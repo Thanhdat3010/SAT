@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Trangchulythuyet from "../components/Trangchulythuyet";
 function Lythuyet(){
@@ -5,6 +6,7 @@ function Lythuyet(){
         <>
         <Navbar/>
         <Trangchulythuyet/>
+        <Footer/>
         </>
     )
 }

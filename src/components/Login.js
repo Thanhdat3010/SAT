@@ -1,194 +1,184 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+
 const Login = (props) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [emailError, setEmailError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
-  
-    const navigate = useNavigate()
-  
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [authMode, setAuthMode] = useState('signin'); // Default to signin
+    const navigate = useNavigate();
+    const checkAccountExists = (callback) => {
+        fetch('http://localhost:3080/check-account', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        })
+          .then((r) => r.json())
+          .then((r) => {
+            callback(r?.userExists)
+          })
+      }
     const onButtonClick = () => {
-      // Đặt giá trị lỗi ban đầu thành trống
-      setEmailError('')
-      setPasswordError('')
-      // Kiểm tra xem người dùng đã nhập đúng cả hai trường chưa
-      if ('' === email) {
-        setEmailError('Please enter your email')
-        return
-      }
-    
-      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-        setEmailError('Please enter a valid email')
-        return
-      }
-    
-      if ('' === password) {
-        setPasswordError('Please enter a password')
-        return
-      }
-    
-      if (password.length < 7) {
-        setPasswordError('The password must be 8 characters or longer')
-        return
-      }
-    
-      checkAccountExists((accountExists) => {
-        // Nếu đúng, đăng nhập
-        if (accountExists) logIn()
-        // Ngược lại, hãy hỏi người dùng xem họ có muốn tạo tài khoản mới không và nếu có thì hãy đăng nhập
-        else if (
-          window.confirm(
-            'An account does not exist with this email address: ' + email + '. Do you want to create a new account?',
-          )
-        ) {
-          logIn()
-        }
-      })
-    }
-    // Gọi API máy chủ để kiểm tra xem ID email đã cho đã tồn tại chưa
-  const checkAccountExists = (callback) => {
-    fetch('http://localhost:3080/check-account', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        callback(r?.userExists)
-      })
-  }
-  
-  // Đăng nhập người dùng bằng email và mật khẩu
-  const logIn = () => {
-    fetch('http://localhost:3080/auth', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        if ('success' === r.message) {
-          localStorage.setItem('user', JSON.stringify({ email, token: r.token }))
-          props.setLoggedIn(true)
-          props.setEmail(email)
-          navigate('/')
+        // Clear any previous errors
+        setEmailError('');
+        setPasswordError('');
+        checkAccountExists((accountExists) => {
+        if (authMode === 'signin' && accountExists) {
+            // Login logic
+            if ('' === email) {
+                setEmailError('Hãy nhập email của bạn');
+                return;
+            }
+            if ('' === password) {
+                setPasswordError('Hãy nhập mật khẩu của bạn');
+                return;
+            }
+            // Perform login API call
+            fetch('http://localhost:3080/auth', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+              })
+            .then((r) => r.json())
+            .then((r) => {
+                if ('success' === r.message) {
+                    // Login successful
+                    localStorage.setItem('user', JSON.stringify({ email, token: r.token }));
+                    props.setLoggedIn(true);
+                    props.setEmail(email);
+                    navigate('/');
+                } else {
+                    // Login failed
+                    window.alert('Bạn đã nhập sai Email hoặc mật khẩu');
+                }
+            })
+            .catch(error => console.error('Login error:', error));
         } else {
-          window.alert('Wrong email or password')
-        }
-      })
-  }
-  let [authMode, setAuthMode] = useState("signin")
+            // Registration logic
+            if ('' === fullName) {
+                setEmailError('Hãy họ và tên của bạn');
+                return;
+            }
+            if ('' === email) {
+                setEmailError('Hãy nhập email của bạn');
+                return;
+            }
+            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                setEmailError('Hãy nhập email hợp lệ');
+                return;
+            }
+            if ('' === password) {
+                setPasswordError('Hãy nhập mật khẩu của bạn');
+                return;
+            }
+            if (password.length < 7) {
+                setPasswordError('The password must be 8 characters or longer');
+                return;
+            }
+            checkAccountExists((accountExists) => {
+                if (accountExists) {
+                    window.alert('Địa chỉ email này đã tồn tại');
+                    setAuthMode('signin'); //Quay lại màn hình đăng nhập
+                } else {
+            // Perform registration API call
+            fetch('http://localhost:3080/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ fullName, email, password }),
+            })
+            .then((r) => r.json())
+            .then((r) => {
+                if ('success' === r.message) {
+                    // Registration successful
+                    window.confirm(
+                        'Bạn có muốn tạo tài khoản mới',
+                      )                  
+                    setAuthMode('signin'); //Quay lại màn hình đăng nhập
+                } else {
+                    // Registration failed
+                    window.alert('Đăng ký thất bại');
+                }
+            })
+            .catch(error => console.error('Registration error:', error));
+        }})}
+    })
+    };
 
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "signup" : "signin")
-  }
+    const changeAuthMode = () => {
+        setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
+        setFullName('');
+        setEmail('');
+        setPassword('');
+        setEmailError('');
+        setPasswordError('');
+    };
 
-  if (authMode === "signin") {
     return (
-      <div className="Auth-form-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Đăng nhập</h3>
-            <div className="text-center">
-              Bạn chưa có tài khoản?{" "}
-              <span className="link-primary" onClick={changeAuthMode}>
-                Đăng ký
-              </span>
-            </div>
-            <div className="form-group mt-3">
-              <label>Email</label>
-              <input
-                type="email"
-                className="form-control mt-1"
-                placeholder="Email"
-                value={email}
-                 onChange={(ev) => setEmail(ev.target.value)}
-              />
-            <label className="errorLabel">{emailError}</label>
-            </div>
-            <div className="form-group mt-3">
-              <label>Mật khẩu</label>
-              <input
-                type="password"
-                className="form-control mt-1"
-                placeholder="Mật khẩu"
-                value={password}
-                onChange={(ev) => setPassword(ev.target.value)}
-              />
-            <label className="errorLabel">{passwordError}</label>
-
-            </div>
-            <div className="d-grid gap-2 mt-3">
-              <button  className="btn btn-primary" type="button" onClick={onButtonClick} value={'Log in'}>
-                Hoàn thành
-              </button>
-            </div>
-            <p className="text-center mt-2">
-              <a href="#">Quên mật khẩu?</a>
-            </p>
-          </div>
-        </form>
-      </div>
-    )
-  }
-
-  return (
-    <div className="Auth-form-container">
-      <form className="Auth-form">
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Đăng ký</h3>
-          <div className="text-center">
-            Bạn đã có tài khoản?{" "}
-            <span className="link-primary" onClick={changeAuthMode}>
-              Đăng nhập
-            </span>
-          </div>
-          <div className="form-group mt-3">
-            <label>Họ và tên</label>
-            <input
-              type="text"
-              className="form-control mt-1"
-              placeholder="Ví dụ: Nguyễn Văn A"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Email</label>
-            <input
-            type="email"
-            className="form-control mt-1"
-            placeholder="Email"
-            value={email}
-            onChange={(ev) => setEmail(ev.target.value)}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Mật khẩu</label>
-            <input
-                type="password"
-                className="form-control mt-1"
-                placeholder="Mật khẩu"
-                value={password}
-                onChange={(ev) => setPassword(ev.target.value)}
-            />
-                    <label className="errorLabel">{passwordError}</label>
-          </div>
-          <div className="d-grid gap-2 mt-3">
-          <button  className="btn btn-primary" type="button" onClick={onButtonClick} value={'Log in'}>
-              Hoàn thành
-            </button>
-          </div>
-          <p className="text-center mt-2">
-            <a href="#"> Quên mật khẩu?</a>
-          </p>
+        <div className="Auth-form-container">
+            <form className="Auth-form">
+                <div className="Auth-form-content">
+                    <h3 className="Auth-form-title">{authMode === 'signin' ? 'Đăng nhập' : 'Đăng ký'}</h3>
+                    {authMode === 'signup' && (
+                        <div className="form-group mt-3">
+                            <label>Họ và tên</label>
+                            <input
+                                type="text"
+                                className="form-control mt-1"
+                                placeholder="Ví dụ: Nguyễn Văn A"
+                                value={fullName}
+                                onChange={(ev) => setFullName(ev.target.value)}
+                            />
+                        </div>
+                    )}
+                    <div className="form-group mt-3">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            className="form-control mt-1"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(ev) => setEmail(ev.target.value)}
+                        />
+                        <label className="errorLabel">{emailError}</label>
+                    </div>
+                    <div className="form-group mt-3">
+                        <label>Mật khẩu</label>
+                        <input
+                            type="password"
+                            className="form-control mt-1"
+                            placeholder="Mật khẩu"
+                            value={password}
+                            onChange={(ev) => setPassword(ev.target.value)}
+                        />
+                        <label className="errorLabel">{passwordError}</label>
+                    </div>
+                    <div className="d-grid gap-2 mt-3">
+                        <button className="btn btn-primary" type="button" onClick={onButtonClick}>
+                            {authMode === 'signin' ? 'Đăng nhập' : 'Đăng ký'}
+                        </button>
+                    </div>
+                    <p className="text-center mt-2">
+                        <a href="#">{authMode === 'signin' ? 'Quên mật khẩu?' : ''}</a>
+                    </p>
+                    <div className="text-center">
+                        {authMode === 'signin' ? 'Bạn chưa có tài khoản? ' : 'Bạn đã có tài khoản? '}
+                        <span className="link-primary" onClick={changeAuthMode}>
+                            {authMode === 'signin' ? 'Đăng ký' : 'Đăng nhập'}
+                        </span>
+                    </div>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  )
-}
+    );
+};
+
 export default Login;

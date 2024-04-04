@@ -6,7 +6,7 @@ class GioithieuData extends Component{
         return(
     <div className="first">
             <div className="first-text">
-            <h2>Ôn tập tiện lợi ở bất cứ đâu</h2>
+            <h2><b>ÔN TẬP TIỆN LỢI Ở BẤT CỨ ĐÂU</b></h2>
             <h3>Nền tảng luyện đề SAT Hóa học dành cho học sinh</h3>
             <p1>Xây dựng năng lực:&ensp;</p1>
             <p2>SAT Chemistry không chỉ giúp bạn dễ dàng luyện đề theo quy chuẩn đề SAT mà còn giúp bạn xây dựng tư duy logic của mình.

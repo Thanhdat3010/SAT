@@ -72,5 +72,8 @@
 .Panel p{
   font-weight:lighter;
   line-height: 1.8;
-  text-indent: 45px;
+  text-indent: 40px;
+}
+.Hinhchapter1{
+  width: 50%;
 }
