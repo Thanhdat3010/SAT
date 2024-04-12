@@ -1,9 +1,9 @@
-.NavbarItems{
+.NavbarItems {
     background-color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding:0 30px ;
+    padding: 0 30px;
     width: 100%;
     height: 100px;
     border-radius: 0px;
@@ -12,26 +12,29 @@
     transform: translate(-50%);
     z-index: 9999;
 }
-.navbar-logo{
+
+.navbar-logo {
     color: #222;
     font-size: 2rem;
     cursor: pointer;
     background-color: #fff;
 }
-.logo{
+
+.logo {
     height: 85px;
     width: 85px;
 }
-.nav-menu{
+
+.nav-menu {
     display: grid;
     grid-template-columns: repeat(7, auto);
     list-style: none;
     grid-gap: 10px;
     align-items: center;
     background-color: #fff;
-
 }
-.nav-links{
+
+.nav-links {
     text-decoration: none;
     color: #222;
     font-size: 1.2rem;
@@ -41,28 +44,29 @@
     font-weight: bold;
     position: relative;
 }
-.nav-links::before{
+
+.nav-links::before {
     content: "";
     position: absolute;
     top: 100%;
     left: 0;
     width: 0;
     height: 2px;
-    background: #6D92D0;
-    transition: .3s;
+    background: #6d92d0;
+    transition: 0.3s;
 }
-.nav-links:hover:before{
-   width: 100%;
+
+.nav-links:hover::before {
+    width: 100%;
 }
-.nav-links i{
+
+.nav-links i {
     padding-right: 10px;
 }
 
-.nav-links-mobile{
-    display: none;
-}
 
-button{
+
+button.nav-button {
     padding: 0.5rem 1rem;
     white-space: nowrap;
     border-radius: 0.3rem;
@@ -71,22 +75,23 @@ button{
     border: none;
     cursor: pointer;
     transition: 0.2s ease-in-out;
-    
 }
-button:hover{
+
+button.nav-button:hover {
     background-color: #151516;
-    color:#fff;
+    color: #fff;
 }
-.menu-icons{
+
+.menu-icons {
     display: none;
-    
 }
 
 @media screen and (max-width: 850px) {
-    .NavbarItems{
+    .NavbarItems {
         z-index: 99;
     }
-    .nav-menu{
+
+    .nav-menu {
         display: flex;
         flex-direction: column;
         justify-self: flex-start;
@@ -103,28 +108,28 @@ button:hover{
         margin: 0;
         transition: 0.3s ease-in-out;
     }
-    .nav-menu.active{
+
+    .nav-menu.active {
         left: 0;
         opacity: 1;
         z-index: -1;
         transition: 0.3s ease-in-out;
-
     }
-    .nav-links{
+
+    .nav-links {
         display: block;
         width: 100%;
         font-size: 1.2rem;
         padding: 2rem 0;
     }
-    .nav-links:hover{
-        background:#01959a;
+
+    .nav-links:hover {
+        background: #01959a;
         transition: none;
     }
-    button{
-        display: none;
-    }
-    .nav-links-mobile{
-        display: block ;
+
+    .nav-links-mobile {
+        display: block;
         text-align: center;
         padding: 1.5rem;
         margin: auto;
@@ -136,12 +141,18 @@ button:hover{
         font-weight: 700;
         letter-spacing: 2px;
     }
-    .menu-icons{
+
+    .menu-icons {
         display: block;
         cursor: pointer;
     }
-    .menu-icons i{
+
+    .menu-icons i {
         font-size: 1.2rem;
         color: #222;
+    }
+
+    button.nav-button {
+        display: none;
     }
 }

@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = (props) => {
-    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [authMode, setAuthMode] = useState('signin'); // Default to signin
     const navigate = useNavigate();
+    
     const checkAccountExists = (callback) => {
         fetch('http://localhost:3080/check-account', {
           method: 'POST',
@@ -38,6 +38,7 @@ const Login = (props) => {
                 setPasswordError('Hãy nhập mật khẩu của bạn');
                 return;
             }
+           
             // Perform login API call
             fetch('http://localhost:3080/auth', {
                 method: 'POST',
@@ -60,12 +61,14 @@ const Login = (props) => {
                 }
             })
             .catch(error => console.error('Login error:', error));
-        } else {
+        } else{
+            setAuthMode('signup'); //Quay lại màn hình ký
+
+        }
+        
+        if (authMode === 'signup') {
             // Registration logic
-            if ('' === fullName) {
-                setEmailError('Hãy họ và tên của bạn');
-                return;
-            }
+           
             if ('' === email) {
                 setEmailError('Hãy nhập email của bạn');
                 return;
@@ -93,7 +96,7 @@ const Login = (props) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ fullName, email, password }),
+                body: JSON.stringify({ email, password }),
             })
             .then((r) => r.json())
             .then((r) => {
@@ -115,7 +118,6 @@ const Login = (props) => {
 
     const changeAuthMode = () => {
         setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
-        setFullName('');
         setEmail('');
         setPassword('');
         setEmailError('');
@@ -127,18 +129,7 @@ const Login = (props) => {
             <form className="Auth-form">
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">{authMode === 'signin' ? 'Đăng nhập' : 'Đăng ký'}</h3>
-                    {authMode === 'signup' && (
-                        <div className="form-group mt-3">
-                            <label>Họ và tên</label>
-                            <input
-                                type="text"
-                                className="form-control mt-1"
-                                placeholder="Ví dụ: Nguyễn Văn A"
-                                value={fullName}
-                                onChange={(ev) => setFullName(ev.target.value)}
-                            />
-                        </div>
-                    )}
+                   
                     <div className="form-group mt-3">
                         <label>Email</label>
                         <input

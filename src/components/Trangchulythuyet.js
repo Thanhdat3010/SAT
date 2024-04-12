@@ -25,7 +25,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Matter and Energy" src={image1} />}
             >
-              <Meta title="Vật chất và Năng lượng" />
+              <Meta title="Chapter 1: Vật chất và Năng lượng" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")} >
@@ -33,7 +33,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Phases of Matter" src={image2} />}
             >
-              <Meta title="Các pha của vật chất" />
+              <Meta title="Chapter 2: Các pha của vật chất" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -41,7 +41,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Atomic Structure" src={image3} />}
             >
-              <Meta title="Cấu trúc nguyên tử" />
+              <Meta title="Chapter 3: Cấu trúc nguyên tử" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -49,7 +49,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="The Periodic Table and Periodic Trends" src={image4} />}
             >
-              <Meta title="Bảng tuần hoàn và xu hướng tuần hoàn" />
+              <Meta title="Chapter 4: Bảng tuần hoàn và xu hướng tuần hoàn" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -57,7 +57,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Bonding" src={image5} />}
             >
-              <Meta title="Liên Kết" />
+              <Meta title="Chapter 5: Liên Kết" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -65,7 +65,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Stoichiometry and Solution Chemistry" src={image6} />}
             >
-              <Meta title="Phép cân bằng hóa học và giải pháp hóa học" />
+              <Meta title="Chapter 6: Phép cân bằng hóa học và giải pháp hóa học" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -81,7 +81,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Reaction Rates and Chemical Equilibrium" src={image6} />}
             >
-              <Meta title="Tốc độ phản ứng và cân bằng hóa học" />
+              <Meta title="Chapter 8: Tốc độ phản ứng và cân bằng hóa học" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -89,7 +89,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Acid and Base" src={image6} />}
             >
-              <Meta title="Acid và Base" />
+              <Meta title="Chapter 9: Acid và Base" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -105,7 +105,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Organic Chemistry" src={image6} />}
             >
-              <Meta title="Hóa học hữu cơ" />
+              <Meta title="Chapter 11: Hóa học hữu cơ" />
             </Card>
           </Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
@@ -113,7 +113,7 @@ function Trangchulythuyet() {
               hoverable
               cover={<img alt="Nuclear Chemistry" src={image6} />}
             >
-              <Meta title="Hóa học hạt nhân" />
+              <Meta title="Chapter 12: Hóa học hạt nhân" />
             </Card>
           </Col>
           

@@ -3,7 +3,7 @@ import "./App.css";
 import { Routes, Route} from "react-router-dom";
 import Trangchu from "./routes/Trangchu";
 import Lythuyet from "./routes/Lythuyet";
-import LuyendeSAT from "./routes/LuyendeSAT";
+import Onthi from "./routes/Onthi";
 import Vechungtoi from "./routes/Vechungtoi";
 import Login from "./components/Login";
 import Tainguyen from "./routes/Tainguyen";
@@ -46,7 +46,7 @@ function App() {
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
-    <Route path='/LuyendeSAT' element={<LuyendeSAT/>}/>    
+    <Route path='/Onthi' element={<Onthi/>}/>    
     <Route path='/Vechungtoi' element={<Vechungtoi/>}/>    
     </Routes>
   </div>
