@@ -4,7 +4,7 @@
     height: 100vh;
     position: relative;
     background-color: #f1f1f1;
-
+    background-image: url('../assets/background-web.png');
 }
 .hero-mid{
     width: 100%;
