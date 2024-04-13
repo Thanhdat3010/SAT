@@ -6,25 +6,30 @@ import avatar from "../assets/profile-user.png";
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [avatarActive, setAvatarActive] = useState(false);
 
   const handleClick = () => {
     setClicked(!clicked);
   };
 
-  const handleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
-
   const handleLogout = () => {
-    // Đăng xuất bằng cách xóa trạng thái đăng nhập khỏi localStorage
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
 
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+    setAvatarActive(!avatarActive);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
+
   return (
-    <nav className="NavbarItems">
+    <nav className="NavbarItems" onClick={closeDropdown}>
       <h1 className="navbar-logo">
         <img alt="img" src={logo} className="logo" />
       </h1>
@@ -57,23 +62,25 @@ const Navbar = () => {
             Liên hệ
           </Link>
         </li>
-        <li>
-          <div onClick={handleDropdown}>
-            {isLoggedIn ? (
-              <img alt="img" src={avatar} className="avatar" />
-            ) : (
-              <Link className="nav-links-mobile" to="/Login">
-                Đăng nhập
-              </Link>
-            )}
-            {showDropdown && isLoggedIn && (
-              <ul className="dropdown">
-                <li>Thông tin</li>
-                <li onClick={handleLogout}>Đăng xuất</li>
-              </ul>
-            )}
-          </div>
-        </li>
+        {isLoggedIn ? (
+          <li className={avatarActive ? "avatar-container active" : "avatar-container"} onClick={toggleDropdown}>
+            <img alt="img" src={avatar} className="avatar" />
+            <ul className={showDropdown ? "dropdown-menu show" : "dropdown-menu"}>
+              <li>
+                <Link to="/profile">Hồ sơ</Link>
+              </li>
+              <li>
+              <Link onClick={handleLogout}>Đăng xuất</Link> {/* Chuyển hướng đến trang đăng xuất */}
+              </li>
+            </ul>
+          </li>
+        ) : (
+          <li>
+            <Link className="nav-links-mobile" to="/Login">
+              Đăng nhập
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );

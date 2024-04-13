@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useEffect, useState } from 'react'
 import Chapter1 from "./Chaper/Chapter1";
 import Home from "./routes/Home";
+import Navbar from "./components/Navbar";
 function App() {
   useEffect(() => {
     // Fetch the user email and token from local storage
@@ -39,6 +40,7 @@ function App() {
   const [email, setEmail] = useState('')
   return (
     <div className="App">
+    <Navbar loggedIn={loggedIn}/>
     <Routes>
     <Route path='/Home' element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}/>
     <Route path='/login' element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />}/>
