@@ -2,12 +2,25 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./Navbar.css";
+import avatar from "../assets/profile-user.png";
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
 
   const handleClick = () => {
     setClicked(!clicked);
+  };
+
+  const handleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleLogout = () => {
+    // Đăng xuất bằng cách xóa trạng thái đăng nhập khỏi localStorage
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
   };
 
   return (
@@ -45,9 +58,21 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link className="nav-links-mobile" to="/Login">
-            <button className="nav-button">Đăng nhập</button>
-          </Link>
+          <div onClick={handleDropdown}>
+            {isLoggedIn ? (
+              <img alt="img" src={avatar} className="avatar" />
+            ) : (
+              <Link className="nav-links-mobile" to="/Login">
+                Đăng nhập
+              </Link>
+            )}
+            {showDropdown && isLoggedIn && (
+              <ul className="dropdown">
+                <li>Thông tin</li>
+                <li onClick={handleLogout}>Đăng xuất</li>
+              </ul>
+            )}
+          </div>
         </li>
       </ul>
     </nav>

@@ -52,6 +52,7 @@ const Login = (props) => {
                 if ('success' === r.message) {
                     // Login successful
                     localStorage.setItem('user', JSON.stringify({ email, token: r.token }));
+                    localStorage.setItem('isLoggedIn', true);
                     props.setLoggedIn(true);
                     props.setEmail(email);
                     navigate('/');
@@ -85,6 +86,7 @@ const Login = (props) => {
                 setPasswordError('The password must be 8 characters or longer');
                 return;
             }
+            
             checkAccountExists((accountExists) => {
                 if (accountExists) {
                     window.alert('Địa chỉ email này đã tồn tại');
@@ -105,7 +107,7 @@ const Login = (props) => {
                     window.confirm(
                         'Bạn có muốn tạo tài khoản mới',
                       )                  
-                    setAuthMode('signin'); //Quay lại màn hình đăng nhập
+                      setAuthMode('signin'); //Quay lại màn hình ký
                 } else {
                     // Registration failed
                     window.alert('Đăng ký thất bại');
