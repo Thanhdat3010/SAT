@@ -19,6 +19,8 @@
 }
 .NavbarItems.solid {
     background-color: rgba(255, 255, 255, 1); /* Chuyển sang màu trắng không trong suốt */
+    border-bottom: 1px solid #cccccc; /* Thêm viền dưới màu xám */
+
 }
 .navbar-logo {
     color: #222;
@@ -83,9 +85,31 @@
 .avatar-container.active .dropdown-menu {
     display: block; /* Hiển thị dropdown menu khi phần tử cha có class 'active' */
 }
-.avatar-container.active li{
+
+.Profile a{
     text-align: center;
     font-weight: bold;
+    display: block;
+    padding: 0.5rem;
+    color: #333;
+    text-decoration: none;
+}
+.Profile a:hover{
+    background-color: #f0f0f0;
+}
+.Logout a{
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    padding: 0.5rem;
+    color: #333;
+    text-decoration: none;
+}
+.Logout a:hover{
+    background-color: #f0f0f0;
+    color: red;
+    transition: 0.3s;
+
 }
 .dropdown-menu {
     position: absolute;
@@ -103,26 +127,15 @@
     list-style: none;
 }
 
-.dropdown-menu li a,
-.dropdown-menu li button {
-    display: block;
-    padding: 0.5rem;
-    color: #333;
-    text-decoration: none;
-}
 
-.dropdown-menu li a:hover,
-.dropdown-menu li button:hover {
-    background-color: #f0f0f0;
-}
+
 .nav-links-mobile {
     display: inline-block;
     padding: 0.5rem 1rem;
     white-space: nowrap;
     border-radius: 0.3rem;
-    background-color: whitesmoke;
     color: black;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     border: none;
     cursor: pointer;

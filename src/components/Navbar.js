@@ -93,11 +93,11 @@ const Navbar = () => {
           <li className={avatarActive ? "avatar-container active" : "avatar-container"} onClick={toggleDropdown}>
             <img alt="img" src={background ? background : avatar} className="avatar" /> {/* Sử dụng background người dùng đã chọn hoặc hình ảnh mặc định */}
             <ul className={showDropdown ? "dropdown-menu show" : "dropdown-menu"}>
-              <li>
+              <li className="Profile">
                 <Link to="/Profile">Hồ sơ</Link>
               </li>
-              <li>
-                <Link onClick={handleLogout}>Đăng xuất</Link>
+              <li className="Logout">
+                <Link onClick={handleLogout} >Đăng xuất</Link>
               </li>
             </ul>
           </li>

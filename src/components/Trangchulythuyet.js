@@ -1,11 +1,17 @@
 import React from 'react';
 import './Trangchulythuyet.css';
 import image1 from '../assets/MatterandEnergy.png';
-import image2 from '../assets/MatterandEnergy.png';
+import image2 from '../assets/PhasesofMatter.png';
 import image3 from '../assets/AtomicStructure.png';
-import image4 from '../assets/MatterandEnergy.png';
-import image5 from '../assets/MatterandEnergy.png';
-import image6 from '../assets/MatterandEnergy.png';
+import image4 from '../assets/ThePeriodicTableandPeriodicTrends.png';
+import image5 from '../assets/Bonding.png';
+import image6 from '../assets/StoichiometryandSolutionChemistry.png';
+import image7 from '../assets/StoichiometryandSolutionChemistry.png';
+import image8 from '../assets/ReactionRatesandChemicalEquilibrium.png';
+import image9 from '../assets/AcidandBase.png';
+import image10 from '../assets/StoichiometryandSolutionChemistry.png';
+import image11 from '../assets/OrganicChemistry.png';
+import image12 from '../assets/NuclearChemistry.png';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { Card } from 'antd';
@@ -71,7 +77,7 @@ function Trangchulythuyet() {
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
             <Card
               hoverable
-              cover={<img alt="Test" src={image6} />}
+              cover={<img alt="Test" src={image7} />}
             >
               <Meta title="Chapter 7" />
             </Card>
@@ -79,7 +85,7 @@ function Trangchulythuyet() {
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
             <Card
               hoverable
-              cover={<img alt="Reaction Rates and Chemical Equilibrium" src={image6} />}
+              cover={<img alt="Reaction Rates and Chemical Equilibrium" src={image8} />}
             >
               <Meta title="Chapter 8: Tốc độ phản ứng và cân bằng hóa học" />
             </Card>
@@ -87,7 +93,7 @@ function Trangchulythuyet() {
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
             <Card
               hoverable
-              cover={<img alt="Acid and Base" src={image6} />}
+              cover={<img alt="Acid and Base" src={image9} />}
             >
               <Meta title="Chapter 9: Acid và Base" />
             </Card>
@@ -95,7 +101,7 @@ function Trangchulythuyet() {
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
             <Card
               hoverable
-              cover={<img alt="Test" src={image6} />}
+              cover={<img alt="Test" src={image10} />}
             >
               <Meta title="Chapter 10" />
             </Card>
@@ -103,7 +109,7 @@ function Trangchulythuyet() {
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
             <Card
               hoverable
-              cover={<img alt="Organic Chemistry" src={image6} />}
+              cover={<img alt="Organic Chemistry" src={image11} />}
             >
               <Meta title="Chapter 11: Hóa học hữu cơ" />
             </Card>
@@ -111,7 +117,7 @@ function Trangchulythuyet() {
           <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")}>
             <Card
               hoverable
-              cover={<img alt="Nuclear Chemistry" src={image6} />}
+              cover={<img alt="Nuclear Chemistry" src={image12} />}
             >
               <Meta title="Chapter 12: Hóa học hạt nhân" />
             </Card>

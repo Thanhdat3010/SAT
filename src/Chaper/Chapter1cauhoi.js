@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './Chapter1cauhoi.css';
 
-const Chapter1cauhoi = () => {
-  // Danh sách các câu hỏi và đáp án
+const Chapter1cauhoi = ({ onCompletion }) => {
   const questions = [
     {
       question: "Chất nào có thể bị phân hủy về mặt hóa học?",
@@ -130,18 +129,15 @@ const Chapter1cauhoi = () => {
       correctAnswer: "Năng lượng kích hoạt",
       explain: "Năng lượng kích hoạt là năng lượng cần thiết để đạt tới phức hợp được kích hoạt, điểm mà chất phản ứng trở thành sản phẩm."
     },
-    // Thêm các câu hỏi khác ở đây
   ];
 
-  // Trạng thái hiện tại của ứng dụng
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [answerState, setAnswerState] = useState(Array(questions.length).fill(null));
   const [score, setScore] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-  // Hàm xử lý khi chọn đáp án
   const handleOptionClick = (selectedAnswer, index) => {
-    // Kiểm tra xem đã chọn câu trả lời cho câu hỏi này chưa
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
       const isCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
@@ -149,23 +145,28 @@ const Chapter1cauhoi = () => {
       newAnswerState[currentQuestion] = isCorrect;
       setAnswerState(newAnswerState);
 
-      // Nếu chọn đúng, tăng điểm số lên 1
       if (isCorrect) {
         setScore(score + 1);
       }
     }
   };
 
-  // Hàm chuyển sang câu hỏi tiếp theo
   const nextQuestion = () => {
     setSelectedOption(null);
     setCurrentQuestion(currentQuestion + 1);
+    const newProgress = ((currentQuestion + 1) / questions.length) * 100;
+    setProgress(newProgress);
+
+    if (currentQuestion === questions.length - 1) {
+      onCompletion();
+    }
   };
 
   return (
     <div className="questions-page">
       <h1>Câu hỏi</h1>
       <div className="questions-container">
+        <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         {currentQuestion < questions.length && (
           <div className="question">
             <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
@@ -184,7 +185,6 @@ const Chapter1cauhoi = () => {
                   <div>
                     <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
                     <p>Giải thích: {questions[currentQuestion].explain}</p>
-
                   </div>
                 )}
               </div>

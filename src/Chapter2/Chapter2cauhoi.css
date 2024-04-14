@@ -1,0 +1,56 @@
+.question {
+    padding: 20px;
+    text-align: left; /* Hoặc có thể sử dụng justify-content: flex-start; nếu sử dụng flexbox */
+  }
+  .questions-page {
+    text-align: center;
+  }
+ .question p{
+    font-weight: bold;
+ }
+  
+  .questions-container {
+    margin-top: 20px;
+  }
+  .question ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .question li {
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
+  }
+  
+  .correct-mark {
+    color: green;
+    margin-left: 10px;
+  }
+  
+  .incorrect-mark {
+    color: red;
+    margin-left: 10px;
+  }
+  
+  .next-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .next-button:hover {
+    background-color: #0056b3;
+  }

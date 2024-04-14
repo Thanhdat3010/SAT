@@ -1,70 +1,85 @@
+import React, { useState } from 'react';
+import { Layout, Menu, Progress } from 'antd';
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import Chapter1cauhoi from '../Chaper/Chapter1cauhoi';
+import Chapter2cauhoi from '../Chapter2/Chapter2cauhoi';
 import './Onthi.css';
 import Navbar from '../components/Navbar';
-import React from 'react';
-import { Layout, Menu } from 'antd';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import Footer from '../components/Footer';
-import { Link, Route, Routes } from "react-router-dom";
-import { useState } from 'react';
-import Chapter1cauhoi from '../Chaper/Chapter1cauhoi';
-const { Header, Content, Sider } = Layout;
+
+const { Sider, Content } = Layout;
 
 const Onthi = () => {
   const [selectedChapter, setSelectedChapter] = useState(1);
+  const [chapterCompletion, setChapterCompletion] = useState({
+    1: false,
+    3: false,
+    // Add more chapters as needed
+  });
 
   const handleMenuClick = (chapterNumber) => {
     setSelectedChapter(chapterNumber);
   };
+
+  const handleChapterCompletion = (chapterNumber) => {
+    const updatedCompletion = { ...chapterCompletion, [chapterNumber]: true };
+    setChapterCompletion(updatedCompletion);
+  };
+
+  const calculateProgress = () => {
+    const completedChapters = Object.values(chapterCompletion).filter((completed) => completed).length;
+    const totalChapters = Object.keys(chapterCompletion).length;
+    return (completedChapters / totalChapters) * 100;
+  };
+
   return (
     <Layout>
-        <Navbar/>
-        <div className='block contactBlock'>
-      <div className='layout'>
-      <Layout>
+      <Navbar />
+      <Layout className='layout'>
         <Sider width={200} style={{ background: 'lightgray' }}>
-          <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} selectedKeys={[String(selectedChapter)]} style={{ height: '100%', borderRight: 0 }}>
+          <Menu mode="inline" defaultSelectedKeys={['1']} selectedKeys={[String(selectedChapter)]} style={{ height: '100%', borderRight: 0 }}>
             <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="Chapter 1">
               <Menu.Item key="1" onClick={() => handleMenuClick(1)}>
-             Câu hỏi
+                Câu hỏi
               </Menu.Item>
-              <Menu.Item key="2" onClick={() => handleMenuClick(2)}> 
-              Đáp án và giải thích
+              <Menu.Item key="2" onClick={() => handleMenuClick(2)}>
+                Luyện đề
               </Menu.Item>
-             
             </Menu.SubMenu>
             <Menu.SubMenu key="sub2" icon={<LaptopOutlined />} title="Chapter 2">
             <Menu.Item key="3" onClick={() => handleMenuClick(3)}>
-             Câu hỏi
+                Câu hỏi
               </Menu.Item>
+              <Menu.Item key="4" onClick={() => handleMenuClick(4)}>
+              Luyện đề
+            </Menu.Item>
             </Menu.SubMenu>
-            <Menu.Item key="4" onClick={() => handleMenuClick(4)}> 
-              Đáp án và giải thích
-              </Menu.Item>
+          
             <Menu.SubMenu key="sub3" icon={<NotificationOutlined />} title="Chapter 3">
-            <Menu.Item key="5" onClick={() => handleMenuClick(5)}>
-             Câu hỏi
+              <Menu.Item key="5" onClick={() => handleMenuClick(5)}>
+                Câu hỏi
               </Menu.Item>
-              <Menu.Item key="6" onClick={() => handleMenuClick(6)}> 
-              Đáp án và giải thích
+              <Menu.Item key="6" onClick={() => handleMenuClick(6)}>
+                Luyện đề
               </Menu.Item>
             </Menu.SubMenu>
           </Menu>
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
           <Content style={{ padding: '24px 0', minHeight: 280 }}>
-          <div className='content-wrapper'>
-          {selectedChapter === 1 && <Chapter1cauhoi />}
-          </div>
+            <div className='progress-bar'>
+              <Progress percent={calculateProgress()} status="active" />
+            </div>
+            <div className='content-wrapper'>
+              {selectedChapter === 1 && <Chapter1cauhoi onCompletion={() => handleChapterCompletion(1)} />}
+              {selectedChapter === 3 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(3)} />}
+
+            </div>
           </Content>
         </Layout>
       </Layout>
-
-      </div>
-      </div>
-      <Footer/>
-
+      <Footer />
     </Layout>
-    
   );
 };
 
