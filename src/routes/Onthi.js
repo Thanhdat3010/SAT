@@ -6,9 +6,7 @@ import Chapter2cauhoi from '../Chapter2/Chapter2cauhoi';
 import './Onthi.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
 const { Sider, Content } = Layout;
-
 const Onthi = () => {
   const [selectedChapter, setSelectedChapter] = useState(1);
   const [chapterCompletion, setChapterCompletion] = useState({

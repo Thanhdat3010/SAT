@@ -71,8 +71,8 @@ const Chapter2cauhoi = ({ onCompletion }) => {
       },
       {
         question: "Tham khảo các lựa chọn sau: I. Định luật Boyle II. Định luật Charles III. Định luật Khí kết hợp Cái nào trong số trên có thể được sử dụng để tính toán sự thay đổi về thể tích khi có sự thay đổi về áp suất ở nhiệt độ không đổi?",
-        options: ["I chỉ", "II chỉ", "II và III chỉ", "I và III chỉ", "I và II chỉ"],
-        correctAnswer: "I và III chỉ",
+        options: ["Chỉ I", "Chỉ II", "II và III", "I và III", "I và II"],
+        correctAnswer: "I và III",
         explain: "Cả Luật Boyle và Luật Khí Kết hợp đều có biến số cho áp suất và thể tích. Luật Charles chỉ xem xét sự thay đổi về thể tích khi có sự thay đổi về nhiệt độ."
       },
       {
@@ -117,7 +117,7 @@ const Chapter2cauhoi = ({ onCompletion }) => {
 
   return (
     <div className="questions-page">
-      <h1>Câu hỏi</h1>
+      <h1>Chapter 2</h1>
       <div className="questions-container">
         <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         {currentQuestion < questions.length && (
@@ -150,9 +150,11 @@ const Chapter2cauhoi = ({ onCompletion }) => {
       </div>
       {currentQuestion === questions.length && (
         <div>
-          <h2>Quiz Finished!</h2>
-          <p>Điểm số của bạn: {score}</p>
-          {/* Hiển thị điểm số ở đây nếu cần */}
+          <h2>Hoàn thành</h2>
+          <div className="score-container">
+          <p className="score-label">Điểm số của bạn:</p>
+          <p className="score">{score}</p>
+        </div>
         </div>
       )}
     </div>

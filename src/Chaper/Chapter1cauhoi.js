@@ -164,7 +164,7 @@ const Chapter1cauhoi = ({ onCompletion }) => {
 
   return (
     <div className="questions-page">
-      <h1>Câu hỏi</h1>
+      <h1>Chapter 1</h1>
       <div className="questions-container">
         <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         {currentQuestion < questions.length && (
@@ -197,8 +197,11 @@ const Chapter1cauhoi = ({ onCompletion }) => {
       </div>
       {currentQuestion === questions.length && (
         <div>
-          <h2>Quiz Finished!</h2>
-          <p>Điểm số của bạn: {score}</p>
+          <h2>Hoàn thành</h2>
+          <div className="score-container">
+         <p className="score-label">Điểm số của bạn:</p>
+          <p className="score">{score}</p>
+        </div>
           {/* Hiển thị điểm số ở đây nếu cần */}
         </div>
       )}
