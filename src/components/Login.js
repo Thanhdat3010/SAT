@@ -7,7 +7,7 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [authMode, setAuthMode] = useState('signin'); // Default to signin
+    const [authMode, setAuthMode] = useState('signin'); // Mặc định là signin
     const navigate = useNavigate();
     
     const checkAccountExists = (callback) => {
@@ -24,7 +24,7 @@ const Login = (props) => {
           })
       }
     const onButtonClick = () => {
-        // Clear any previous errors
+        // Xóa mọi lỗi trước đó
         setEmailError('');
         setPasswordError('');
         checkAccountExists((accountExists) => {
@@ -39,7 +39,7 @@ const Login = (props) => {
                 return;
             }
            
-            // Perform login API call
+            // Thực hiện lệnh gọi API đăng nhập
             fetch('http://localhost:3080/auth', {
                 method: 'POST',
                 headers: {
@@ -92,7 +92,7 @@ const Login = (props) => {
                     window.alert('Địa chỉ email này đã tồn tại');
                     setAuthMode('signin'); //Quay lại màn hình đăng nhập
                 } else {
-            // Perform registration API call
+            // Thực hiện lệnh gọi API đăng ký
             fetch('http://localhost:3080/auth', {
                 method: 'POST',
                 headers: {

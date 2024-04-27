@@ -34,7 +34,7 @@ function Trangchulythuyet() {
               <Meta title="Chapter 1: Vật chất và Năng lượng" />
             </Card>
           </Col>
-          <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/")} >
+          <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} onClick={() => navigate("/Chapter2")} >
             <Card
               hoverable
               cover={<img alt="Phases of Matter" src={image2} />}
