@@ -1,6 +1,15 @@
 import React from 'react';
 import './Chapter2thongtin.css';
 import { Collapse} from 'antd';
+import Hinhchapter21 from "../Hinhchapter/Chapter2.1.png";
+import Hinhchapter22 from "../Hinhchapter/Chapter2.2.png";
+import Hinhchapter23 from "../Hinhchapter/Chapter2.3.png";
+import Hinhchapter24 from "../Hinhchapter/Chapter2.4.png";
+import Hinhchapter25 from "../Hinhchapter/Chapter2.5.png";
+import Hinhchapter26 from "../Hinhchapter/Chapter2.6.png";
+import Hinhchapter27 from "../Hinhchapter/Chapter2.7.png";
+import Hinhchapter28 from "../Hinhchapter/Chapter2.8.png";
+
 import Congthuc1Chapter2  from "../Hinhchapter/Congthuc1Chapter2.png"
 import Congthuc2Chapter2  from "../Hinhchapter/Congthuc2Chapter2.png"
 import Congthuc3Chapter2  from "../Hinhchapter/Congthuc3Chapter2.png"
@@ -51,7 +60,9 @@ function Chapter2thongtin() {
             <p>Những nguyên lý này giúp chúng ta hiểu và dự đoán hành vi quang học của khí bằng cách xem xét những chuyển động và tương tác vi mô của các hạt riêng lẻ.</p>
             </Panel>
             <Panel header="III. Áp lực" key="3" className='Panel'>
-            <p>Các khí tạo ra áp lực khi va chạm vào các vật khác. Áp lực được tạo ra bởi khí có thể được định nghĩa là lượng lực tác động lên một diện tích. Bất kỳ người nào đã xem hoặc nghe một bản tin thời tiết có thể nhớ đến việc nghe về áp suất khí quyển hoặc áp suất không khí. Những áp suất này có thể khác nhau khi hệ thống áp suất cao và áp suất thấp di chuyển qua một khu vực cụ thể. Có hai thiết bị được sử dụng để đo áp suất tạo ra bởi khí, đó là cột thủy ngân và bồn đo áp suất. Cả hai thiết bị đều có thể hữu ích tùy thuộc vào tình huống.</p>
+            <p>Các khí tạo ra áp lực khi va chạm vào các vật khác. Áp lực được tạo ra bởi khí có thể được định nghĩa là lượng lực tác động lên một diện tích. Bất kỳ người nào đã xem hoặc nghe một bản tin thời tiết có thể nhớ đến việc nghe về áp suất khí quyển hoặc áp suất không khí. Những áp suất này có thể khác nhau khi hệ thống áp suất cao và áp suất thấp di chuyển qua một khu vực cụ thể. Có hai thiết bị được sử dụng để đo áp suất tạo ra bởi khí, đó là cột thủy ngân và bồn đo áp suất. Cả hai thiết bị đều có thể hữu ích tùy thuộc vào tình huống.
+            </p>
+            <img alt="Hình 2.1" src={Hinhchapter21} className="Hinhchapter"></img>
             <p>
             Cột thủy ngân (xem Hình 2.1) sử dụng một cột thủy ngân trong suốt được đổ thủy ngân vào một bình chứa chất thủy ngân. Khi bạn di chuyển lên độ cao, mức thủy ngân trong cột thủy ngân giảm vì có ít không khí ở độ cao cao hơn. Trung bình, chiều cao của thủy ngân trong cột là 760 milimét so với mức thủy ngân trong bình chứa. Áp suất trung bình này được gọi là áp suất tiêu chuẩn hoặc áp suất khí quyển bình thường.
             Có nhiều đơn vị có thể được sử dụng để đo áp suất không khí. Ví dụ, milimét có thể được chuyển đổi thành inch; do đó, áp suất tiêu chuẩn 760 mm Hg cũng có thể được ghi nhận là 30.0 inch thủy ngân. Inch thủy ngân là đơn vị được sử dụng cho các bản tin thời tiết ở Hoa Kỳ. Ba đơn vị phổ biến khác tương ứng với 760 mm Hg là:
@@ -63,9 +74,11 @@ function Chapter2thongtin() {
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Các phân tử khí được phân tán rộng rãi.
             </p>
             <p>Một đơn vị cuối cùng được gặp khi đo áp suất là pound trên mỗi inch vuông (psi). Đơn vị này thường được dành cho việc đo áp suất không khí trong lốp xe tại các trạm xăng ở Hoa Kỳ. Bồn đo áp suất được sử dụng để xác định áp suất của một khí bị chận trong một bình chứa. Hình dáng và mở đầu ở phía trên của bồn đo áp suất cho phép một lượng thủy ngân nhất định được chuyển động tùy thuộc vào áp suất khí quyển và áp suất của khí trong bình chứa. Có ba tình huống cần xem xét khi sử dụng bồn đo áp suất: áp suất khí bằng với áp suất khí quyển, áp suất khí lớn hơn áp suất khí quyển, và áp suất khí nhỏ hơn áp suất khí quyển. Các tình huống này có thể thấy trong Hình 2.2.</p>
+            <img alt="Hình 2.2" src={Hinhchapter22} className="Hinhchapter"></img>
             </Panel>
             <Panel header="IV. Định luật Boyle" key="4" className='Panel'>
             <p>Robert Boyle đã thực hiện các thí nghiệm để xem làm thế nào việc thay đổi áp suất lên một khí sẽ ảnh hưởng đến thể tích của nó. Thí nghiệm của ông cho thấy rằng khi áp suất lên khí tăng, thể tích mà khí chiếm giảm đi. Trong Hình 2.3, biểu đồ bên trái thể hiện một piston không tạo ra áp lực lớn lên một mẫu khí. Biểu đồ ở giữa cho thấy piston đã được nhấn xuống, làm tăng áp suất lên khí. Đáp ứng với sự tăng áp suất, thể tích của khí đã giảm.</p>
+            <img alt="Hình 2.3" src={Hinhchapter23} className="Hinhchapter"></img>
             <p>Boyle đã xác định được rằng, ở nhiệt độ không đổi, có một mối quan hệ nghịch đảo giữa áp suất và thể tích. Nghĩa là, khi giá trị của một yếu tố tăng, giá trị của yếu tố kia giảm. Đồ thị trong Hình 2.3 cho thấy mối quan hệ toán học giữa áp suất và thể tích. Phương trình P<sub>1</sub>V<sub>1</sub> = P<sub>2</sub>V<sub>2</sub> có thể được sử dụng để thực hiện các tính toán bằng Định luật Boyle để xác định thể tích cuối cùng của một khí sau khi nó đã trải qua sự thay đổi áp suất.</p>
             <p><b>Bài toán:</b></p>
             <p>Một khí chiếm thể tích 22.4 lít và áp suất lên nó tăng từ 760 torr lên 1520 torr. Thể tích mới là bao nhiêu? Tại sao câu trả lời của bạn hợp lý?</p>
@@ -83,6 +96,7 @@ function Chapter2thongtin() {
             </Panel>
             <Panel header="V. Định luật Charles" key="5" className='Panel'>
             <p>Jacques Charles đã thực hiện các thí nghiệm lượng số về ảnh hưởng của sự thay đổi nhiệt độ đối với thể tích của khí. Qua nhiều thí nghiệm khác nhau, ông đã có thể định lượng mối quan hệ giữa nhiệt độ và thể tích. Mối quan hệ này, khác với mối quan hệ được biểu diễn bởi Định luật Boyle, được phát hiện là mối quan hệ trực tiếp. Nghĩa là, khi nhiệt độ của một khí tăng, thể tích của khí cũng tăng theo. Đồ thị trong Hình 2.4 thể hiện một mối quan hệ trực tiếp:</p>
+            <img alt="Hình 2.4" src={Hinhchapter24} className="Hinhchapter"></img>
             <p><b>Hãy nghĩ về điều này:</b></p>
             <p>Nếu một bóng bay được đặt trong tủ lạnh trong 10 phút, điều gì sẽ xảy ra với nó?Quan trọng khi xem xét về chủ đề nhiệt độ trước khi cố gắng tính toán sử dụng Định luật Charles:
             <img src={Congthuc2Chapter2} className="math-image" alt="Math Formula"/>
@@ -110,6 +124,7 @@ function Chapter2thongtin() {
             </Panel>
             <Panel header="IX. Định luật khí hỗn hợp" key="9" className='Panel'>
             <p>Định luật Charles và định luật Boyle được sử dụng khi áp suất và nhiệt độ của một hệ thống được giữ nguyên, tương ứng. Nhưng nếu áp suất, nhiệt độ và thể tích đều thay đổi trong một vấn đề, điều gì sẽ xảy ra? Đó là khi Định luật Khí hỗn hợp được sử dụng.
+            <img alt="Hình 2.5" src={Hinhchapter25} className="Hinhchapter"></img>
             <img src={Congthuc4Chapter2} className="math-image" alt="Math Formula"/>
             </p>
             <p>Định luật Khí hỗn hợp kết hợp những nguyên tắc của Charles và Boyle. Chú ý rằng nếu bạn che đi các biến T, phương trình của Boyle vẫn được giữ nguyên. Tương tự, nếu bạn che đi các biến P, phương trình của Charles vẫn được giữ nguyên. Thay vì nhớ cả hai phương trình cho Định luật Charles và Boyle, việc nhớ Định luật Khí hỗn hợp và "che đi" các biến đang được giữ nguyên là dễ dàng hơn nhiều.</p>
@@ -189,7 +204,7 @@ Theo định nghĩa, một khí lý tưởng tuân theo phương trình PV = nRT
             <p><b>Giải pháp:</b> Áp suất là 760 mm Hg; điều này bằng 1.0 atm. Thể tích của khí là 11.2 lít và nhiệt độ là 273 K. Từ trên, bạn biết rằng R = 0.0820 (L•atm)/(mol•K). Định luật Khí lý tưởng là PV = nRT. Thay thế cho phương trình ta có: (1.0 atm)(11.2 L) = (n)(0.0820L•atm)/(mol•K)(273 K).
             <img src={Congthuc13Chapter2} className="math-image" alt="Math Formula"/>
             </p>
-            <p>Giải pháp cho kết quả là 0.50 mol khí H2. Vì một mol của một khí chứa 6.02 × 1023 phân tử của khí, 0.50 mol của khí sẽ chứa một nửa số Avogadro, tức là 3.01 × 1023 phân tử khí H<sub>2</sub>.</p>
+            <p>Giải pháp cho kết quả là 0.50 mol khí H<sub>2</sub>. Vì một mol của một khí chứa 6.02 × 1023 phân tử của khí, 0.50 mol của khí sẽ chứa một nửa số Avogadro, tức là 3.01 × 1023 phân tử khí H<sub>2</sub>.</p>
             </Panel>
             <Panel header="XIV. Chất lỏng" key="14" className='Panel'>
             <p>Chất lỏng được đặc trưng bởi thể tích xác định của chúng. Khác với khí, chất lỏng (đa phần) không thể được nén. Chất lỏng, giống như khí, không có hình dạng xác định và sẽ có hình dạng của bình chứa mà chúng được đặt vào. Các phân tử của chất lỏng liên tục tiếp xúc với nhau do những lực tồn tại giữa chúng và giữ chúng lại. Tuy nhiên, những lực này không đủ mạnh để giữ các phân tử ở một vị trí cố định như trong trường hợp của chất rắn.</p>
@@ -205,6 +220,8 @@ Theo định nghĩa, một khí lý tưởng tuân theo phương trình PV = nRT
             </Panel>
             <Panel header="XVII. Sự thăng hoa và sự lắng đọng" key="17" className='Panel'>
             <p>Làm thế nào mà khi bạn mua kem từ người bán trên một công viên vào một ngày hè nóng, tờ bao bọc kem không bị ướt bởi "đá" dùng để giữ lạnh? Liệu người bán có sử dụng đá không? "Đá khô" là thuật ngữ chỉ khí CO2 ở dạng rắn. Đá khô có thể chuyển từ pha rắn trực tiếp sang pha khí mà không có trạng thái lỏng trung gian rõ ràng. Quá trình này được gọi là sự sublime. Một số chất khác cũng có thể sublime như bóng đèn cầu vồng (naftalen) và iodine rắn. Lắng có thể được hiểu là "ngược lại của" sublime. Trong quá trình này, một khí sẽ chuyển thành chất rắn, một lần nữa mà không có trạng thái lỏng trung gian rõ ràng.</p>
+            <img alt="Hình 2.6" src={Hinhchapter26} className="Hinhchapter"></img>
+
             </Panel>
             <Panel header="XVIII. Các sự thay đổi của pha" key="18" className='Panel'>
             <p>Matter có thể tồn tại ở ba pha: chất rắn, chất lỏng và khí. Hình 2.6 tóm tắt các tên của các thay đổi mà các pha có thể trải qua.</p>
@@ -216,6 +233,9 @@ Trong biểu đồ này, nhiệt độ được áp dụng cho mẫu đá. Nhi�
 Hãy đi sâu vào việc hiểu về các thay đổi pha và đường cong nhiệt. điểm của chất lỏng, quan trọng là không bỏ qua áp suất khi xem xét sự thay đổi trong pha. Một biểu đồ pha tổng quát được hiển thị trong Hình 2.8.
             </p>
             <p>Điểm mà ba pha rắn, lỏng và khí có thể tồn tại cùng một lúc, với một nhiệt độ và áp suất cụ thể, được gọi là điểm tam giác. Đối với H<sub>2</sub>O, điểm tam giác tồn tại khi áp suất là 4.57 atm và nhiệt độ là 0.01°C.</p>
+            <img alt="Hình 2.7" src={Hinhchapter27} className="Hinhchapter"></img>
+            <img alt="Hình 2.8" src={Hinhchapter28} className="Hinhchapter"></img>
+
             </Panel>
           </Collapse>
         </div>

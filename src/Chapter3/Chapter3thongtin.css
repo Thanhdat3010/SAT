@@ -79,7 +79,7 @@
 .Hinhchapter{
   display: block;       
   margin: auto;       
-  width: 50%;           
+  width: 50%;
   max-width: 400px;    
   max-height: 400px;      
   object-fit: contain;  
@@ -105,3 +105,16 @@
   max-height: 70px;      
   object-fit: contain;  
 }
+.Bangchapter{
+    display: block;       
+    margin: auto;       
+    width: 50%;           
+    max-width: 1000px;    
+    max-height: 1000px;      
+    object-fit: contain;  
+  }
+  .math-image-inline {
+    max-width: 200px;    
+    max-height: 70px;      
+    object-fit: contain;  
+  }

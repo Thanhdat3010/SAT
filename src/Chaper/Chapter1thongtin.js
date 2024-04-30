@@ -69,7 +69,7 @@ function Chapter1thongtin() {
             ΔH = PEP − PER (delta H bằng “hạt tiêu”)
             <br/>
             </p>
-            <img alt="Hình 1.1 Hai sơ đồ thế năng" src={Hinhchapter1} className="Hinhchapter1"></img>
+            <img alt="Hình 1.1 Hai sơ đồ thế năng" src={Hinhchapter1} className="Hinhchapter"></img>
             <br/><b>Hình 1.1 Hai sơ đồ thế năng</b>
             <p>Khi ΔH có giá trị dương, phản ứng được gọi là phản ứng thu nhiệt (nhập nhiệt). Khi ΔH có giá trị âm, phản ứng được cho là tỏa nhiệt (tỏa nhiệt).</p>
             <p><b>Đặt vấn đề:</b> Trong một phản ứng, thế năng của các chất phản ứng là 150 jun/mol và thế năng của các sản phẩm là 400 jun/mol. Nhiệt của phản ứng cho phản ứng này là gì? Điều này chứng tỏ một quá trình thu nhiệt hay tỏa nhiệt?</p>

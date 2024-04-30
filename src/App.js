@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import Chapter1 from "./Chaper/Chapter1";
 import Profile from "./routes/Profile";
 import Chapter2 from "./Chapter2/Chapter2";
+import Chapter3 from "./Chapter3/Chapter3";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
   useEffect(() => {
@@ -48,6 +49,7 @@ function App() {
     <Route path='/Profile' element={<Profile />}/>
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
+    <Route path='/Chapter3' element={<Chapter3 />}/>
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
     <Route path='/Onthi' element={<Onthi/>}/>    
