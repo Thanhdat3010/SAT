@@ -42,6 +42,11 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.email) {
+        localStorage.removeItem(user.email); // Xóa thông tin người dùng lưu trữ theo email
+        localStorage.removeItem('user'); // Xóa thông tin người dùng từ localStorage
+    }
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };

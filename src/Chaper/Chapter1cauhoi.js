@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Chapter1cauhoi.css';
 
-const Chapter1cauhoi = ({ onCompletion }) => {
+const Chapter1cauhoi = ({ onCompletion,onReset }) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
   const questions = [
     {
       question: "Chất nào có thể bị phân hủy về mặt hóa học?",
@@ -131,13 +133,37 @@ const Chapter1cauhoi = ({ onCompletion }) => {
     },
   ];
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(() => {
+    const saved = localStorage.getItem(userId + '_currentQuestion');
+    return saved ? JSON.parse(saved) : 0;
+  });
   const [selectedOption, setSelectedOption] = useState(null);
-  const [answerState, setAnswerState] = useState(Array(questions.length).fill(null));
-  const [score, setScore] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [answerState, setAnswerState] = useState(() => {
+    const saved = localStorage.getItem(userId + '_answerState');
+    return saved ? JSON.parse(saved) : Array(questions.length).fill(null);
+  });
+  const [score, setScore] = useState(() => {
+    const saved = localStorage.getItem(userId + '_score');
+    return saved ? JSON.parse(saved) : 0;
+  });
+  const [progress, setProgress] = useState(() => {
+    const saved = localStorage.getItem(userId + '_progress');
+    return saved ? JSON.parse(saved) : 0;
+  });
+  const [quizCompleted, setQuizCompleted] = useState(() => {
+    const saved = localStorage.getItem(userId + '_quizCompleted');
+    return saved ? JSON.parse(saved) : false;
+  });
 
-  const handleOptionClick = (selectedAnswer, index) => {
+  useEffect(() => {
+    localStorage.setItem(userId + '_currentQuestion', JSON.stringify(currentQuestion));
+    localStorage.setItem(userId + '_answerState', JSON.stringify(answerState));
+    localStorage.setItem(userId + '_score', JSON.stringify(score));
+    localStorage.setItem(userId + '_progress', JSON.stringify(progress));
+    localStorage.setItem(userId + '_quizCompleted', JSON.stringify(quizCompleted));
+  }, [currentQuestion, answerState, score, progress, quizCompleted, userId]);
+
+  const handleOptionClick = (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
       const isCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
@@ -146,21 +172,47 @@ const Chapter1cauhoi = ({ onCompletion }) => {
       setAnswerState(newAnswerState);
 
       if (isCorrect) {
-        setScore(score + 1);
+        setScore(prevScore => prevScore + 1);
       }
     }
   };
 
   const nextQuestion = () => {
     setSelectedOption(null);
-    setCurrentQuestion(currentQuestion + 1);
-    const newProgress = ((currentQuestion + 1) / questions.length) * 100;
-    setProgress(newProgress);
-
-    if (currentQuestion === questions.length - 1) {
+    const nextQ = currentQuestion + 1;
+    if (nextQ < questions.length) {
+      setCurrentQuestion(nextQ);
+      const newProgress = (nextQ / questions.length) * 100;
+      setProgress(newProgress);
+    } else {
+      setQuizCompleted(true);
       onCompletion();
     }
   };
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedOption(null);
+    setAnswerState(Array(questions.length).fill(null));
+    setScore(0);
+    setProgress(0);
+    setQuizCompleted(false);
+    onReset();
+  };
+
+  if (quizCompleted) {
+    return (
+      <div className="questions-page">
+        <h1>Chapter 1</h1>
+        <h2>Hoàn thành</h2>
+        <div className="score-container">
+          <p className="score-label">Điểm số của bạn:</p>
+          <p className="score">{score}</p>
+          <button onClick={resetQuiz} className="next-button">Làm lại</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="questions-page">
@@ -172,7 +224,7 @@ const Chapter1cauhoi = ({ onCompletion }) => {
             <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
             <ul>
               {questions[currentQuestion].options.map((option, index) => (
-                <li key={index} onClick={() => handleOptionClick(option, index)} className={answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? 'correct' : answerState[currentQuestion] !== null && selectedOption === option ? 'incorrect' : ''}>
+                <li key={index} onClick={() => handleOptionClick(option)} className={answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? 'correct' : answerState[currentQuestion] !== null && selectedOption === option ? 'incorrect' : ''}>
                   ({String.fromCharCode(65 + index)}) {option}
                   {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
                   {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
@@ -195,16 +247,6 @@ const Chapter1cauhoi = ({ onCompletion }) => {
           <button onClick={nextQuestion} className="next-button">Câu hỏi tiếp theo</button>
         )}
       </div>
-      {currentQuestion === questions.length && (
-        <div>
-          <h2>Hoàn thành</h2>
-          <div className="score-container">
-         <p className="score-label">Điểm số của bạn:</p>
-          <p className="score">{score}</p>
-        </div>
-          {/* Hiển thị điểm số ở đây nếu cần */}
-        </div>
-      )}
     </div>
   );
 };

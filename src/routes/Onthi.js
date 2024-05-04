@@ -8,12 +8,18 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 const { Sider, Content } = Layout;
 const Onthi = () => {
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+  const userEmail = user.email || 'defaultUser';  // Fallback to a default key if no user is logged in
+
   const [selectedChapter, setSelectedChapter] = useState(1);
-  const [chapterCompletion, setChapterCompletion] = useState({
-    1: false,
-    3: false,
-    // Add more chapters as needed
+  const [chapterCompletion, setChapterCompletion] = useState(() => {
+    const saved = localStorage.getItem(userEmail + '_chapterCompletion');
+    return saved ? JSON.parse(saved) : { 1: false, 3: false };
   });
+
+  useEffect(() => {
+    localStorage.setItem(userEmail + '_chapterCompletion', JSON.stringify(chapterCompletion));
+  }, [chapterCompletion, userEmail]);
 
   const handleMenuClick = (chapterNumber) => {
     setSelectedChapter(chapterNumber);
@@ -24,8 +30,13 @@ const Onthi = () => {
     setChapterCompletion(updatedCompletion);
   };
 
+  const handleChapterReset = (chapterNumber) => {
+    const updatedCompletion = { ...chapterCompletion, [chapterNumber]: false };
+    setChapterCompletion(updatedCompletion);
+  };
+
   const calculateProgress = () => {
-    const completedChapters = Object.values(chapterCompletion).filter((completed) => completed).length;
+    const completedChapters = Object.values(chapterCompletion).filter(completed => completed).length;
     const totalChapters = Object.keys(chapterCompletion).length;
     return (completedChapters / totalChapters) * 100;
   };
@@ -45,14 +56,13 @@ const Onthi = () => {
               </Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub2" icon={<LaptopOutlined />} title="Chapter 2">
-            <Menu.Item key="3" onClick={() => handleMenuClick(3)}>
+              <Menu.Item key="3" onClick={() => handleMenuClick(3)}>
                 Câu hỏi
               </Menu.Item>
               <Menu.Item key="4" onClick={() => handleMenuClick(4)}>
-              Luyện đề
-            </Menu.Item>
+                Luyện đề
+              </Menu.Item>
             </Menu.SubMenu>
-          
             <Menu.SubMenu key="sub3" icon={<NotificationOutlined />} title="Chapter 3">
               <Menu.Item key="5" onClick={() => handleMenuClick(5)}>
                 Câu hỏi
@@ -69,9 +79,8 @@ const Onthi = () => {
               <Progress percent={calculateProgress()} status="active" />
             </div>
             <div className='content-wrapper'>
-              {selectedChapter === 1 && <Chapter1cauhoi onCompletion={() => handleChapterCompletion(1)} />}
-              {selectedChapter === 3 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(3)} />}
-
+              {selectedChapter === 1 && <Chapter1cauhoi onCompletion={() => handleChapterCompletion(1)} onReset={() => handleChapterReset(1)} />}
+              {selectedChapter === 3 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(3)} onReset={() => handleChapterReset(3)} />}
             </div>
           </Content>
         </Layout>
