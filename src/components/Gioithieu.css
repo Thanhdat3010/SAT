@@ -50,6 +50,8 @@
     object-fit: cover;
     border-radius: 6px;
     box-shadow: -1px 1px 62px -18px rgba(0, 0, 0, 0.19);
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+
 }
 .image img:nth-child(2){
     position: absolute;

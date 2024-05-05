@@ -10,7 +10,7 @@ function Trangchu(props){
         <Hero
          cName="hero"
          title="SAT Chemistry trong việc giúp đỡ các nhà giáo dục"
-         text="cải thiện kỹ năng"
+         text="phát triển năng lực học sinh"
          buttonText="Tìm hiểu thêm"
          url="/"
          btnClass="show"

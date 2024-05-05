@@ -1,14 +1,16 @@
-import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import Blog from "../Blog/Blog";
+import Footer from "../components/Footer";
 function Tainguyen(){
     return(
         <>
         <Navbar/>
-        <Hero
-         cName="hero-mid"
-         title="Tài nguyên và thảo luận"
-         btnClass="hide"
-        /> 
+        <div className="block contactBlock">
+        <div className="block">
+        <Blog/>
+        </div>
+        </div>
+        <Footer/>
         </>
     )
 }

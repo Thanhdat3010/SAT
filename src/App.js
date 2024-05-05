@@ -13,6 +13,8 @@ import Chapter1 from "./Chaper/Chapter1";
 import Profile from "./routes/Profile";
 import Chapter2 from "./Chapter2/Chapter2";
 import Chapter3 from "./Chapter3/Chapter3";
+import Chapter4 from "./Chapter4/Chapter4";
+import Post from "./Blog/Post";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
   useEffect(() => {
@@ -50,10 +52,13 @@ function App() {
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
     <Route path='/Chapter3' element={<Chapter3 />}/>
+    <Route path='/Chapter4' element={<Chapter4/>}/>
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
     <Route path='/Onthi' element={<Onthi/>}/>    
     <Route path='/Vechungtoi' element={<Vechungtoi/>}/>    
+    <Route path="/post/:id" element={<Post />} />
+
     </Routes>
   </div>
   </BackgroundProvider>
