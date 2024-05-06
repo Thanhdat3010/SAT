@@ -1,78 +1,102 @@
 .question {
-    padding: 20px;
-    text-align: left; /* Hoặc có thể sử dụng justify-content: flex-start; nếu sử dụng flexbox */
-  }
-  .questions-page {
-    text-align: center;
-  }
- .question p{
-    font-weight: bold;
- }
-  
-  .questions-container {
-    margin-top: 20px;
-  }
-  .question ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .question li {
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .correct {
-    color: green;
-  }
-  
-  .incorrect {
-    color: red;
-  }
-  
-  .correct-mark {
-    color: green;
-    margin-left: 10px;
-  }
-  
-  .incorrect-mark {
-    color: red;
-    margin-left: 10px;
-  }
-  
-  .next-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .next-button:hover {
-    background-color: #0056b3;
-  }
-  .score-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .score-label {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .score {
-    font-size: 36px;
-    font-weight: bold;
-    color: #007bff;
-    border: 3px solid #007bff;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-    margin: 0 auto;
-  }
+  padding: 20px;
+  text-align: left; /* Hoặc có thể sử dụng justify-content: flex-start; nếu sử dụng flexbox */
+}
+.questions-page {
+  text-align: center;
+}
+.question p{
+  font-weight: bold;
+}
+
+.questions-container {
+  margin-top: 20px;
+}
+.question ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.question li {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+.correct-mark {
+  color: green;
+  margin-left: 10px;
+}
+
+.incorrect-mark {
+  color: red;
+  margin-left: 10px;
+}
+
+.next-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.next-button:hover {
+  background-color: #0056b3;
+}
+.score-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.score-label {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.score {
+  font-size: 36px;
+  font-weight: bold;
+  color: #007bff;
+  border: 3px solid #007bff;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  margin: 0 auto;
+}
+.explanation-button {
+  background-color: #4CAF50; /* Màu nền xanh lá */
+  color: white; /* Màu chữ trắng */
+  border: none; /* Không viền */
+  padding: 5px 10px; /* Đệm nhỏ hơn xung quanh nội dung nút */
+  text-align: center; /* Căn giữa chữ trong nút */
+  text-decoration: none; /* Không gạch chân */
+  display: inline-block; /* Hiển thị dạng khối nội tuyến */
+  font-size: 15px; /* Cỡ chữ nhỏ hơn */
+  margin: 2px 1px; /* Khoảng cách nhỏ hơn xung quanh nút */
+  cursor: pointer; /* Con trỏ chuột hiển thị dạng pointer */
+  border-radius: 5px; /* Bo góc nút nhỏ hơn */
+  transition-duration: 0.4s; /* Thời gian chuyển đổi hiệu ứng */
+}
+
+.explanation-button:hover {
+  background-color: #45a049; /* Màu nền khi hover */
+}
+
+.explanation-button:active {
+  background-color: #3e8e41; /* Màu nền khi nhấn */
+  box-shadow: 0 3px #666; /* Bóng đổ nhỏ hơn khi nhấn */
+  transform: translateY(2px); /* Dịch chuyển nút xuống ít hơn khi nhấn */
+}

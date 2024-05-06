@@ -1,7 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Chapter2cauhoi.css';
 
-const Chapter2cauhoi = ({ onCompletion }) => {
+const Chapter2cauhoi = ({ onCompletion,onReset }) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [questions, setQuestions] = useState([]);
+
+  const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
+  const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
+  function shuffleArray(array) { //Hàm trộn mảng
+    let currentIndex = array.length, randomIndex;
+  
+    // Trong khi vẫn còn phần tử để trộn...
+    while (currentIndex !== 0) {
+  
+      // Chọn một phần tử còn lại...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // Và hoán đổi nó với phần tử hiện tại.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+  useEffect(() => {
   const questions = [
     {
         question: "Loại khí nào dưới nhiệt độ cao và áp suất thấp hành xử giống nhất như một khí lý tưởng?",
@@ -83,41 +106,99 @@ const Chapter2cauhoi = ({ onCompletion }) => {
       }
       // Các câu hỏi khác ở đây...
   ];
+  setQuestions(shuffleArray([...questions])); // Trộn và thiết lập câu hỏi
+}, []); // Chỉ chạy một lần khi component được mount
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(() => {
+    const saved = localStorage.getItem(userId + '_currentQuestion');
+    return saved ? JSON.parse(saved) : 0;
+  });
   const [selectedOption, setSelectedOption] = useState(null);
-  const [answerState, setAnswerState] = useState(Array(questions.length).fill(null));
-  const [score, setScore] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [answerState, setAnswerState] = useState(() => {
+    const saved = localStorage.getItem(userId + '_answerState');
+    return saved ? JSON.parse(saved) : Array(questions.length).fill(null);
+  });
+  const [score, setScore] = useState(() => {
+    const saved = localStorage.getItem(userId + '_score');
+    return saved ? JSON.parse(saved) : 0;
+  });
+  const [progress, setProgress] = useState(() => {
+    const saved = localStorage.getItem(userId + '_progress');
+    return saved ? JSON.parse(saved) : 0;
+  });
+  const [quizCompleted, setQuizCompleted] = useState(() => {
+    const saved = localStorage.getItem(userId + '_quizCompleted');
+    return saved ? JSON.parse(saved) : false;
+  });
 
-  const handleOptionClick = (selectedAnswer, index) => {
+  useEffect(() => {
+    localStorage.setItem(userId + '_currentQuestion', JSON.stringify(currentQuestion));
+    localStorage.setItem(userId + '_answerState', JSON.stringify(answerState));
+    localStorage.setItem(userId + '_score', JSON.stringify(score));
+    localStorage.setItem(userId + '_progress', JSON.stringify(progress));
+    localStorage.setItem(userId + '_quizCompleted', JSON.stringify(quizCompleted));
+  }, [currentQuestion, answerState, score, progress, quizCompleted, userId]);
+
+  const handleOptionClick = (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
+      setShowExplanation(false);  // Ẩn giải thích mỗi khi người dùng chọn một tùy chọn mới
+
       const isCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
       const newAnswerState = [...answerState];
       newAnswerState[currentQuestion] = isCorrect;
       setAnswerState(newAnswerState);
 
       if (isCorrect) {
-        setScore(score + 1);
+        setScore(prevScore => prevScore + 1);
       }
     }
   };
 
   const nextQuestion = () => {
     setSelectedOption(null);
-    setCurrentQuestion(currentQuestion + 1);
-    const newProgress = ((currentQuestion + 1) / questions.length) * 100;
-    setProgress(newProgress);
+    setShowExplanation(false);  // Reset trạng thái hiển thị giải thích khi chuyển câu hỏi
 
-    if (currentQuestion === questions.length - 1) {
+    const nextQ = currentQuestion + 1;
+    if (nextQ < questions.length) {
+      setCurrentQuestion(nextQ);
+      const newProgress = (nextQ / questions.length) * 100;
+      setProgress(newProgress);
+    } else {
+      setQuizCompleted(true);
       onCompletion();
     }
   };
 
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedOption(null);
+    setAnswerState(Array(questions.length).fill(null));
+    setScore(0);
+    setProgress(0);
+    setQuizCompleted(false);
+    onReset();
+  };
+  const toggleExplanation = () => {
+    setShowExplanation(!showExplanation);  // Chuyển đổi trạng thái hiển thị giải thích
+  };
+  if (quizCompleted) {
+    return (
+      <div className="questions-page">
+        <h1>Chapter 1</h1>
+        <h2>Hoàn thành</h2>
+        <div className="score-container">
+          <p className="score-label">Điểm số của bạn:</p>
+          <p className="score">{score}</p>
+          <button onClick={resetQuiz} className="next-button">Làm lại</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="questions-page">
-      <h1>Chapter 2</h1>
+      <h1>Chapter 1</h1>
       <div className="questions-container">
         <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         {currentQuestion < questions.length && (
@@ -125,21 +206,18 @@ const Chapter2cauhoi = ({ onCompletion }) => {
             <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
             <ul>
               {questions[currentQuestion].options.map((option, index) => (
-                <li key={index} onClick={() => handleOptionClick(option, index)} className={answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? 'correct' : answerState[currentQuestion] !== null && selectedOption === option ? 'incorrect' : ''}>
+                <li key={index} onClick={() => handleOptionClick(option)} className={answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? 'correct' : answerState[currentQuestion] !== null && selectedOption === option ? 'incorrect' : ''}>
                   ({String.fromCharCode(65 + index)}) {option}
                   {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
                   {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
                 </li>
               ))}
             </ul>
-            {selectedOption && (
-              <div>
-                {answerState[currentQuestion] !== null && selectedOption !== questions[currentQuestion].correctAnswer && (
-                  <div>
-                    <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
-                    <p>Giải thích: {questions[currentQuestion].explain}</p>
-                  </div>
-                )}
+            <button onClick={toggleExplanation} className="explanation-button">Hiển thị Giải thích</button>
+            {showExplanation && (
+              <div className="explanation">
+                <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
+                <p>Giải thích: {questions[currentQuestion].explain}</p>
               </div>
             )}
           </div>
@@ -148,17 +226,7 @@ const Chapter2cauhoi = ({ onCompletion }) => {
           <button onClick={nextQuestion} className="next-button">Câu hỏi tiếp theo</button>
         )}
       </div>
-      {currentQuestion === questions.length && (
-        <div>
-          <h2>Hoàn thành</h2>
-          <div className="score-container">
-          <p className="score-label">Điểm số của bạn:</p>
-          <p className="score">{score}</p>
-        </div>
-        </div>
-      )}
     </div>
   );
 };
-
 export default Chapter2cauhoi;

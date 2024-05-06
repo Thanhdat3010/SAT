@@ -9,8 +9,8 @@ function Trangchu(props){
         <Navbar/>
         <Hero
          cName="hero"
-         title="SAT Chemistry trong việc giúp đỡ các nhà giáo dục"
-         text="phát triển năng lực học sinh"
+         title="SAT CHEMISTRY TRONG VIỆC GIÚP ĐỠ CÁC NHÀ GIÁO DỤC"
+         text="PHÁT TRIỂN NĂNG LỰC HỌC SINH"
          buttonText="Tìm hiểu thêm"
          url="/"
          btnClass="show"

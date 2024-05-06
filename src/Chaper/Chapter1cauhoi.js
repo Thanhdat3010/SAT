@@ -3,7 +3,28 @@ import './Chapter1cauhoi.css';
 
 const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   const user = JSON.parse(localStorage.getItem('user'));
+  const [questions, setQuestions] = useState([]);
+
   const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
+  const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
+  function shuffleArray(array) { //Hàm trộn mảng
+    let currentIndex = array.length, randomIndex;
+  
+    // Trong khi vẫn còn phần tử để trộn...
+    while (currentIndex !== 0) {
+  
+      // Chọn một phần tử còn lại...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // Và hoán đổi nó với phần tử hiện tại.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+  useEffect(() => {
   const questions = [
     {
       question: "Chất nào có thể bị phân hủy về mặt hóa học?",
@@ -132,6 +153,8 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
       explain: "Năng lượng kích hoạt là năng lượng cần thiết để đạt tới phức hợp được kích hoạt, điểm mà chất phản ứng trở thành sản phẩm."
     },
   ];
+  setQuestions(shuffleArray([...questions])); // Trộn và thiết lập câu hỏi
+}, []); // Chỉ chạy một lần khi component được mount
 
   const [currentQuestion, setCurrentQuestion] = useState(() => {
     const saved = localStorage.getItem(userId + '_currentQuestion');
@@ -166,6 +189,8 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   const handleOptionClick = (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
+      setShowExplanation(false);  // Ẩn giải thích mỗi khi người dùng chọn một tùy chọn mới
+
       const isCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
       const newAnswerState = [...answerState];
       newAnswerState[currentQuestion] = isCorrect;
@@ -179,6 +204,8 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
 
   const nextQuestion = () => {
     setSelectedOption(null);
+    setShowExplanation(false);  // Reset trạng thái hiển thị giải thích khi chuyển câu hỏi
+
     const nextQ = currentQuestion + 1;
     if (nextQ < questions.length) {
       setCurrentQuestion(nextQ);
@@ -199,7 +226,9 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
     setQuizCompleted(false);
     onReset();
   };
-
+  const toggleExplanation = () => {
+    setShowExplanation(!showExplanation);  // Chuyển đổi trạng thái hiển thị giải thích
+  };
   if (quizCompleted) {
     return (
       <div className="questions-page">
@@ -231,14 +260,11 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
                 </li>
               ))}
             </ul>
-            {selectedOption && (
-              <div>
-                {answerState[currentQuestion] !== null && selectedOption !== questions[currentQuestion].correctAnswer && (
-                  <div>
-                    <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
-                    <p>Giải thích: {questions[currentQuestion].explain}</p>
-                  </div>
-                )}
+            <button onClick={toggleExplanation} className="explanation-button">Hiển thị Giải thích</button>
+            {showExplanation && (
+              <div className="explanation">
+                <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
+                <p>Giải thích: {questions[currentQuestion].explain}</p>
               </div>
             )}
           </div>
