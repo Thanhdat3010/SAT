@@ -42,7 +42,7 @@
     -webkit-text-fill-color: transparent;
     padding: 0.5rem 0 2rem 0;
     z-index: 2;
-    position: relative; /* Ensure position context for pseudo-elements */
+    position: relative; /* Đảm bảo bối cảnh vị trí cho các phần tử giả */
 }
 
 .hero-text p::after {

@@ -21,7 +21,7 @@ function Hero(props) {
             }
         } else {
             if (typedText.length === props.text.length) {
-                // Wait some time before starting to delete
+                // Đợi một lúc trước khi bắt đầu xóa
                 typingDelay = setTimeout(() => {
                     setIsDeleting(true);
                 }, 2000);

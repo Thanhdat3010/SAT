@@ -45,7 +45,13 @@ const Onthi = () => {
     <Layout>
       <Navbar />
       <Layout className='layout'>
-        <Sider width={200} style={{ background: 'lightgray' }}>
+        <Sider  width={200}
+        style={{ background: 'lightgray' }}
+        breakpoint="lg"  // Breakpoint tại đây, ví dụ lg là màn hình lớn
+        collapsedWidth="0"  // Thiết lập này sẽ ẩn hoàn toàn Sider khi màn hình nhỏ hơn breakpoint
+        onBreakpoint={broken => {
+         console.log(broken);
+          }}>
           <Menu mode="inline" defaultSelectedKeys={['1']} selectedKeys={[String(selectedChapter)]} style={{ height: '100%', borderRight: 0 }}>
             <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="Chapter 1">
               <Menu.Item key="1" onClick={() => handleMenuClick(1)}>

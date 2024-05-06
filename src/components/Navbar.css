@@ -170,7 +170,7 @@
         left: -100%;
         opacity: 0;
         align-items: stretch;
-        padding: 80px 0 30px 0;
+        padding: 20px 0; /* Giảm padding giữa các mục để tránh tràn */
         margin: 0;
         transition: 0.3s ease-in-out;
     }
@@ -178,47 +178,63 @@
     .nav-menu.active {
         left: 0;
         opacity: 1;
-        z-index: -1;
+        z-index: 100; /* Đảm bảo menu nằm trên các thành phần khác */
         transition: 0.3s ease-in-out;
     }
 
     .nav-links {
         display: block;
         width: 100%;
-        font-size: 1.2rem;
-        padding: 2rem 0;
+        font-size: 1.5rem; /* Giảm kích thước font để phù hợp với màn hình nhỏ */
+        padding: 1.2rem 0; /* Giảm padding để giảm chiều cao của từng mục */
     }
 
-    .nav-links:hover {
-        background: #01959a;
-        transition: none;
-    }
+    
 
     .nav-links-mobile {
         display: block;
         text-align: center;
-        padding: 1.5rem;
+        padding: 1rem; /* Giảm padding để phù hợp hơn trên màn hình nhỏ */
         margin: auto;
         border-radius: 4px;
         background: #01959a;
         text-decoration: none;
         color: #fff;
-        font-size: 1.2rem;
+        font-size: 1rem; /* Giảm kích thước font */
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 1px; /* Giảm khoảng cách giữa các chữ */
+    }
+
+    .avatar-container {
+        position: relative; /* Đặt vị trí tương đối cho avatar để dropdown phù hợp */
+    }
+
+    .dropdown-menu {
+        display: none; /* Ẩn dropdown menu khi chưa kích hoạt */
+        position: absolute;
+        top: 50px; /* Đặt vị trí dưới avatar */
+        left: 50%; /* Căn giữa dropdown */
+        transform: translateX(-50%); /* Dịch chuyển dropdown về phía trung tâm */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Thêm bóng để dễ nhìn */
+        z-index: 101; /* Đảm bảo dropdown hiển thị trên cùng */
+    }
+
+    .avatar-container.active .dropdown-menu {
+        display: block; /* Hiển thị dropdown khi avatar được kích hoạt */
     }
 
     .menu-icons {
         display: block;
         cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
     }
 
     .menu-icons i {
-        font-size: 1.2rem;
+        font-size: 2.5rem;
         color: #222;
-    }
-
-    button.nav-button {
-        display: none;
     }
 }
