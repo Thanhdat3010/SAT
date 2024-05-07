@@ -185,7 +185,7 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
   if (quizCompleted) {
     return (
       <div className="questions-page">
-        <h1>Chapter 1</h1>
+        <h1>Chapter 2</h1>
         <h2>Hoàn thành</h2>
         <div className="score-container">
           <p className="score-label">Điểm số của bạn:</p>
@@ -198,7 +198,7 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
 
   return (
     <div className="questions-page">
-      <h1>Chapter 1</h1>
+      <h1>Chapter 2</h1>
       <div className="questions-container">
         <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         {currentQuestion < questions.length && (
@@ -213,7 +213,7 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
                 </li>
               ))}
             </ul>
-            <button onClick={toggleExplanation} className="explanation-button">Hiển thị Giải thích</button>
+            <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
             {showExplanation && (
               <div className="explanation">
                 <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>

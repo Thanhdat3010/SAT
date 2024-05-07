@@ -14,7 +14,6 @@ import Hinhchapter310 from "../Hinhchapter/Chapter3.10.png";
 import Hinhchapter311 from "../Hinhchapter/Chapter3.11.png";
 import Hinhchapter312 from "../Hinhchapter/Chapter3.12.png";
 import Hinhchapter313 from "../Hinhchapter/Chapter3.13.png";
-
 import Congthuc1Chapter3  from "../Hinhchapter/Congthuc1Chapter3.png"
 import Congthuc2Chapter3  from "../Hinhchapter/Congthuc2Chapter3.png"
 import Congthuc3Chapter3  from "../Hinhchapter/Congthuc3Chapter3.png"
@@ -25,15 +24,9 @@ import Congthuc7Chapter3  from "../Hinhchapter/Congthuc7Chapter3.png"
 import Congthuc8Chapter3  from "../Hinhchapter/Congthuc8Chapter3.png"
 import Congthuc9Chapter3  from "../Hinhchapter/Congthuc9Chapter3.png"
 import Congthuc10Chapter3  from "../Hinhchapter/Congthuc10Chapter3.png"
-import Congthuc11Chapter2  from "../Hinhchapter/Congthuc11Chapter2.png"
-import Congthuc12Chapter2  from "../Hinhchapter/Congthuc12Chapter2.png"
-import Congthuc13Chapter2  from "../Hinhchapter/Congthuc13Chapter2.png"
 import Bang1Chapter3  from "../Hinhchapter/Bang1Chapter3.png"
 import Bang2Chapter3  from "../Hinhchapter/Bang2Chapter3.png"
 import Bang3Chapter3  from "../Hinhchapter/Bang3Chapter3.png"
-
-
-import { InlineMath, BlockMath } from 'react-katex';
 const { Panel } = Collapse;
 function Chapter3thongtin() {
     return (

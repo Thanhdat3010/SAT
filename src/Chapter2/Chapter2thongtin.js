@@ -24,7 +24,6 @@ import Congthuc11Chapter2  from "../Hinhchapter/Congthuc11Chapter2.png"
 import Congthuc12Chapter2  from "../Hinhchapter/Congthuc12Chapter2.png"
 import Congthuc13Chapter2  from "../Hinhchapter/Congthuc13Chapter2.png"
 
-import { InlineMath, BlockMath } from 'react-katex';
 const { Panel } = Collapse;
 function Chapter2thongtin() {
     return (

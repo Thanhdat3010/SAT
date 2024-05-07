@@ -1,39 +1,11 @@
 import React from 'react';
 import { Collapse} from 'antd';
 import "./Chapter4thongtin.css"
-import Hinhchapter31 from "../Hinhchapter/Chapter3.1.png";
 import Hinhchapter32 from "../Hinhchapter/Chapter3.2.png";
-import Hinhchapter33 from "../Hinhchapter/Chapter3.3.png";
-import Hinhchapter34 from "../Hinhchapter/Chapter3.4.png";
-import Hinhchapter35 from "../Hinhchapter/Chapter3.5.png";
-import Hinhchapter36 from "../Hinhchapter/Chapter3.6.png";
-import Hinhchapter37 from "../Hinhchapter/Chapter3.7.png";
-import Hinhchapter38 from "../Hinhchapter/Chapter3.8.png";
-import Hinhchapter39 from "../Hinhchapter/Chapter3.9.png";
-import Hinhchapter310 from "../Hinhchapter/Chapter3.10.png";
-import Hinhchapter311 from "../Hinhchapter/Chapter3.11.png";
-import Hinhchapter312 from "../Hinhchapter/Chapter3.12.png";
-import Hinhchapter313 from "../Hinhchapter/Chapter3.13.png";
-
-import Congthuc1Chapter3  from "../Hinhchapter/Congthuc1Chapter3.png"
-import Congthuc2Chapter3  from "../Hinhchapter/Congthuc2Chapter3.png"
-import Congthuc3Chapter3  from "../Hinhchapter/Congthuc3Chapter3.png"
 import Congthuc4Chapter3  from "../Hinhchapter/Congthuc4Chapter3.png"
-import Congthuc5Chapter3  from "../Hinhchapter/Congthuc5Chapter3.png"
-import Congthuc6Chapter3  from "../Hinhchapter/Congthuc6Chapter3.png"
-import Congthuc7Chapter3  from "../Hinhchapter/Congthuc7Chapter3.png"
-import Congthuc8Chapter3  from "../Hinhchapter/Congthuc8Chapter3.png"
-import Congthuc9Chapter3  from "../Hinhchapter/Congthuc9Chapter3.png"
-import Congthuc10Chapter3  from "../Hinhchapter/Congthuc10Chapter3.png"
-import Congthuc11Chapter2  from "../Hinhchapter/Congthuc11Chapter2.png"
-import Congthuc12Chapter2  from "../Hinhchapter/Congthuc12Chapter2.png"
-import Congthuc13Chapter2  from "../Hinhchapter/Congthuc13Chapter2.png"
-import Bang1Chapter4  from "../Hinhchapter/Bang1Chapter4.png"
-import Bang2Chapter4  from "../Hinhchapter/Bang2Chapter4.png"
 import Bang3Chapter3  from "../Hinhchapter/Bang3Chapter3.png"
 
 
-import { InlineMath, BlockMath } from 'react-katex';
 const { Panel } = Collapse;
 function Chapter4thongtin() {
     return (
@@ -52,9 +24,7 @@ function Chapter4thongtin() {
             <Panel header="III. Cân bằng" key="3" className='Panel'>
             <p>Hai loại nguyên tố trong bảng tuần hoàn là kim loại và phi kim.</p>
             <p>Thuộc tính của chúng được tóm tắt trong biểu đồ dưới đây:</p>
-            <img alt="Bảng 1" src={Bang1Chapter4} className="Bangchapter"></img>
             <p>Các bán kim loại, hay á kim, được biết là có một số tính chất của kim loại và một số tính chất của phi kim. Các bán kim loại là B, Si, Ge, As, Sb, Te và At . Chúng được tô đậm trong bảng tuần hoàn từng phần ở Hình 4.1.</p>
-            <img alt="Bảng 2" src={Bang2Chapter4} className="Bangchapter"></img>
             <p>Các nguyên tố nằm ở bên trái của bán kim loại là kim loại; những thứ ở bên phải của bán kim loại là phi kim loại. Việc xác định một nguyên tố là kim loại, phi kim hoặc bán kim là rất quan trọng trong việc xác định các xu hướng định kỳ và xác định các loại liên kết mà các nguyên tử sẽ hình thành với nhau.</p>
             </Panel>
             <Panel header="IV. Mô hình Bohr của nguyên tử" key="4" className='Panel'> 
@@ -64,8 +34,6 @@ function Chapter4thongtin() {
             </p>
             <p>Ánh sáng phát ra từ một phần tử bị kích thích có thể được truyền qua lăng kính hoặc gradient nhiễu xạ để xác định bước sóng chính xác của ánh sáng do nguyên tử bị kích thích phát ra. Những bước sóng ánh sáng chính xác này được gọi là quang phổ vạch của một nguyên tố. Phổ vạch của hydro được thể hiện trên hình 3.3.</p>
             <p>Mỗi phần tử có phổ vạch riêng. Đây là lý do tại sao phổ vạch của một phần tử cũng được coi là “dấu vân tay” của phần tử cụ thể đó. Vì lượng ánh sáng phát ra bởi các nguyên tử bị kích thích có lượng cố định nên Bohr gọi chúng là lượng ánh sáng “lượng tử hóa”. Những lượng năng lượng cố định này chứng tỏ rằng các electron chỉ có thể thực hiện những bước nhảy nhất định giữa các quỹ đạo ở những khoảng cách cố định trong nguyên tử. Do những quỹ đạo tròn, cố định này, mô hình nguyên tử của Bohr thường được gọi là “mô hình hệ mặt trời” của nguyên tử (xem Hình 3.4).</p>
-            <img alt="Hình 3.3" src={Hinhchapter33} className="Hinhchapter"></img>
-            <img alt="Hình 3.4" src={Hinhchapter34} className="Hinhchapter"></img>
             </Panel>
             <Panel header="V. Mô hình cơ sóng" key="5" className='Panel'>
             <p>Mô hình cơ sóng của nguyên tử cho thấy cấu trúc nguyên tử phức tạp hơn và cách các electron tự cấu hình ở các mức năng lượng chính. Các mức năng lượng chính được chia thành các mức năng lượng phụ, mỗi mức có tập hợp quỹ đạo riêng biệt. Cấu trúc phức tạp hơn này được phác thảo với sự trợ giúp của sơ đồ này. Các mức năng lượng chính trong nguyên tử được đánh số từ 1 đến 7.
@@ -89,18 +57,15 @@ function Chapter4thongtin() {
             <p>Lớp con s chứa một quỹ đạo hoặc vùng nơi có thể tìm thấy electron. Cấp độ p có ba quỹ đạo, trong khi cấp độ d và f lần lượt có năm và bảy quỹ đạo. Hình dạng của quỹ đạo s và p được thể hiện trên hình 3.5.</p>
             <p>Mỗi quỹ đạo được phép mang tối đa hai electron và theo Nguyên lý loại trừ Pauli, các electron phải có spin ngược nhau.</p>
             <p>Làm thế nào để các electron lấp đầy các mức năng lượng chính này? Hãy xem xét ví dụ đơn giản nhất, hydro và một electron của nó. Vì các electron muốn ở trạng thái năng lượng thấp nhất có thể nên một electron sẽ nằm ở quỹ đạo 1s. Điều này có thể được lập biểu đồ bằng cách viết đơn giản 1s1 hoặc bằng cách vẽ sơ đồ như sau:<img src={Congthuc4Chapter3} className="math-image-inline" alt="Math Formula"/>.</p>
-            <p>Vì quỹ đạo 1s có thể chứa tối đa hai electron nên cấu hình electron của helium sẽ như thế này: 1s<sup>2</sup> hoặc <img src={Congthuc5Chapter3} className="math-image-inline" alt="Math Formula"/>. Chú ý rằng các mũi tên chỉ theo những hướng khác nhau.
-            <img alt="Hình 3.5" src={Hinhchapter35} className="Hinhchapter"></img>
+            <p>Vì quỹ đạo 1s có thể chứa tối đa hai electron nên cấu hình electron của helium sẽ như thế này: 1s<sup>2</sup> hoặc  Chú ý rằng các mũi tên chỉ theo những hướng khác nhau.
             hướng. Điều này cho thấy các spin ngược nhau của các electron. Ví dụ tiếp theo sẽ cho thấy quy tắc Hund hoạt động như thế nào. Xét cấu hình electron của nitơ ở trạng thái cơ bản. Nitơ có tổng cộng bảy electron. Hai electron đầu tiên sẽ lấp đầy quỹ đạo 1s. Nhìn vào sơ đồ trên, sau khi quỹ đạo 1s đầy, quỹ đạo 2s sẽ nhận electron. Ba electron còn lại sẽ đi vào quỹ đạo 2p. Cấu hình electron trông như thế này: 1s22s22p3. Điều đáng quan tâm ở đây là làm thế nào các electron tự định hướng theo quỹ đạo 2p. Có hai khả năng:
-            <img src={Congthuc6Chapter3} className="math-image" alt="Math Formula"/>
             </p>
             <p>Theo quy tắc Hund, các electron lấp đầy quỹ đạo của chúng một cách đơn lẻ và sau đó chúng bắt đầu ghép đôi. Điều này có nghĩa là tình huống thứ hai được trình bày ở trên là thứ tự điền đúng cho các electron.</p>
             <p><b>Vấn đề:</b></p>
             <p>Viết cấu hình electron của S và Ca.</p>
             <p><b>Giải pháp:</b> Lưu huỳnh có 16 electron. Cấu hình là 1s<sup>2</sup>2s2<sup>2</sup>p<sup>6</sup>3s<sup>2</sup>3p<sup>4</sup> hoặc
-            <img src={Congthuc7Chapter3} className="math-image-inline" alt="Math Formula"/>
             </p>
-            <p>Ca có 20 electron và có cấu hình như thế này: 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup>4s<sup>2</sup>. <img src={Congthuc8Chapter3} className="math-image-inline" alt="Math Formula"/></p>
+            <p>Ca có 20 electron và có cấu hình như thế này: 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup>4s<sup>2</sup>. </p>
             <p>Lưu ý rằng trong bài toán trước quỹ đạo 3d đã bị bỏ qua. Quỹ đạo 3d đầy lên sau khi quỹ đạo 4s đầy lên. Điều này là do quỹ đạo 4s thực sự có ít năng lượng hơn quỹ đạo 3d (không bình thường nhưng đúng). Điều này có nghĩa là thứ tự điền thông qua phần tử số 36, Kr, là 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup>4s<sup>2</sup>3d<sup>10</sup>4p<sup>6</sup>. Cũng lưu ý số lượng electron tối đa có thể được giữ ở mức năng lượng chính. Mức năng lượng chính thứ nhất có thể chứa tối đa 2 electron (1s<sup>2</sup>), lần thứ hai lên tới 8 (2s<sup>2</sup>2p<sup>6</sup>) và thứ ba lên đến 18 (3s<sup>2</sup>3p<sup>6</sup>3d<sup>10</sup>). Mẫu này tuân theo phương trình 2n2, trong đó n là số của mức năng lượng chính. Ví dụ, để tìm số electron tối đa có thể được giữ ở mức năng lượng chính thứ tư, bạn có thể nói rằng 2(4)<sup>2</sup> = 32 electron tối đa.</p>
             </Panel>
             <Panel header="VII. Điện tử hóa trị và sơ đồ chấm" key="7" className='Panel'>
@@ -118,8 +83,6 @@ function Chapter4thongtin() {
             <br/>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Sáu electron tiếp theo lấp đầy đơn lẻ rồi ghép đôi theo quy tắc Hund, như thể chúng lấp đầy quỹ đạo p. Một cách hay để ghi nhớ quy tắc này là tự nhủ: “Đơn, đơn, đơn, sau đó ghép đôi, ghép đôi, ghép đôi.”
             </p>
-            <img alt="Hình 3.6" src={Hinhchapter36} className="Hinhchapter"></img>
-            <img alt="Hình 3.7" src={Hinhchapter37} className="Hinhchapter"></img>
             <p><b>Vấn đề:</b></p>
             <p>Vẽ sơ đồ chấm hóa trị của N, Ne, O và Ca.</p>
             <p><b>Giải pháp:</b> Xác định cấu hình electron và tìm electron hóa trị:</p>
@@ -174,19 +137,12 @@ function Chapter4thongtin() {
            </Panel>
             <Panel header="X. Lai tạo" key="10" className='Panel'>
             <p>Carbon là một ngoại lệ đối với các quy tắc viết biểu đồ chấm hóa trị như mô tả ở trên. Việc kiểm tra chặt chẽ carbon và các electron hóa trị của nó cho thấy một câu chuyện khác, bằng chứng là carbon có thể tạo ra bốn liên kết. Carbon có 6 electron và cấu hình electron của nó là 1s<sup>2</sup>2s<sup>2</sup>2p<sup>2</sup>. Sơ đồ dấu chấm hóa trị theo cách sắp xếp này sẽ trông giống như:</p>
-            <img src={Congthuc9Chapter3} className="math-image" alt="Math Formula"/>
             <p>Theo sơ đồ chấm này, carbon chỉ tạo ra hai liên kết. Tuy nhiên, đây không phải là trường hợp tất cả. Thay vào đó, carbon có sự sắp xếp 1s<sup>2</sup>2s<sup>2</sup>2p<sup>3</sup> hoặc</p>
-            <img src={Congthuc10Chapter3} className="math-image" alt="Math Formula"/>
             <p>Đây được gọi là sự lai hóa sp<sup>3</sup> của nguyên tử cacbon. Một trong các electron đã chuyển từ quỹ đạo 2s sang quỹ đạo 2p. Điều này hiện mang lại cho carbon bốn electron đơn lẻ thay vì hai electron ghép đôi và hai electron chưa ghép cặp. Đó là các electron đơn lẻ liên kết với nhau để cố gắng trở thành cặp đôi. Bởi vì có bốn electron đơn trong nguyên tử carbon lai sp3 nên carbon có thể liên kết bốn nguyên tử khác nhau với bốn electron đơn của nó. Để có bốn electron là electron chưa ghép cặp, quá trình lai hóa sp3 cũng làm thay đổi hình dạng của các quỹ đạo s và p có liên quan đến liên kết. Sự thay đổi này được thể hiện trong Hình 3.8.</p>
             <p>Sự sắp xếp mới được gọi là hình tứ diện vì các nguyên tử tạo với nhau một góc 109,5 độ. Điều này có thể được nhìn thấy trong hình dạng ba chiều của metan, một phân tử có dạng hình học phân tử tứ diện. Nếu chỉ có ba nguyên tử liên kết với nguyên tử lai hóa sp3 thì hình học phân tử được gọi là hình chóp tam giác. Amoniac là một ví dụ về điều này. Cuối cùng, trong nước oxy bị lai hóa sp3 nhưng vì chỉ có hai nguyên tử liên kết với oxy nên hình dạng phân tử được cho là bị uốn cong (xem Hình 3.9).</p>
-            <img alt="Hình 3.8" src={Hinhchapter38} className="Hinhchapter"></img>
-            <img alt="Hình 3.9" src={Hinhchapter39} className="Hinhchapter"></img>
-            <img alt="Hình 3.10" src={Hinhchapter310} className="Hinhchapter"></img>
-            <img alt="Hình 3.11" src={Hinhchapter311} className="Hinhchapter"></img>
             <p>Trong lai hóa sp<sup>2</sup>, một obitan 2s và hai obitan 2p kết hợp để tạo thành hình dạng mới như trên Hình 3.10.</p>
             <p>Ở trạng thái lai hóa này, carbon sẽ tạo ra hai liên kết đơn và một liên kết đôi. Điều này sẽ cho phép nguyên tử carbon liên kết với ba nguyên tử khác nhau. Sự định hướng của các nguyên tử này xung quanh nguyên tử carbon sẽ là hình học phân tử phẳng lượng giác. Góc của các nguyên tử này với nhau là 120 độ. Điều này được thể hiện qua sơ đồ ethene trên Hình 3.11.</p>
             <p>Khi một nguyên tử được lai hóa sp, quỹ đạo của một s kết hợp với một quỹ đạo p. Điều này cho phép một nguyên tử như carbon tạo ra hai liên kết đôi hoặc một liên kết đơn và một liên kết ba. Hai nguyên tử liên kết với nguyên tử carbon trong trường hợp này sẽ tự định hướng cách nhau 180 độ. Đây được gọi là hình học phân tử tuyến tính (xem Hình 3.12).</p>
-            <img alt="Hình 3.12" src={Hinhchapter312} className="Hinhchapter"></img>
             <img alt="Bảng 3" src={Bang3Chapter3} className="Bangchapter"></img>
             <p>Trên đây là so sánh song song giữa ba trạng thái lai:</p>
             <p><b>Vấn đề:</b></p>
@@ -209,7 +165,6 @@ function Chapter4thongtin() {
             </Panel> 
             <Panel header="XIII. Các ngoại lệ đối với Quy tắc Octet" key="13" className='Panel'>
             <p>Có những ngoại lệ đối với quy tắc bát tử. Ví dụ, helium cực kỳ ổn định chỉ với hai electron hóa trị ở mức năng lượng chính ngoài cùng của nó. Điều tương tự cũng đúng với các ion lithium và beryllium. Điều này chỉ ra rằng
-            <img alt="Hình 3.13" src={Hinhchapter313} className="Hinhchapter"></img>
             việc có một octet để ổn định nguyên tử không phải là vấn đề lớn mà vấn đề là phải có mức năng lượng chính đầy đủ ngoài cùng.
             </p>
             <p>Một ngoại lệ cuối cùng đối với quy tắc bát tử nằm ở liên kết của nguyên tử boron. Boron thích sáu electron ở mức năng lượng chính ngoài cùng của nó. Điều này cho phép các hợp chất chứa boron tạo ra ba liên kết theo cách sắp xếp phẳng lượng giác. Hai ví dụ là BH<sub>3</sub> và BF<sub>3</sub> như hình 3.13.</p>

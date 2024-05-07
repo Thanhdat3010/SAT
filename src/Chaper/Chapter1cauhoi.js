@@ -260,7 +260,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
                 </li>
               ))}
             </ul>
-            <button onClick={toggleExplanation} className="explanation-button">Hiển thị Giải thích</button>
+            <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
             {showExplanation && (
               <div className="explanation">
                 <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
