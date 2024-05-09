@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Chapter2cauhoi.css';
-
+import formatChemicalFormula from '../components/formatChemicalFormula';
 const Chapter2cauhoi = ({ onCompletion,onReset }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [questions, setQuestions] = useState([]);
+  const chapterId = 'chapter2'; // Tạo một ID riêng cho mỗi chương
 
   const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
   const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
@@ -24,23 +25,24 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
   
     return array;
   }
+  
   useEffect(() => {
   const questions = [
     {
         question: "Loại khí nào dưới nhiệt độ cao và áp suất thấp hành xử giống nhất như một khí lý tưởng?",
-        options: ["He", "O2", "NH3", "CO2", "Ne"],
+        options: ["He", formatChemicalFormula ("O2"), formatChemicalFormula("NH3"), formatChemicalFormula("CO2"), "Ne"],
         correctAnswer: "He",
         explain: "Càng nhỏ khí, nó sẽ càng hành xử giống như khí lý tưởng hơn. Hơn nữa, khí hành xử giống như khí lý tưởng nhất khi cách xa nhau. Điều này xảy ra ở áp suất thấp và nhiệt độ cao."
       },
       {
         question: "Mẫu nào thể hiện hạt được sắp xếp theo một mẫu hình hình học đều?",
-        options: ["CO2 (g)", "CO2 (s)", "CO2 (l)", "CO2 (aq)", "Không có cái nào phù hợp"],
-        correctAnswer: "CO2 (s)",
+        options: [formatChemicalFormula("CO2 (g)"), formatChemicalFormula("CO2 (s)"), formatChemicalFormula("CO2 (l)"), formatChemicalFormula("CO2 (aq)"), "Không có cái nào phù hợp"],
+        correctAnswer: formatChemicalFormula("CO2 (s)"),
         explain: "Một mô hình hình học đều mô tả tốt nhất một chất rắn."
       },
       {
         question: "Ở nhiệt độ nào, mẫu nước có năng lượng kinet trung bình cao nhất?",
-        options: ["0 độ Celsius", "100 độ Celsius", "0 K", "100 K", "273 K"],
+        options: ["0 độ Celsius", "100 độ Celsius", "0K", "100K", "273K"],
         correctAnswer: "100 độ Celsius",
         explain: "Năng lượng Kinet Trung bình là thuật ngữ mô tả nhiệt độ. Nhiệt độ cao nhất có mặt trong các mẫu này là 100 độ Celsius, tương ứng với 373 Kelvin."
       },
@@ -52,7 +54,7 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
       },
       {
         question: "Khí nào được dự kiến sẽ có tỷ lệ tràn ra cao nhất?",
-        options: ["O2", "F2", "H2O", "He", "CH4"],
+        options: [formatChemicalFormula("O2"), formatChemicalFormula("F2"), formatChemicalFormula("H2O"), "He", formatChemicalFormula("CH4")],
         correctAnswer: "He",
         explain: "Khí nhẹ nhất sẽ có mật độ thấp nhất và tỷ lệ tràn ra cao nhất. Trong số các lựa chọn, helium là khí nhẹ nhất."
       },
@@ -76,7 +78,7 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
       },
       {
         question: "Khí nào được dự kiến sẽ có mật độ thấp nhất ở STP?",
-        options: ["SO2", "CO2", "Cl2", "Xe", "Ar"],
+        options: [formatChemicalFormula("SO2"),formatChemicalFormula("CO2"),formatChemicalFormula("Cl2"), "Xe", "Ar"],
         correctAnswer: "Ar",
         explain: "Mật độ của một khí là khối lượng mol của khí chia cho 22.4L. Đối với argon, điều này sẽ là 39.95g/22.4L = 1.78 g/L. Hãy nhớ rằng không cần máy tính. Vì argon là khí nhẹ nhất, nó sẽ có mật độ thấp nhất."
       },
@@ -109,34 +111,34 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
   setQuestions(shuffleArray([...questions])); // Trộn và thiết lập câu hỏi
 }, []); // Chỉ chạy một lần khi component được mount
 
-  const [currentQuestion, setCurrentQuestion] = useState(() => {
-    const saved = localStorage.getItem(userId + '_currentQuestion');
-    return saved ? JSON.parse(saved) : 0;
-  });
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [answerState, setAnswerState] = useState(() => {
-    const saved = localStorage.getItem(userId + '_answerState');
-    return saved ? JSON.parse(saved) : Array(questions.length).fill(null);
-  });
-  const [score, setScore] = useState(() => {
-    const saved = localStorage.getItem(userId + '_score');
-    return saved ? JSON.parse(saved) : 0;
-  });
-  const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem(userId + '_progress');
-    return saved ? JSON.parse(saved) : 0;
-  });
-  const [quizCompleted, setQuizCompleted] = useState(() => {
-    const saved = localStorage.getItem(userId + '_quizCompleted');
-    return saved ? JSON.parse(saved) : false;
-  });
+const [currentQuestion, setCurrentQuestion] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_currentQuestion`);
+  return saved ? JSON.parse(saved) : 0;
+});
+const [selectedOption, setSelectedOption] = useState(null);
+const [answerState, setAnswerState] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_answerState`);
+  return saved ? JSON.parse(saved) : Array(questions.length).fill(null);
+});
+const [score, setScore] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_score`);
+  return saved ? JSON.parse(saved) : 0;
+});
+const [progress, setProgress] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_progress`);
+  return saved ? JSON.parse(saved) : 0;
+});
+const [quizCompleted, setQuizCompleted] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_quizCompleted`);
+  return saved ? JSON.parse(saved) : false;
+});
 
   useEffect(() => {
-    localStorage.setItem(userId + '_currentQuestion', JSON.stringify(currentQuestion));
-    localStorage.setItem(userId + '_answerState', JSON.stringify(answerState));
-    localStorage.setItem(userId + '_score', JSON.stringify(score));
-    localStorage.setItem(userId + '_progress', JSON.stringify(progress));
-    localStorage.setItem(userId + '_quizCompleted', JSON.stringify(quizCompleted));
+    localStorage.setItem(`${userId}_${chapterId}_currentQuestion`, JSON.stringify(currentQuestion));
+    localStorage.setItem(`${userId}_${chapterId}_answerState`, JSON.stringify(answerState));
+    localStorage.setItem(`${userId}_${chapterId}_score`, JSON.stringify(score));
+    localStorage.setItem(`${userId}_${chapterId}_progress`, JSON.stringify(progress));
+    localStorage.setItem(`${userId}_${chapterId}_quizCompleted`, JSON.stringify(quizCompleted));
   }, [currentQuestion, answerState, score, progress, quizCompleted, userId]);
 
   const handleOptionClick = (selectedAnswer) => {
@@ -206,11 +208,19 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
             <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
             <ul>
               {questions[currentQuestion].options.map((option, index) => (
-                <li key={index} onClick={() => handleOptionClick(option)} className={answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? 'correct' : answerState[currentQuestion] !== null && selectedOption === option ? 'incorrect' : ''}>
-                  ({String.fromCharCode(65 + index)}) {option}
-                  {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
-                  {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
-                </li>
+                <li key={index} onClick={() => handleOptionClick(option)}
+                className={
+                selectedOption !== null && // Thêm điều kiện này để chỉ tô màu khi đã có lựa chọn
+                answerState[currentQuestion] !== null &&
+                option === questions[currentQuestion].correctAnswer ? 'correct' : 
+                selectedOption !== null &&
+                answerState[currentQuestion] !== null &&
+                selectedOption === option && option !== questions[currentQuestion].correctAnswer ? 'incorrect' : ''
+                   } >
+            ({String.fromCharCode(65 + index)}) {option}
+            {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
+            {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
+              </li>
               ))}
             </ul>
             <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>

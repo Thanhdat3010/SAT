@@ -2,10 +2,13 @@ import Footer from "../components/Footer";
 import Gioithieu from "../components/Gioithieu";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import { Layout } from "antd";
+const { Sider, Content } = Layout;
+
 function Trangchu(props){
     
     return(
-        <>
+        <Layout>
         <Navbar/>
         <Hero
          cName="hero"
@@ -17,7 +20,7 @@ function Trangchu(props){
         />
         <Gioithieu/>
         <Footer/>
-        </>
+        </Layout>
     )
 }
 export default Trangchu;

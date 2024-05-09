@@ -156,7 +156,9 @@
     .NavbarItems {
         z-index: 99;
     }
-
+    .nav-links::before {
+        display: none;
+    }
     .nav-menu {
         display: flex;
         flex-direction: column;

@@ -3,7 +3,9 @@ import { Collapse} from 'antd';
 import "./Chapter4thongtin.css"
 import Hinhchapter32 from "../Hinhchapter/Chapter3.2.png";
 import Congthuc4Chapter3  from "../Hinhchapter/Congthuc4Chapter3.png"
-import Bang3Chapter3  from "../Hinhchapter/Bang3Chapter3.png"
+import Bang1Chapter4  from "../Hinhchapter/Bang1Chapter4.png"
+import Bang2Chapter4  from "../Hinhchapter/Bang2Chapter4.png"
+import Bang3Chapter4  from "../Hinhchapter/Bang3Chapter4.png"
 
 
 const { Panel } = Collapse;
@@ -17,6 +19,8 @@ function Chapter4thongtin() {
           <Collapse defaultActiveKey={['1']} size="large">
             <Panel header="I. Lịch sử của bảng tuần hoàn" key="1" className='Panel'>
             <p>Bảng tuần hoàn đã được phát triển và hoàn thiện trong nhiều năm. Mặc dù có rất nhiều nhà khoa học có đóng góp cho bảng tuần hoàn nhưng hai nhà khoa học được công nhận nhiều nhất là Dmitry Mendeleyev và Henry Moseley. Mendeleyev, mặc dù bảng tuần hoàn của ông thiếu các thành phần, nhưng lại được ghi nhận nhiều nhất về bảng tuần hoàn và các xu hướng tuần hoàn. Sau đó, Moseley sử dụng một kỹ thuật gọi là tinh thể học tia X và phát hiện ra ý tưởng về số nguyên tử. Khám phá này là cơ sở cho việc sắp xếp bảng tuần hoàn hiện đại. Đã có những bảng tuần hoàn được đề xuất dựa trên khối lượng nguyên tử, nhưng những cách sắp xếp này không đủ vì các đồng vị có thể tồn tại đối với một nguyên tố.</p>
+            <img alt="Hình 3.2" src={Hinhchapter32} className="Hinhchapter"></img>
+
             </Panel>
             <Panel header="II. Sự sắp xếp của bảng tuần hoàn" key="2" className='Panel'>
             <p>Bảng tuần hoàn chứa một số chu kỳ và nhóm. Các khoảng thời gian là các hàng ngang. Chúng được đánh số từ 1 đến 7. Các nhóm (hoặc họ) là các cột dọc. Chúng được đánh số từ 1 đến 18. Khi chúng ta di chuyển qua các họ hoặc các thời kỳ, chúng ta có thể khám phá ra nhiều xu hướng xảy ra trong bảng tuần hoàn. Điều này được gọi là Luật định kỳ. Bạn sẽ được cung cấp bảng tuần hoàn khi làm bài kiểm tra SAT II: Hóa học. LƯU Ý: Bảng tuần hoàn hoàn chỉnh được cung cấp trong Phụ lục 3 ở cuối cuốn sách này.</p>
@@ -24,74 +28,34 @@ function Chapter4thongtin() {
             <Panel header="III. Cân bằng" key="3" className='Panel'>
             <p>Hai loại nguyên tố trong bảng tuần hoàn là kim loại và phi kim.</p>
             <p>Thuộc tính của chúng được tóm tắt trong biểu đồ dưới đây:</p>
+            <img alt="Bảng 1" src={Bang1Chapter4} className="Bangchapter"></img>
             <p>Các bán kim loại, hay á kim, được biết là có một số tính chất của kim loại và một số tính chất của phi kim. Các bán kim loại là B, Si, Ge, As, Sb, Te và At . Chúng được tô đậm trong bảng tuần hoàn từng phần ở Hình 4.1.</p>
+            <img alt="Bảng 2" src={Bang2Chapter4} className="Bangchapter"></img>
             <p>Các nguyên tố nằm ở bên trái của bán kim loại là kim loại; những thứ ở bên phải của bán kim loại là phi kim loại. Việc xác định một nguyên tố là kim loại, phi kim hoặc bán kim là rất quan trọng trong việc xác định các xu hướng định kỳ và xác định các loại liên kết mà các nguyên tử sẽ hình thành với nhau.</p>
-            </Panel>
-            <Panel header="IV. Mô hình Bohr của nguyên tử" key="4" className='Panel'> 
-            <p>Niels Bohr đề xuất một mô hình nguyên tử trong đó các electron chuyển động quanh hạt nhân theo những quỹ đạo cố định. Trong mô hình này, mỗi quỹ đạo cách hạt nhân một khoảng cố định và mỗi electron
-            <img alt="Hình 3.2" src={Hinhchapter32} className="Hinhchapter"></img>
-            trong các quỹ đạo này đều có một lượng năng lượng nhất định. Các electron phải ở một trong các quỹ đạo; họ không thể ở giữa. Các electron năng lượng thấp quay gần hạt nhân hơn trong khi các electron năng lượng cao hơn quay xa hạt nhân hơn. Khi các electron ở trạng thái năng lượng thấp nhất, chúng được gọi là ở trạng thái cơ bản. Ở trạng thái này chúng quay càng gần hạt nhân càng tốt. Khi năng lượng được thêm vào các nguyên tử, ví dụ dưới dạng nhiệt hoặc điện, các electron sẽ chuyển sang mức năng lượng cao hơn gọi là trạng thái kích thích. Bởi vì thiên nhiên thích trạng thái năng lượng thấp hơn nên các electron phát ra năng lượng bổ sung của chúng dưới dạng ánh sáng. Điều này cho phép các electron quay trở lại trạng thái cơ bản của chúng như biểu đồ trong Hình 3.2.
-            </p>
-            <p>Ánh sáng phát ra từ một phần tử bị kích thích có thể được truyền qua lăng kính hoặc gradient nhiễu xạ để xác định bước sóng chính xác của ánh sáng do nguyên tử bị kích thích phát ra. Những bước sóng ánh sáng chính xác này được gọi là quang phổ vạch của một nguyên tố. Phổ vạch của hydro được thể hiện trên hình 3.3.</p>
-            <p>Mỗi phần tử có phổ vạch riêng. Đây là lý do tại sao phổ vạch của một phần tử cũng được coi là “dấu vân tay” của phần tử cụ thể đó. Vì lượng ánh sáng phát ra bởi các nguyên tử bị kích thích có lượng cố định nên Bohr gọi chúng là lượng ánh sáng “lượng tử hóa”. Những lượng năng lượng cố định này chứng tỏ rằng các electron chỉ có thể thực hiện những bước nhảy nhất định giữa các quỹ đạo ở những khoảng cách cố định trong nguyên tử. Do những quỹ đạo tròn, cố định này, mô hình nguyên tử của Bohr thường được gọi là “mô hình hệ mặt trời” của nguyên tử (xem Hình 3.4).</p>
-            </Panel>
-            <Panel header="V. Mô hình cơ sóng" key="5" className='Panel'>
-            <p>Mô hình cơ sóng của nguyên tử cho thấy cấu trúc nguyên tử phức tạp hơn và cách các electron tự cấu hình ở các mức năng lượng chính. Các mức năng lượng chính được chia thành các mức năng lượng phụ, mỗi mức có tập hợp quỹ đạo riêng biệt. Cấu trúc phức tạp hơn này được phác thảo với sự trợ giúp của sơ đồ này. Các mức năng lượng chính trong nguyên tử được đánh số từ 1 đến 7.
-            <br/>
-            <b>PEL# &nbsp;  &nbsp;1  &nbsp; &nbsp;2  &nbsp; &nbsp;3  &nbsp; &nbsp;4</b>
-            </p>
-            <p>Mức năng lượng chính thứ nhất chỉ có một lớp con, mức năng lượng chính thứ hai có hai, mức năng lượng chính thứ ba có ba, v.v. Bây giờ, đường viền có thể được nâng cao:
-            <br/>
-            <b>PEL# &nbsp;  &nbsp;1  &nbsp; &nbsp;2  &nbsp; &nbsp;3  &nbsp; &nbsp;4</b>
-            <br/>
-            <b>Subshell &nbsp;  &nbsp;)  &nbsp; &nbsp;) )  &nbsp; &nbsp;) ) )  &nbsp; &nbsp;) ) ) )</b>
-            </p>
-            <p>Lớp con đầu tiên trong mỗi mức năng lượng chính có chữ cái “s”. Cấp độ con thứ hai có chữ cái “p”, chữ cái thứ ba là “d” và chữ cái thứ tư là “f”. Bây giờ mô hình thậm chí còn được dán nhãn nhiều hơn:
-            <br/>
-            <b>PEL# &nbsp;  &nbsp;1  &nbsp; &nbsp;2  &nbsp; &nbsp;3  &nbsp; &nbsp;4</b>
-            <br/>
-            <b>Subshell &nbsp;  &nbsp;)  &nbsp; &nbsp;) )  &nbsp; &nbsp;) ) )  &nbsp; &nbsp;) ) ) )</b>
-            <br/>
-            <b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;s  &nbsp; &nbsp;s p &nbsp;s p d &nbsp; s p d f</b>
-            </p>
-            <p>Lớp con s chứa một quỹ đạo hoặc vùng nơi có thể tìm thấy electron. Cấp độ p có ba quỹ đạo, trong khi cấp độ d và f lần lượt có năm và bảy quỹ đạo. Hình dạng của quỹ đạo s và p được thể hiện trên hình 3.5.</p>
-            <p>Mỗi quỹ đạo được phép mang tối đa hai electron và theo Nguyên lý loại trừ Pauli, các electron phải có spin ngược nhau.</p>
-            <p>Làm thế nào để các electron lấp đầy các mức năng lượng chính này? Hãy xem xét ví dụ đơn giản nhất, hydro và một electron của nó. Vì các electron muốn ở trạng thái năng lượng thấp nhất có thể nên một electron sẽ nằm ở quỹ đạo 1s. Điều này có thể được lập biểu đồ bằng cách viết đơn giản 1s1 hoặc bằng cách vẽ sơ đồ như sau:<img src={Congthuc4Chapter3} className="math-image-inline" alt="Math Formula"/>.</p>
-            <p>Vì quỹ đạo 1s có thể chứa tối đa hai electron nên cấu hình electron của helium sẽ như thế này: 1s<sup>2</sup> hoặc  Chú ý rằng các mũi tên chỉ theo những hướng khác nhau.
-            hướng. Điều này cho thấy các spin ngược nhau của các electron. Ví dụ tiếp theo sẽ cho thấy quy tắc Hund hoạt động như thế nào. Xét cấu hình electron của nitơ ở trạng thái cơ bản. Nitơ có tổng cộng bảy electron. Hai electron đầu tiên sẽ lấp đầy quỹ đạo 1s. Nhìn vào sơ đồ trên, sau khi quỹ đạo 1s đầy, quỹ đạo 2s sẽ nhận electron. Ba electron còn lại sẽ đi vào quỹ đạo 2p. Cấu hình electron trông như thế này: 1s22s22p3. Điều đáng quan tâm ở đây là làm thế nào các electron tự định hướng theo quỹ đạo 2p. Có hai khả năng:
-            </p>
-            <p>Theo quy tắc Hund, các electron lấp đầy quỹ đạo của chúng một cách đơn lẻ và sau đó chúng bắt đầu ghép đôi. Điều này có nghĩa là tình huống thứ hai được trình bày ở trên là thứ tự điền đúng cho các electron.</p>
             <p><b>Vấn đề:</b></p>
-            <p>Viết cấu hình electron của S và Ca.</p>
-            <p><b>Giải pháp:</b> Lưu huỳnh có 16 electron. Cấu hình là 1s<sup>2</sup>2s2<sup>2</sup>p<sup>6</sup>3s<sup>2</sup>3p<sup>4</sup> hoặc
-            </p>
-            <p>Ca có 20 electron và có cấu hình như thế này: 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup>4s<sup>2</sup>. </p>
-            <p>Lưu ý rằng trong bài toán trước quỹ đạo 3d đã bị bỏ qua. Quỹ đạo 3d đầy lên sau khi quỹ đạo 4s đầy lên. Điều này là do quỹ đạo 4s thực sự có ít năng lượng hơn quỹ đạo 3d (không bình thường nhưng đúng). Điều này có nghĩa là thứ tự điền thông qua phần tử số 36, Kr, là 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup>4s<sup>2</sup>3d<sup>10</sup>4p<sup>6</sup>. Cũng lưu ý số lượng electron tối đa có thể được giữ ở mức năng lượng chính. Mức năng lượng chính thứ nhất có thể chứa tối đa 2 electron (1s<sup>2</sup>), lần thứ hai lên tới 8 (2s<sup>2</sup>2p<sup>6</sup>) và thứ ba lên đến 18 (3s<sup>2</sup>3p<sup>6</sup>3d<sup>10</sup>). Mẫu này tuân theo phương trình 2n2, trong đó n là số của mức năng lượng chính. Ví dụ, để tìm số electron tối đa có thể được giữ ở mức năng lượng chính thứ tư, bạn có thể nói rằng 2(4)<sup>2</sup> = 32 electron tối đa.</p>
+            <p>Xác định các nguyên tố sau là kim loại, phi kim hoặc bán kim loại: potassium, calcium, bromine, hydrogen và neon.</p>
+            <p><b>Lời giải:</b> K và Ca nằm ở bên trái bảng tuần hoàn và là kim loại. Br và Ne nằm ở phía bên phải của bán kim loại và là phi kim. Hydrogen, mặc dù nằm ở phía bên trái của bảng tuần hoàn, nhưng lại là một phi kim. Nếu bạn vẫn chưa bị thuyết phục về hydrogen, hãy tự hỏi bản thân về các tính chất của khí hydrogen và xem những đặc tính đó phù hợp ở đâu trong biểu đồ so sánh ở trang 1.77.</p>
             </Panel>
-            <Panel header="VII. Điện tử hóa trị và sơ đồ chấm" key="7" className='Panel'>
-            <p>Các electron hóa trị đóng một vai trò rất lớn trong liên kết, như sẽ được trình bày sau. Các electron hóa trị là các electron ở mức năng lượng chính ngoài cùng (không nên nhầm lẫn với lớp ngoài cùng). Những electron này rất quan trọng vì chúng là những electron bị mất, thu được hoặc chia sẻ khi hình thành liên kết hóa học. Các electron hóa trị của một nguyên tử là các electron tương tác với các electron hóa trị của một nguyên tử khác để tạo thành các liên kết này.</p>
-            <p><b>Vấn đề:</b></p>
-            <p>Có bao nhiêu electron hóa trị trong các nguyên tố Na, P, Cl và Ca?</p>
-            <p><b>Giải pháp:</b> Trước hết hãy xét cấu hình electron.</p>
-            <p>Na = 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup><b>3s<sup>1</sup></b>. Na có một electron hóa trị.</p>
-            <p>P = 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup><b>3s<sup>2</sup>3p<sup>3</sup></b>. P có năm electron hóa trị.</p>
-            <p>Cl = 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup><b>3s<sup>2</sup>3p<sup>5</sup></b>. Cl có bảy electron hóa trị.</p>
-            <p>Ca = 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup><b>4s<sup>2</sup></b>. Ca có hai electron hóa trị.</p>
-            <p>Khi lập sơ đồ hình dạng và cấu trúc của các nguyên tử, điều quan trọng là phải có sơ đồ chấm hóa trị chính xác. Những sơ đồ này rất dễ vẽ vì chúng tuân theo một mẫu đơn giản. Có hai quy tắc bạn cần nhớ khi vẽ sơ đồ dấu chấm hóa trị (xem Hình 3.6):
-            <br/>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Hai electron đầu tiên đi cùng nhau ở cùng một phía của ký hiệu, như thể chúng đang lấp đầy quỹ đạo s.
-            <br/>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Sáu electron tiếp theo lấp đầy đơn lẻ rồi ghép đôi theo quy tắc Hund, như thể chúng lấp đầy quỹ đạo p. Một cách hay để ghi nhớ quy tắc này là tự nhủ: “Đơn, đơn, đơn, sau đó ghép đôi, ghép đôi, ghép đôi.”
-            </p>
-            <p><b>Vấn đề:</b></p>
-            <p>Vẽ sơ đồ chấm hóa trị của N, Ne, O và Ca.</p>
-            <p><b>Giải pháp:</b> Xác định cấu hình electron và tìm electron hóa trị:</p>
-            <p>N—1s<sup>2</sup><b>2s<sup>2</sup>2p<sup>3</sup></b></p>
-            <p>Ne—1s<sup>2</sup><b>2s<sup>2</sup>2p<sup>6</sup></b></p>
-            <p>O—1s<sup>2</sup><b>2s<sup>2</sup>2p<sup>4</sup></b></p>
-            <p>Ca = 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup><b>4s<sup>2</sup></b>
-            </p>
-            <p>Sau đó vẽ sơ đồ như hình 3.7.</p>
+            <Panel header="IV. Gia đình" key="4" className='Panel'> 
+            <p>Một số nhóm hoặc họ được đặt những cái tên đặc biệt và có những đặc tính nhất định cần được giải quyết. Nhưng trước tiên bạn phải hiểu tại sao các phần tử lại được xếp vào cùng một nhóm. Hãy nghĩ về một gia đình mà bạn biết, không phải gia đình hóa học mà là gia đình nhân loại. Trẻ em trông giống cha mẹ của chúng. Chúng học cách làm mọi việc từ cha mẹ và làm theo cách tương tự. Điều tương tự cũng đúng với các nguyên tố trong các họ của bảng tuần hoàn; họ phản ứng theo cùng một cách (phần lớn). Như bạn đã học ở chương trước, mỗi nguyên tố có một số electron hóa trị nhất định. Như bạn sẽ học trong chương tiếp theo, chính số electron hóa trị của một nguyên tử quyết định khả năng phản ứng hóa học của nó. Bởi vì các nguyên tố trong một họ có cùng số electron hóa trị nên chúng sẽ có khả năng phản ứng hóa học tương tự nhau. Ví dụ, Na và K có thể được so sánh về cấu hình electron và các ion được hình thành: Na - 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup><b>3s<sup>1</sup></b> và K - 1s<sup>2</sup>2s<sup>2</sup>2p<sup>6</sup>3s<sup>2</sup>3p<sup>6</sup><b>4s<sup>1</sup></b>.</p>
+            <p>Cả hai nguyên tử đều có 1 electron hóa trị và sẽ mất đi một electron này để tạo thành các ion có điện tích 1+. Điện tích tương tự này có nghĩa là cả hai nguyên tố đều có khả năng phản ứng hóa học tương tự nhau.</p>
+            <p>Các gia đình và nhóm quan trọng được liệt kê dưới đây kèm theo các đặc điểm quan trọng của chúng. Những đặc điểm này sẽ trở nên quen thuộc hơn với bạn khi bạn nghiên cứu chương về sự gắn kết.</p>
+            <img alt="Bảng 3" src={Bang3Chapter4} className="Bangchapter"></img>
+            <p>Có những xu hướng định kỳ quan trọng xảy ra xuyên suốt các thời kỳ và lên xuống của các nhóm. Tốt nhất bạn nên nhớ xu hướng của một vài yếu tố. Điều này sẽ đơn giản hóa các xu hướng rất nhiều và làm cho các câu hỏi về xu hướng định kỳ trở nên dễ trả lời nhất trong bài kiểm tra.</p>
+            </Panel>
+            <Panel header="V. Độ âm điện" key="5" className='Panel'>
+            <p>Độ âm điện là thước đo khả năng thu hút electron của nguyên tử. Độ âm điện của các nguyên tố được cho giá trị từ 0,0 đến 4,0. Giá trị độ âm điện lớn nhất thuộc về fluorine, 4,0. Vậy nguyên tố có độ âm điện thấp nhất ở đâu? Nhìn xa nhất từ fluorine và nhìn về phía dưới bên trái của bảng tuần hoàn. Francium, Fr, có độ âm điện là 0,7. Điều này sẽ có ý nghĩa vì phi kim có xu hướng nhận electron và có giá trị độ âm điện cao hơn, trong khi kim loại có xu hướng mất electron và có giá trị độ âm điện thấp hơn. Vì chúng không phản ứng nên các khí hiếm không có giá trị về độ âm điện.</p>
+            <p><b>Đặt vấn đề:</b></p>
+            <p>Chất nào được cho là có độ âm điện thấp hơn, Na hay S?</p>
+            <p><b>Lời giải:</b> Na có độ âm điện thấp hơn vì nó khác xa fluorine trong bảng tuần hoàn.</p>
+            </Panel>
+            <Panel header="VI. Năng lượng ion hóa" key="6" className='Panel'>
+            <p>Năng lượng ion hóa, như tên gọi của nó, là năng lượng cần thiết để loại bỏ một electron khỏi nguyên tử và tạo thành ion. Khái niệm này sẽ dễ dàng nhận ra trong bảng tuần hoàn một khi bạn đã nắm được ý tưởng về độ âm điện. Phải mất rất nhiều năng lượng để loại bỏ các electron khỏi các octet rất ổn định của khí hiếm. Ví dụ, đối với helium, năng lượng ion hóa thứ nhất là 2372 kJ/mol, trong khi neon có năng lượng ion hóa thứ nhất là 2081 kJ/mol. Fluorine, có độ âm điện cao nhất và khả năng “giữ” electron, có năng lượng ion hóa thứ nhất là 1681 kJ/mol.</p>
+            <p>Bây giờ bạn có thể đoán rằng điều ngược lại cũng đúng với kim loại khi bạn tránh xa flo và các khí hiếm. Bằng chứng nằm ở năng lượng ion hóa đầu tiên của sắt (762 kJ/mol) và kali (419 kJ/mol). Những giá trị này chỉ là một phần năng lượng ion hóa đầu tiên đối với một số phi kim nhất định.</p>
+            <p><b>Đặt vấn đề:</b></p>
+            <p>Chất nào được cho là có năng lượng ion hóa lớn hơn, Ca hay Br?</p>
+            <p><b>Lời giải:</b> Br nằm gần F hơn và sẽ có năng lượng ion hóa cao hơn.</p>
+
             </Panel>
             <Panel header={(<div><span>VIII. Điện tích hạt nhân hiệu quả —Z</span><sub>eff</sub></div>)} key="8" className='Panel'>
             <p>Tất cả các electron trong nguyên tử đều chịu lực hút của hạt nhân tích điện dương. Tuy nhiên, đồng thời, có một lực đẩy giữa các electron do chúng mang điện tích âm. Điện tích hạt nhân hiệu dụng tác dụng lên một electron hoặc tập hợp electron có thể được tính bằng công thức sau:
@@ -143,7 +107,6 @@ function Chapter4thongtin() {
             <p>Trong lai hóa sp<sup>2</sup>, một obitan 2s và hai obitan 2p kết hợp để tạo thành hình dạng mới như trên Hình 3.10.</p>
             <p>Ở trạng thái lai hóa này, carbon sẽ tạo ra hai liên kết đơn và một liên kết đôi. Điều này sẽ cho phép nguyên tử carbon liên kết với ba nguyên tử khác nhau. Sự định hướng của các nguyên tử này xung quanh nguyên tử carbon sẽ là hình học phân tử phẳng lượng giác. Góc của các nguyên tử này với nhau là 120 độ. Điều này được thể hiện qua sơ đồ ethene trên Hình 3.11.</p>
             <p>Khi một nguyên tử được lai hóa sp, quỹ đạo của một s kết hợp với một quỹ đạo p. Điều này cho phép một nguyên tử như carbon tạo ra hai liên kết đôi hoặc một liên kết đơn và một liên kết ba. Hai nguyên tử liên kết với nguyên tử carbon trong trường hợp này sẽ tự định hướng cách nhau 180 độ. Đây được gọi là hình học phân tử tuyến tính (xem Hình 3.12).</p>
-            <img alt="Bảng 3" src={Bang3Chapter3} className="Bangchapter"></img>
             <p>Trên đây là so sánh song song giữa ba trạng thái lai:</p>
             <p><b>Vấn đề:</b></p>
             <p>Sự lai hóa của cacbon trong CCl<sub>4</sub>, trong HCN và trong CH<sub>2</sub>O là gì??</p>

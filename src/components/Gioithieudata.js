@@ -1,6 +1,7 @@
 import "./Gioithieu.css";
 import { Component } from "react";
-import hinhgioithieu  from "../assets/logo (2).png"
+import hinhgioithieu  from "../assets/logo(2).png"
+import hinhgioithieu1  from "../assets/logo(3).png"
 class GioithieuData extends Component{
     render(){
         return(
@@ -23,7 +24,7 @@ class GioithieuData extends Component{
             </div>
             <div className="image">
             <img alt="img" src={hinhgioithieu}/>
-            <img alt="img" src={hinhgioithieu}/>
+            <img alt="img" src={hinhgioithieu1}/>
             </div>
         </div>
         )

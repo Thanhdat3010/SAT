@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Progress } from 'antd';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { BookOutlined } from '@ant-design/icons';
 import Chapter1cauhoi from '../Chaper/Chapter1cauhoi';
 import Chapter2cauhoi from '../Chapter2/Chapter2cauhoi';
 import './Onthi.css';
@@ -14,7 +14,7 @@ const Onthi = () => {
   const [selectedChapter, setSelectedChapter] = useState(1);
   const [chapterCompletion, setChapterCompletion] = useState(() => {
     const saved = localStorage.getItem(userEmail + '_chapterCompletion');
-    return saved ? JSON.parse(saved) : { 1: false, 3: false };
+    return saved ? JSON.parse(saved) : { 1: false, 4: false };
   });
 
   useEffect(() => {
@@ -53,27 +53,36 @@ const Onthi = () => {
          console.log(broken);
           }}>
           <Menu mode="inline" defaultSelectedKeys={['1']} selectedKeys={[String(selectedChapter)]} style={{ height: '100%', borderRight: 0 }}>
-            <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="Chapter 1">
+            <Menu.SubMenu key="sub1" icon={<BookOutlined />} title="Chapter 1">
               <Menu.Item key="1" onClick={() => handleMenuClick(1)}>
-                Câu hỏi
+                Ôn tập
               </Menu.Item>
               <Menu.Item key="2" onClick={() => handleMenuClick(2)}>
-                Luyện đề
+              Questions
               </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key="sub2" icon={<LaptopOutlined />} title="Chapter 2">
               <Menu.Item key="3" onClick={() => handleMenuClick(3)}>
-                Câu hỏi
-              </Menu.Item>
-              <Menu.Item key="4" onClick={() => handleMenuClick(4)}>
                 Luyện đề
               </Menu.Item>
             </Menu.SubMenu>
-            <Menu.SubMenu key="sub3" icon={<NotificationOutlined />} title="Chapter 3">
+            <Menu.SubMenu key="sub2" icon={<BookOutlined />} title="Chapter 2">
+              <Menu.Item key="4" onClick={() => handleMenuClick(4)}>
+                Ôn tập
+              </Menu.Item>
               <Menu.Item key="5" onClick={() => handleMenuClick(5)}>
-                Câu hỏi
+              Questions
               </Menu.Item>
               <Menu.Item key="6" onClick={() => handleMenuClick(6)}>
+                Luyện đề
+              </Menu.Item>
+            </Menu.SubMenu>
+            <Menu.SubMenu key="sub3" icon={<BookOutlined />} title="Chapter 3">
+              <Menu.Item key="7" onClick={() => handleMenuClick(7)}>
+                Ôn tập
+              </Menu.Item>
+              <Menu.Item key="8" onClick={() => handleMenuClick(8)}>
+              Questions
+              </Menu.Item>
+              <Menu.Item key="9" onClick={() => handleMenuClick(9)}>
                 Luyện đề
               </Menu.Item>
             </Menu.SubMenu>
@@ -86,7 +95,7 @@ const Onthi = () => {
             </div>
             <div className='content-wrapper'>
               {selectedChapter === 1 && <Chapter1cauhoi onCompletion={() => handleChapterCompletion(1)} onReset={() => handleChapterReset(1)} />}
-              {selectedChapter === 3 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(3)} onReset={() => handleChapterReset(3)} />}
+              {selectedChapter === 4 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(3)} onReset={() => handleChapterReset(3)} />}
             </div>
           </Content>
         </Layout>

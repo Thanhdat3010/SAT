@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Chapter1cauhoi.css';
-
+import formatChemicalFormula from '../components/formatChemicalFormula';
 const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [questions, setQuestions] = useState([]);
-
+  const chapterId = 'chapter1'; // Tạo một ID riêng cho mỗi chương
   const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
   const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
   function shuffleArray(array) { //Hàm trộn mảng
@@ -40,7 +40,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
     },
     {
       question: "Chất nào đại diện cho một hỗn hợp đồng nhất?",
-      options: ["CH3OH(l)", "CH3OH(aq)", "CH3OH(g)", "CH3OH(s)", "Không chất nào ở trên"],
+      options: [formatChemicalFormula("CH3OH(l)"), formatChemicalFormula("CH3OH(aq)"), formatChemicalFormula("CH3OH(g)"), formatChemicalFormula("CH3OH(s)"), "Không chất nào ở trên"],
       correctAnswer: "Không chất nào ở trên",
       explain: "Hỗn hợp đồng nhất chỉ chứa một loại chất. Các lựa chọn khác đều là dạng khác nhau của CH3OH (methanol).",
     },
@@ -156,34 +156,34 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   setQuestions(shuffleArray([...questions])); // Trộn và thiết lập câu hỏi
 }, []); // Chỉ chạy một lần khi component được mount
 
-  const [currentQuestion, setCurrentQuestion] = useState(() => {
-    const saved = localStorage.getItem(userId + '_currentQuestion');
-    return saved ? JSON.parse(saved) : 0;
-  });
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [answerState, setAnswerState] = useState(() => {
-    const saved = localStorage.getItem(userId + '_answerState');
-    return saved ? JSON.parse(saved) : Array(questions.length).fill(null);
-  });
-  const [score, setScore] = useState(() => {
-    const saved = localStorage.getItem(userId + '_score');
-    return saved ? JSON.parse(saved) : 0;
-  });
-  const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem(userId + '_progress');
-    return saved ? JSON.parse(saved) : 0;
-  });
-  const [quizCompleted, setQuizCompleted] = useState(() => {
-    const saved = localStorage.getItem(userId + '_quizCompleted');
-    return saved ? JSON.parse(saved) : false;
-  });
-
+const [currentQuestion, setCurrentQuestion] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_currentQuestion`);
+  return saved ? JSON.parse(saved) : 0;
+});
+const [selectedOption, setSelectedOption] = useState(null);
+const [answerState, setAnswerState] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_answerState`);
+  return saved ? JSON.parse(saved) : Array(questions.length).fill(null);
+});
+const [score, setScore] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_score`);
+  return saved ? JSON.parse(saved) : 0;
+});
+const [progress, setProgress] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_progress`);
+  return saved ? JSON.parse(saved) : 0;
+});
+const [quizCompleted, setQuizCompleted] = useState(() => {
+  const saved = localStorage.getItem(`${userId}_${chapterId}_quizCompleted`);
+  return saved ? JSON.parse(saved) : false;
+});
+  
   useEffect(() => {
-    localStorage.setItem(userId + '_currentQuestion', JSON.stringify(currentQuestion));
-    localStorage.setItem(userId + '_answerState', JSON.stringify(answerState));
-    localStorage.setItem(userId + '_score', JSON.stringify(score));
-    localStorage.setItem(userId + '_progress', JSON.stringify(progress));
-    localStorage.setItem(userId + '_quizCompleted', JSON.stringify(quizCompleted));
+    localStorage.setItem(`${userId}_${chapterId}_currentQuestion`, JSON.stringify(currentQuestion));
+    localStorage.setItem(`${userId}_${chapterId}_answerState`, JSON.stringify(answerState));
+    localStorage.setItem(`${userId}_${chapterId}_score`, JSON.stringify(score));
+    localStorage.setItem(`${userId}_${chapterId}_progress`, JSON.stringify(progress));
+    localStorage.setItem(`${userId}_${chapterId}_quizCompleted`, JSON.stringify(quizCompleted));
   }, [currentQuestion, answerState, score, progress, quizCompleted, userId]);
 
   const handleOptionClick = (selectedAnswer) => {
@@ -253,11 +253,19 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
             <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
             <ul>
               {questions[currentQuestion].options.map((option, index) => (
-                <li key={index} onClick={() => handleOptionClick(option)} className={answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? 'correct' : answerState[currentQuestion] !== null && selectedOption === option ? 'incorrect' : ''}>
-                  ({String.fromCharCode(65 + index)}) {option}
-                  {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
-                  {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
-                </li>
+                <li key={index} onClick={() => handleOptionClick(option)}
+                className={
+                selectedOption !== null && // Thêm điều kiện này để chỉ tô màu khi đã có lựa chọn
+                answerState[currentQuestion] !== null &&
+                option === questions[currentQuestion].correctAnswer ? 'correct' : 
+                selectedOption !== null &&
+                answerState[currentQuestion] !== null &&
+                selectedOption === option && option !== questions[currentQuestion].correctAnswer ? 'incorrect' : ''
+                   }>
+            ({String.fromCharCode(65 + index)}) {option}
+            {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
+            {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
+              </li>
               ))}
             </ul>
             <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
