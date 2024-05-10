@@ -268,13 +268,17 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
               </li>
               ))}
             </ul>
-            <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
-            {showExplanation && (
-              <div className="explanation">
-                <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
-                <p>Giải thích: {questions[currentQuestion].explain}</p>
-              </div>
-            )}
+            {selectedOption !== null && (
+            <>
+              <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
+              {showExplanation && (
+                <div className="explanation">
+                  <p>Đáp án đúng: {questions[currentQuestion].correctAnswer}</p>
+                  <p>Giải thích: {questions[currentQuestion].explain}</p>
+                </div>
+              )}
+            </>
+          )}
           </div>
         )}
         {currentQuestion < questions.length && (
