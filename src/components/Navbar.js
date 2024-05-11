@@ -59,9 +59,7 @@ const Navbar = () => {
   const closeDropdown = () => {
     setShowDropdown(false);
   };
-  const isActive = (path) => {
-    return location.pathname === path;
-};
+  
   return (
     <nav  className={`NavbarItems ${transparent ? '' : 'solid'}`} onClick={closeDropdown}>
       <h1 className="navbar-logo">
@@ -72,7 +70,7 @@ const Navbar = () => {
       </div>
       <ul className={clicked ? "nav-menu active" : "nav-menu"}>
         <li>
-          <Link className={`nav-links ${isActive('/') ? 'active' : ''}`} to="/">
+          <Link className="nav-links" to="/">
             Trang chủ
           </Link>
         </li>
@@ -82,22 +80,22 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/Lythuyet') ? 'active' : ''}`} to="/Lythuyet">
+          <Link className="nav-links" to="/Lythuyet">
             Lý thuyết
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/Onthi') ? 'active' : ''}`} to="/Onthi">
+          <Link className="nav-links" to="/Onthi">
             Ôn thi
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/Tainguyen') ? 'active' : ''}`} to="/Tainguyen">
+          <Link className="nav-links" to="/Tainguyen">
             Tài nguyên và thảo luận
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/Vechungtoi') ? 'active' : ''}`} to="/Vechungtoi">
+          <Link className="nav-links" to="/Vechungtoi">
             Liên hệ
           </Link>
         </li>

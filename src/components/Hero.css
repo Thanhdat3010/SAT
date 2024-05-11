@@ -115,11 +115,9 @@
 @media screen and (max-width:555px){
     .hero-text h1{
         padding: 10px 20px;
-        align-items: center;
     }
     .hero-text p{
         padding: 0 0 2rem 0;
-        align-items: center;
     }
     .hero-text .show{
         padding: 0.6rem 1.1rem;

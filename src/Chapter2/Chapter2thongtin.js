@@ -34,19 +34,28 @@ function Chapter2thongtin() {
           </div>
           <Collapse defaultActiveKey={['1']} size="large">
             <Panel header="I. Khí" key="1" className='Panel'>
-            <p>Các đặc tính cơ bản của khí bao gồm:</p>
-            <p>•&nbsp;Khí không có thể tích xác định và có thể bị nén.</p>
-            <p>•&nbsp;Khí không có hình dạng xác định và lấy hình dạng của bình chứa chúng.</p>
-            <p>•&nbsp;Các phân tử khí được phân tán rộng rãi.</p>
+            <p>Các đặc tính cơ bản của khí bao gồm:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Khí không có thể tích xác định và có thể bị nén.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Khí không có hình dạng xác định và lấy hình dạng của bình chứa chúng.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Các phân tử khí được phân tán rộng rãi.
+            </p>
             <p>Ngoài các đặc tính cơ bản này, có nhiều lý thuyết và định luật khác mô tả cách khí thể hiện hành vi. Đây là trọng tâm chính của chương này.</p>
 
             </Panel>
             <Panel header="II. Lý thuyết về phân tử động học" key="2" className='Panel'>
-            <p>Hành vi của khí còn có thể được giải thích thêm bằng Lý thuyết phân tử động học, hay KMT. KMT mô tả những điều sau:</p>
-            <p>•&nbsp;Các phân tử khí là các hạt riêng lẻ di chuyển theo đường thẳng và ngẫu nhiên. Điều này sẽ tiếp tục cho đến khi chúng va chạm hoặc bị tác động bởi một lực khác.</p>
-            <p>•&nbsp;Các phân tử khí liên tục va chạm và truyền năng lượng trong suốt những va chạm này. Trong một mẫu khí cô lập, năng lượng tổng là bảo toàn.</p>
-            <p>•&nbsp;Thể tích của từng phân tử khí là không đáng kể so với thể tích mà chúng chiếm.</p>
-            <p>•&nbsp;Không xem xét sự tồn tại của lực hấp dẫn giữa các phân tử khí.</p>
+            <p>Hành vi của khí còn có thể được giải thích thêm bằng Lý thuyết phân tử động học, hay KMT. KMT mô tả những điều sau:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Các phân tử khí là các hạt riêng lẻ di chuyển theo đường thẳng và ngẫu nhiên. Điều này sẽ tiếp tục cho đến khi chúng va chạm hoặc bị tác động bởi một lực khác.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Các phân tử khí liên tục va chạm và truyền năng lượng trong suốt những va chạm này. Trong một mẫu khí cô lập, năng lượng tổng là bảo toàn.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Thể tích của từng phân tử khí là không đáng kể so với thể tích mà chúng chiếm.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Không xem xét sự tồn tại của lực hấp dẫn giữa các phân tử khí.
+            </p>
             <p>Những nguyên lý này giúp chúng ta hiểu và dự đoán hành vi quang học của khí bằng cách xem xét những chuyển động và tương tác vi mô của các hạt riêng lẻ.</p>
             </Panel>
             <Panel header="III. Áp lực" key="3" className='Panel'>
@@ -55,10 +64,14 @@ function Chapter2thongtin() {
             <img alt="Hình 2.1" src={Hinhchapter21} className="Hinhchapter"></img>
             <p>
             Cột thủy ngân (xem Hình 2.1) sử dụng một cột thủy ngân trong suốt được đổ thủy ngân vào một bình chứa chất thủy ngân. Khi bạn di chuyển lên độ cao, mức thủy ngân trong cột thủy ngân giảm vì có ít không khí ở độ cao cao hơn. Trung bình, chiều cao của thủy ngân trong cột là 760 milimét so với mức thủy ngân trong bình chứa. Áp suất trung bình này được gọi là áp suất tiêu chuẩn hoặc áp suất khí quyển bình thường.
-            Có nhiều đơn vị có thể được sử dụng để đo áp suất không khí. Ví dụ, milimét có thể được chuyển đổi thành inch; do đó, áp suất tiêu chuẩn 760 mm Hg cũng có thể được ghi nhận là 30.0 inch thủy ngân. Inch thủy ngân là đơn vị được sử dụng cho các bản tin thời tiết ở Hoa Kỳ. Ba đơn vị phổ biến khác tương ứng với 760 mm Hg là:</p>
-            <p>•&nbsp;Khí không có thể tích xác định và có thể bị nén.</p>
-            <p>•&nbsp;Khí không có hình dạng xác định và lấy hình dạng của bình chứa chúng.</p>
-            <p>•&nbsp;Các phân tử khí được phân tán rộng rãi.</p>
+            Có nhiều đơn vị có thể được sử dụng để đo áp suất không khí. Ví dụ, milimét có thể được chuyển đổi thành inch; do đó, áp suất tiêu chuẩn 760 mm Hg cũng có thể được ghi nhận là 30.0 inch thủy ngân. Inch thủy ngân là đơn vị được sử dụng cho các bản tin thời tiết ở Hoa Kỳ. Ba đơn vị phổ biến khác tương ứng với 760 mm Hg là:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Khí không có thể tích xác định và có thể bị nén.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Khí không có hình dạng xác định và lấy hình dạng của bình chứa chúng.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Các phân tử khí được phân tán rộng rãi.
+            </p>
             <p>Một đơn vị cuối cùng được gặp khi đo áp suất là pound trên mỗi inch vuông (psi). Đơn vị này thường được dành cho việc đo áp suất không khí trong lốp xe tại các trạm xăng ở Hoa Kỳ. Bồn đo áp suất được sử dụng để xác định áp suất của một khí bị chận trong một bình chứa. Hình dáng và mở đầu ở phía trên của bồn đo áp suất cho phép một lượng thủy ngân nhất định được chuyển động tùy thuộc vào áp suất khí quyển và áp suất của khí trong bình chứa. Có ba tình huống cần xem xét khi sử dụng bồn đo áp suất: áp suất khí bằng với áp suất khí quyển, áp suất khí lớn hơn áp suất khí quyển, và áp suất khí nhỏ hơn áp suất khí quyển. Các tình huống này có thể thấy trong Hình 2.2.</p>
             <img alt="Hình 2.2" src={Hinhchapter22} className="Hinhchapter"></img>
             </Panel>
@@ -139,10 +152,14 @@ function Chapter2thongtin() {
             <p>Công trình của Avogadro sẽ được xem xét kỹ lưỡng hơn trong Chương 6, nhưng tạm thời hãy nhớ quy tắc này: Thể tích bằng nhau của các khí đóng góp một cách đồng đều vào áp suất tổng. Ví dụ, nếu một container được điền 50% khí neon và 50% khí argon, với áp suất tổng là 760 torr, mỗi khí sẽ đóng góp 380 torr cho áp suất tổng. Nếu thể tích của các khí không bằng nhau, phần trăm thể tích mà mỗi khí chiếm sẽ đóng góp một phần trăm tương ứng vào áp suất tổng.</p>
             <p><b>Giải bài toán:</b></p>
             <p>Một container chứa ba loại khí được pha trộn với nhau ở điều kiện tiêu chuẩn (STP). Container này có (theo thể tích) 10% He, 40% neon và 50% argon. Áp suất riêng của ba loại khí là bao nhiêu?</p>
-            <p><b>Giải pháp:</b> Vì hỗn hợp khí này ở điều kiện STP, áp suất tổng sẽ là áp suất tiêu chuẩn, 760 torr. Cho các phần trăm khí đã được cung cấp, chúng ta có thể thiết lập như sau:</p>
-            <p>•&nbsp;10% của 760 là 76, nên He đóng góp 76 torr (10% * 760).</p>
-            <p>•&nbsp;50% (hoặc một nửa) của 760 là 380, nên Ar đóng góp 380 torr (50% * 760).</p>
-            <p>•&nbsp;304 torr còn lại đến từ Ne, đóng góp 304 torr (40% * 760).</p>
+            <p><b>Giải pháp:</b> Vì hỗn hợp khí này ở điều kiện STP, áp suất tổng sẽ là áp suất tiêu chuẩn, 760 torr. Cho các phần trăm khí đã được cung cấp, chúng ta có thể thiết lập như sau:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;10% của 760 là 76, nên He đóng góp 76 torr (10% * 760).
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;50% (hoặc một nửa) của 760 là 380, nên Ar đóng góp 380 torr (50% * 760).
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;304 torr còn lại đến từ Ne, đóng góp 304 torr (40% * 760).
+            </p>
             <p>Kiểm tra công việc của bạn. Tổng áp suất riêng có bằng áp suất tổng là 760 torr không?</p>
             </Panel>
             <Panel header="XII. Định luật Diffusion/Effusion của Graham và Mật độ của Khí" key="12" className='Panel'>
@@ -167,10 +184,14 @@ function Chapter2thongtin() {
             </p>
             </Panel> 
             <Panel header="XIII. Định luật Khí lý tưởng - Liên quan đến Áp suất, Thể tích, Nhiệt độ và Mol" key="13" className='Panel'>
-            <p>Định luật Khí lý tưởng được xuất phát từ Lý thuyết phân tử chuyển động. Bây giờ sau khi bạn đã xem xét một số định luật của khí, bạn có thể diễn đạt lại Lý thuyết phân tử chuyển động và nhận ra rằng theo lý tưởng, các phân tử khí:</p>
-            <p>•&nbsp;Nên cách xa nhau càng xa càng tốt (áp suất thấp và nhiệt độ cao là điều kiện tốt nhất cho điều này)</p>
-            <p>•&nbsp;Nên có càng ít khối lượng càng tốt (như H<sub>2</sub> hoặc He)</p>
-            <p>•&nbsp;Nên không có sự hấp dẫn với nhau</p>
+            <p>Định luật Khí lý tưởng được xuất phát từ Lý thuyết phân tử chuyển động. Bây giờ sau khi bạn đã xem xét một số định luật của khí, bạn có thể diễn đạt lại Lý thuyết phân tử chuyển động và nhận ra rằng theo lý tưởng, các phân tử khí:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Nên cách xa nhau càng xa càng tốt (áp suất thấp và nhiệt độ cao là điều kiện tốt nhất cho điều này)
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Nên có càng ít khối lượng càng tốt (như H<sub>2</sub> hoặc He)
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Nên không có sự hấp dẫn với nhau
+            </p>
             <p>Cần lưu ý rằng các khí thực sự không tuân theo tính lý tưởng, và có các phương trình có thể điều chỉnh các tính toán để bù đắp cho tình huống không lý tưởng. Tuy nhiên, những phương trình này là phức tạp và nằm ngoài phạm vi của bài đánh giá này.
 Theo định nghĩa, một khí lý tưởng tuân theo phương trình PV = nRT. Bạn sẽ nhận thấy hai biến mới trong phương trình này, n và R. Biến n đại diện cho số mol của khí và R là một hằng số. Trước khi bạn có thể sử dụng phương trình này, bạn phải trở nên quen với khái niệm mol và ý nghĩa của nó.
             </p>

@@ -61,9 +61,7 @@
     background: #6d92d0;
     transition: 0.3s;
 }
-.nav-links.active::before {
-    width: 100%; /* Hiển thị gạch chân cho nav link hiện tại */
-}
+
 .nav-links:hover::before {
     width: 100%;
 }

@@ -38,18 +38,28 @@ function Chapter3thongtin() {
           <Collapse defaultActiveKey={['1']} size="large">
             <Panel header="I. Tóm tắt lịch sử của nguyên tử" key="1" className='Panel'>
             <p>Ý tưởng của chúng ta về nguyên tử đã đi được một chặng đường dài trong vài nghìn năm qua. Ý tưởng ban đầu của người Hy Lạp về các chất là mọi thứ đều được tạo thành từ đất, gió, lửa hoặc nước. Ý tưởng về một hạt không thể phân chia được xuất hiện sau đó, và từ “nguyên tử” bắt nguồn từ từ “atomos” trong tiếng Hy Lạp, có nghĩa là “không thể phân chia”.</p>
-            <p>Vào đầu những năm 1800, John Dalton đã xây dựng Lý thuyết nguyên tử của mình, có thể tóm tắt như sau:</p>
-            <p>•&nbsp;Mọi vật chất đều được cấu tạo từ các nguyên tử.</p>
-            <p>•&nbsp;Tất cả các nguyên tử của một nguyên tố nhất định đều giống nhau (tuy nhiên, trong Chương 3 điều này sẽ bị tranh cãi).</p>
-            <p>•&nbsp;Hợp chất được tạo thành từ các nguyên tử kết hợp theo tỷ lệ cố định.</p>
-            <p>•&nbsp;Phản ứng hóa học liên quan đến sự sắp xếp lại các nguyên tử. Các nguyên tử không được tạo ra hoặc bị phá hủy trong phản ứng hóa học.</p>
+            <p>Vào đầu những năm 1800, John Dalton đã xây dựng Lý thuyết nguyên tử của mình, có thể tóm tắt như sau:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Mọi vật chất đều được cấu tạo từ các nguyên tử.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Tất cả các nguyên tử của một nguyên tố nhất định đều giống nhau (tuy nhiên, trong Chương 3 điều này sẽ bị tranh cãi).
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Hợp chất được tạo thành từ các nguyên tử kết hợp theo tỷ lệ cố định.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Phản ứng hóa học liên quan đến sự sắp xếp lại các nguyên tử. Các nguyên tử không được tạo ra hoặc bị phá hủy trong phản ứng hóa học.
+            </p>
             <p>Vào đầu những năm 1900, một nhà khoa học tên Robert Millikan đã thực hiện một thí nghiệm sử dụng những giọt dầu mang điện tích. Mặc dù các chi tiết của thí nghiệm có thể khá rộng rãi, nhưng về cơ bản các giọt nước được phép rơi qua một điện trường với một tốc độ nhất định. Từ thí nghiệm này, Millikan đã có thể xác định được khối lượng và điện tích của các electron trên giọt dầu.</p>            
             <p>Cũng vào đầu những năm 1900, Ernest Rutherford đã thực hiện Thí nghiệm lá vàng nổi tiếng của mình. Rutherford đã thiết lập một thí nghiệm trong đó một chất phóng xạ giải phóng các hạt alpha. Những hạt này nhắm vào một tấm lá vàng mỏng. Một màn phủ kẽm sunfua được đặt xung quanh lá vàng để phát hiện các hạt alpha khi chúng chạm vào màn hình. Thí nghiệm của Rutherford cho thấy rằng trong khi một số hạt alpha bị lệch và bật trở lại, phần lớn các hạt alpha có thể đi xuyên qua lá vàng. Điều này được thể hiện trong Hình 3.1.</p>
-            <p>Câu hỏi tiếp theo cần trả lời là: Tại sao điều này có thể xảy ra? Làm thế nào một hạt alpha, một hạt có khối lượng, có thể đi xuyên qua lá vàng, một chất khác có khối lượng? Vì vàng được rèn thành một tấm mỏng (một số người cho rằng dày khoảng 100 nguyên tử) nên nhiều hạt alpha có thể đi qua lá vàng. Tuy nhiên, không phải mọi hạt alpha đều có thể đi qua và một số bị bật trở lại nguồn bức xạ. Rutherford đã rút ra kết luận sau từ thí nghiệm này: </p>
-            <p>•&nbsp;Nguyên tử chủ yếu là không gian trống rỗng. (Kết luận này thường được gọi là “khái niệm không gian trống rỗng.”)</p>
-            <p>•&nbsp;Kích thước hạt nhân nguyên tử nhỏ so với kích thước của toàn bộ nguyên tử.</p>
-            <p>•&nbsp;Khối lượng nguyên tử tập trung ở hạt nhân nguyên tử.</p>
-            <p>•&nbsp;Hạt nhân mang điện tích dương.</p>
+            <p>Câu hỏi tiếp theo cần trả lời là: Tại sao điều này có thể xảy ra? Làm thế nào một hạt alpha, một hạt có khối lượng, có thể đi xuyên qua lá vàng, một chất khác có khối lượng? Vì vàng được rèn thành một tấm mỏng (một số người cho rằng dày khoảng 100 nguyên tử) nên nhiều hạt alpha có thể đi qua lá vàng. Tuy nhiên, không phải mọi hạt alpha đều có thể đi qua và một số bị bật trở lại nguồn bức xạ. Rutherford đã rút ra kết luận sau từ thí nghiệm này:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Nguyên tử chủ yếu là không gian trống rỗng. (Kết luận này thường được gọi là “khái niệm không gian trống rỗng.”)
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Kích thước hạt nhân nguyên tử nhỏ so với kích thước của toàn bộ nguyên tử.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Khối lượng nguyên tử tập trung ở hạt nhân nguyên tử.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Hạt nhân mang điện tích dương.
+            </p>
             <img alt="Hình 3.1" src={Hinhchapter31} className="Hinhchapter"></img>
             </Panel>
             <Panel header="II. Các hạt hạ nguyên tử" key="2" className='Panel'>
@@ -65,13 +75,20 @@ function Chapter3thongtin() {
             <p>Tồn tại các nguyên tử cacbon khác với số khối khác nhau: carbon-13 và carbon-14. Đây là sự so sánh của các nguyên tử carbon này:</p>
             <img alt="Bảng 2" src={Bang2Chapter3} className="Bangchapter"></img>
             <p>Lưu ý rằng có điều gì đó khác biệt ở hạt nhân của các nguyên tử carbon này. Những nguyên tử này là đồng vị của nhau. Những điểm tương đồng và khác biệt được trình bày dưới đây:</p>
-            <p>Các đồng vị có giống nhau:</p>
-            <p>•&nbsp;Số nguyên tử</p>
-            <p>•&nbsp;Số lượng proton</p>
-            <p>•&nbsp;Tên của phần tử</p>
-            <p>Các đồng vị có sự khác biệt:</p>
-            <p>•&nbsp;Số neutron</p>
-            <p>•&nbsp;Số khối</p>
+            <p>Các đồng vị có giống nhau:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số nguyên tử
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số lượng proton
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Tên của phần tử
+            </p>
+            <p>Các đồng vị có sự khác biệt:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số neutron
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số khối
+            </p>
             <p>Đồng vị có thể giúp xác định khối lượng nguyên tử (không phải số khối) của một nguyên tố. Khối lượng nguyên tử của một nguyên tố có thể được tìm thấy trên bảng tuần hoàn. Khối lượng nguyên tử là một số có chứa chữ số thập phân. Tại sao? Có thể có một phần proton hoặc neutron không? Khối lượng nguyên tử không phải là số nguyên vì khối lượng nguyên tử tính đến tất cả khối lượng của các đồng vị của nguyên tử và độ phổ biến tương đối của chúng. Ví dụ, brom có hai đồng vị là bromine-79 và bromine-81. Người ta đã phát hiện ra rằng 50% tổng số nguyên tử brom là bromine-79 và 50% là bromine-81. Từ đó bạn có thể tính được tại sao khối lượng nguyên tử của bromine là 80:
             <img src={Congthuc2Chapter3} className="math-image" alt="Math Formula"/>
             </p>
@@ -165,11 +182,16 @@ function Chapter3thongtin() {
             <p><b>Giải pháp:</b> Tám electron ở mức năng lượng chính hai sẽ cảm thấy điện tích hạt nhân hiệu dụng +9 vì hạt nhân có điện tích +11 và có hai electron ở mức năng lượng chính một.</p>
             </Panel>
             <Panel header="VIII. Số lượng tử" key="8" className='Panel'>
-            <p>Để giúp theo dõi từng electron có mặt trong một nguyên tử, bốn số lượng lượng tử được gán cho mỗi electron. Các quy tắc để gán số lượng lượng tử như sau:</p>
-            <p>•&nbsp;Số đầu tiên được gọi là số lượng tử chính, n, và nó có thể là số nguyên bất kỳ. Số lượng tử đầu tiên, n, biểu thị mức năng lượng chính mà electron đang xét. Ví dụ, một electron trong H là 1s<sup>1</sup> và n sẽ bằng 1. Electron hóa trị của Li, 1s<sup>2</sup>2s<sup>1</sup>, sẽ có n bằng 2.</p>
-            <p>•&nbsp;Số thứ hai được gọi là số lượng tử động lượng góc, l, và nó có thể là số nguyên từ 0 đến n – 1. Số lượng tử thứ hai biểu thị cấp con mà electron ở trong đó. Nếu electron ở quỹ đạo s, thì l = 0. Một electron trong quỹ đạo p sẽ có l = 1, v.v.</p>
-            <p>•&nbsp;Số thứ ba được gọi là số lượng tử từ, ml, và nó có thể là số nguyên nằm trong khoảng từ –l đến + l. Số lượng tử thứ ba giúp chúng ta xác định vị trí của electron được đề cập ở vùng nào của mỗi cấp độ con.Những vùng này là quỹ đạo cụ thể.</p>
-            <p>•&nbsp;Số lượng tử thứ tư là ms và nó chỉ có thể có giá trị +1/2 hoặc –1/2.</p>
+            <p>Để giúp theo dõi từng electron có mặt trong một nguyên tử, bốn số lượng lượng tử được gán cho mỗi electron. Các quy tắc để gán số lượng lượng tử như sau:
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số đầu tiên được gọi là số lượng tử chính, n, và nó có thể là số nguyên bất kỳ. Số lượng tử đầu tiên, n, biểu thị mức năng lượng chính mà electron đang xét. Ví dụ, một electron trong H là 1s<sup>1</sup> và n sẽ bằng 1. Electron hóa trị của Li, 1s<sup>2</sup>2s<sup>1</sup>, sẽ có n bằng 2.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số thứ hai được gọi là số lượng tử động lượng góc, l, và nó có thể là số nguyên từ 0 đến n – 1. Số lượng tử thứ hai biểu thị cấp con mà electron ở trong đó. Nếu electron ở quỹ đạo s, thì l = 0. Một electron trong quỹ đạo p sẽ có l = 1, v.v.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số thứ ba được gọi là số lượng tử từ, ml, và nó có thể là số nguyên nằm trong khoảng từ –l đến + l. Số lượng tử thứ ba giúp chúng ta xác định vị trí của electron được đề cập ở vùng nào của mỗi cấp độ con.Những vùng này là quỹ đạo cụ thể.
+            <br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; •&nbsp;Số lượng tử thứ tư là ms và nó chỉ có thể có giá trị +1/2 hoặc –1/2.
+            </p>
             <p>Số lượng tử thứ tư biểu thị hướng quay của electron. Các dấu ngược nhau biểu thị các spin ngược nhau.</p>
             <p>Việc gán số lượng tử cho các electron của một vài nguyên tử đơn giản sẽ giúp chúng ta biết cách gán các số này.</p>
             <p><b>Vấn đề:</b></p>
