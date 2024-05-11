@@ -75,7 +75,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/Lythuyet') ? 'active' : ''}`} to="/Lythuyet">
+          <Link className="nav-links" to="/Lythuyet">
             Lý thuyết
           </Link>
         </li>
