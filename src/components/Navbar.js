@@ -75,12 +75,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} to="https://www.facebook.com/messages/t/296055206930567">
-            Chatbot AI
-          </Link>
-        </li>
-        <li>
-          <Link className="nav-links" to="/Lythuyet">
+          <Link className={`nav-links ${isActive('/Lythuyet') ? 'active' : ''}`} to="/Lythuyet">
             Lý thuyết
           </Link>
         </li>
