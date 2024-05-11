@@ -5,7 +5,6 @@ import Hinhchapter42 from "../Hinhchapter/Chapter4.2.png";
 import Hinhchapter43 from "../Hinhchapter/Chapter4.3.png";
 import Hinhchapter44 from "../Hinhchapter/Chapter4.4.png";
 import Hinhchapter45 from "../Hinhchapter/Chapter4.5.png";
-import Congthuc4Chapter3  from "../Hinhchapter/Congthuc4Chapter3.png"
 import Bang1Chapter4  from "../Hinhchapter/Bang1Chapter4.png"
 import Bang2Chapter4  from "../Hinhchapter/Bang2Chapter4.png"
 import Bang3Chapter4  from "../Hinhchapter/Bang3Chapter4.png"
