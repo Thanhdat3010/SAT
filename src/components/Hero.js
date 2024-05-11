@@ -41,7 +41,7 @@ function Hero(props) {
                 <div className='hero-text'>
                     <h1>{props.title}</h1>
                     <p>{typedText}</p>
-                    <a href='/Tainguyen' className={props.btnClass}>
+                    <a href='/Lythuyet' className={props.btnClass}>
                         {props.buttonText}
                     </a>
                 </div>

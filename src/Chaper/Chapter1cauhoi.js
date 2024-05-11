@@ -41,7 +41,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
     {
       question: "Chất nào đại diện cho một hỗn hợp đồng nhất?",
       options: [formatChemicalFormula("CH3OH(l)"), formatChemicalFormula("CH3OH(aq)"), formatChemicalFormula("CH3OH(g)"), formatChemicalFormula("CH3OH(s)"), "Không chất nào ở trên"],
-      correctAnswer: "Không chất nào ở trên",
+      correctAnswer: formatChemicalFormula("CH3OH(aq)"),
       explain: "Hỗn hợp đồng nhất chỉ chứa một loại chất. Các lựa chọn khác đều là dạng khác nhau của CH3OH (methanol).",
     },
     {

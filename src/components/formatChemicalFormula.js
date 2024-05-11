@@ -10,4 +10,5 @@ function formatChemicalFormula(formula) {
     return part;
   });
 }
+
 export default formatChemicalFormula;
