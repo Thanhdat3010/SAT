@@ -11,9 +11,11 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useEffect, useState } from 'react'
 import Chapter1 from "./Chaper/Chapter1";
 import Profile from "./routes/Profile";
+import FLashcard from "./routes/Flashcard";
 import Chapter2 from "./Chapter2/Chapter2";
 import Chapter3 from "./Chapter3/Chapter3";
 import Chapter4 from "./Chapter4/Chapter4";
+import AI from "./components/AI";
 import Post from "./Blog/Post";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
@@ -49,6 +51,8 @@ function App() {
     <Route path='/login' element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />}/>
     <Route path='/' element={<Trangchu />}/>
     <Route path='/Profile' element={<Profile />}/>
+    <Route path='/Flashcard' element={<FLashcard />}/>
+
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
     <Route path='/Chapter3' element={<Chapter3 />}/>

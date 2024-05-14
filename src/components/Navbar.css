@@ -35,7 +35,7 @@
 
 .nav-menu {
     display: grid;
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(8, auto);
     list-style: none;
     grid-gap: 10px;
     align-items: center;

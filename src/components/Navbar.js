@@ -77,8 +77,13 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
+          <Link className={`nav-links ${isActive('/Flashcard') ? 'active' : ''}`} to="/Flashcard">
+            Flashcard
+          </Link>
+        </li>
+        <li>
           <Link className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} to="https://www.facebook.com/messages/t/296055206930567">
-            ChatbotAI
+            Chatbot AI
           </Link>
         </li>
         <li>
@@ -101,6 +106,7 @@ const Navbar = () => {
             Liên hệ
           </Link>
         </li>
+        
         {isLoggedIn ? (
           <li className={avatarActive ? "avatar-container active" : "avatar-container"} onClick={toggleDropdown}>
             <img alt="img" src={background ? background : avatar} className="avatar" /> {/* Sử dụng background người dùng đã chọn hoặc hình ảnh mặc định */}

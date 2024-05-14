@@ -30,25 +30,25 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
       question: "Chất nào có thể bị phân hủy về mặt hóa học?",
       options: ["Ammonia", "Iron", "Neon", "Hydrogen", "Fluorine"],
       correctAnswer: "Ammonia",
-      explain: "Hợp chất có thể bị phân hủy về mặt hóa học, còn các nguyên tố thì không. Ammonia là hợp chất duy nhất trong khi các lựa chọn khác đều là nguyên tố.",
+      explain: "Các hợp chất có thể bị phân hủy hóa học, trong khi các nguyên tố không thể. Amoniac là duy nhất hợp chất trong khi các lựa chọn khác đều là các nguyên tố.",
     },
     {
       question: "Những đơn vị nào có thể được sử dụng để biểu thị lượng năng lượng hấp thụ hoặc giải phóng trong phản ứng hóa học?",
       options: ["Độ và gam", "Torr và mmHg", "Gam và lít", "Calo và joule", "Mét và cm3"],
       correctAnswer: "Calo và joule",
-      explain: "Nhiệt lượng trong phản ứng hóa học thường được đo bằng calo và joule.",
+      explain: "Nhiệt được đo bằng calo hoặc joule. Một đơn vị khác mà bạn có thể gặp là kilojoule, trong đó 1 kilojoule bằng 1.000 joule.",
     },
     {
       question: "Chất nào đại diện cho một hỗn hợp đồng nhất?",
       options: [formatChemicalFormula("CH3OH(l)"), formatChemicalFormula("CH3OH(aq)"), formatChemicalFormula("CH3OH(g)"), formatChemicalFormula("CH3OH(s)"), "Không chất nào ở trên"],
       correctAnswer: formatChemicalFormula("CH3OH(aq)"),
-      explain: "Hỗn hợp đồng nhất chỉ chứa một loại chất. Các lựa chọn khác đều là dạng khác nhau của CH3OH (methanol).",
+      explain: "Tất cả các dung dịch phải đồng nhất. Ký hiệu (aq) được sử dụng để chỉ định điều này.",
     },
     {
       question: "Một cuốn sách được nhấc lên khỏi sàn và đặt trên một cái bàn cao hơn sàn nhà một mét. Cuốn sách có",
       options: ["Thu được năng lượng âm thanh", "Mất năng lượng hóa học", "Thu được thế năng", "Thu được động năng", "Mất năng lượng hạt nhân"],
       correctAnswer: "Thu được thế năng",
-      explain: "Việc nâng một vật gì đó lên cao hơn sẽ tăng thế năng của nó.",
+      explain: "Việc nâng một cái gì đó lên một mức cao hơn cung cấp cho nó thế năng cao hơn.",
     },
     {
       question: "Tuyên bố nào không chính xác về năng lượng?",
@@ -60,13 +60,13 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
         "Năng lượng có khối lượng và chiếm không gian."
       ],
       correctAnswer: "Năng lượng có khối lượng và chiếm không gian.",
-      explain: "Năng lượng là một khái niệm vật lý và không có khối lượng. Nó có thể tồn tại dưới nhiều dạng khác nhau và có thể chuyển đổi từ dạng này sang dạng khác."
+      explain: "Vật chất, không phải năng lượng, là thuật ngữ được sử dụng cho cái gì đó có khối lượng và chiếm không gian."
     },
     {
       question: "Khối lượng của một vật thể có mật độ 13 g/mL và thể tích 10 mL là bao nhiêu?",
       options: ["1.3 g/mL", "0.77 g/mL", "1.3 g/L", "130 g", "130 g/L"],
       correctAnswer: "130 g",
-      explain: "Khối lượng của một vật thể có thể được tính bằng công thức: khối lượng = thể tích × mật độ. Trong trường hợp này, khối lượng = 10 mL × 13 g/mL = 130 g.",
+      explain: "Hãy cẩn thận với các đơn vị! Tích số là khối lượng/thể tích. Vì vậy, khối lượng = thể tích × tích số. 10 mL × 13 g/mL = 130 gam.",
     },
     {
       question: "Câu nào dưới đây không đúng?",
@@ -78,7 +78,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
         "Sắt nguyên chất là một hỗn hợp không đồng nhất."
       ],
       correctAnswer: "Sắt nguyên chất là một hỗn hợp không đồng nhất.",
-      explain: "Sắt nguyên chất là một chất tinh khiết, không phải một hỗn hợp."
+      explain: "Tất cả các nguyên tố và hợp chất đều là chất tinh khiết. Sắt, một nguyên tố, rơi vào loại này."
     },
     {
       question: "Loại thay đổi nào khác với bốn loại còn lại?",
@@ -90,10 +90,10 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
         "Đốt cháy propane"
       ],
       correctAnswer: "Làm tan chảy một viên đá",
-      explain: "Làm tan chảy một viên đá là một sự thay đổi vật lý, trong khi các lựa chọn khác là các sự thay đổi hóa học."
+      explain: "Việc tan chảy của một viên đá lạnh là một thay đổi vật lý. Các lựa chọn khác đều là các thay đổi hóa học."
     },
     {
-      question: "Điều nào sau đây không phải là tài sản vật chất?",
+      question: "Đâu không phải là một tính chất vật lý?",
       options: [
         "Màu sắc",
         "Trạng thái",
@@ -102,19 +102,19 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
         "Phản ứng với oxygen"
       ],
       correctAnswer: "Phản ứng với oxygen",
-      explain: "Phản ứng với oxygen là một hiện tượng hóa học, không phải là một đặc điểm vật chất."
+      explain: "Phản ứng của bất kỳ nguyên tố nào đều dẫn đến sự thay đổi hóa học."
     },
     {
       question: "Sự khác biệt giữa năng lượng tiềm năng của sản phẩm và năng lượng tiềm năng của các chất phản ứng trong phản ứng được gọi là",
       options: [
         "Nhiệt độ phản ứng",
-        "Sức nóng của phản ứng",
+        "Nhiệt của phản ứng",
         "Sự thay đổi phản ứng",
         "Phản ứng tỏa nhiệt",
         "Phản ứng thu nhiệt"
       ],
-      correctAnswer: "Sự thay đổi phản ứng",
-      explain: "Sự khác biệt giữa năng lượng tiềm năng của sản phẩm và các chất phản ứng trong phản ứng được gọi là sự thay đổi phản ứng."
+      correctAnswer: "Nhiệt của phản ứng",
+      explain: "Hiệu chênh lệch thế năng của chất phản ứng và sản phẩm của phản ứng được gọi là Nhiệt của phản ứng, ΔH."
     },
     {
       question: "Nghiên cứu về vật chất được gọi là",
