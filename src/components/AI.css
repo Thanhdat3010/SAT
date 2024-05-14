@@ -1,8 +1,8 @@
 
-  .content{
+  .content1{
     display: flex;
   }
-  button{
+  .button-camera{
     background:#1089ff;
     transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
     color: white;
@@ -15,7 +15,7 @@
     font-size: 30px; 
   }
   
-  button:hover{
+  .button-camera:hover{
     transform: scale(1.05);
   }
   

@@ -189,8 +189,8 @@
     .nav-links {
         display: block;
         width: 100%;
-        font-size: 1.5rem; /* Giảm kích thước font để phù hợp với màn hình nhỏ */
-        padding: 1.2rem 0; /* Giảm padding để giảm chiều cao của từng mục */
+        font-size: 1.4rem; /* Giảm kích thước font để phù hợp với màn hình nhỏ */
+        padding: 0.8rem 0; /* Giảm padding để giảm chiều cao của từng mục */
     }
 
     

@@ -811,7 +811,7 @@ function AI() {
     <div className="AiPage">
       <div id="title">
         <b>NHẬN DIỆN AI</b><br />
-        <button type="button" onClick={startCamera}>Start</button>
+        <button className='button-camera' onClick={startCamera}>Start</button>
       </div>
       <div id="webcam-container" style={{ textAlign: 'center' }}></div>
       <div id="label-container" style={{ textAlign: 'center' }}></div>
