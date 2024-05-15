@@ -4,7 +4,12 @@
 .body{
   background-color: #fafafa;
 }
-
+.Bangtuanhoan{
+  margin-top: 100px;
+}
+.table-container{
+  margin-top: 20px;
+}
 #container {
   position: fixed;
   z-index: 1000;

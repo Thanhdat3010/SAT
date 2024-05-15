@@ -14,6 +14,11 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [avatarActive, setAvatarActive] = useState(false);
   const [transparent, setTransparent] = useState(true);
+  const openMessenger = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const messengerURL = isMobile ? 'fb-messenger://user/296055206930567' : 'https://www.facebook.com/messages/t/296055206930567';
+    window.open(messengerURL);
+};
 
   const { background } = useContext(BackgroundContext); // Lấy background từ context
   useEffect(() => {
@@ -82,9 +87,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} to="https://www.facebook.com/messages/t/296055206930567">
+        <a className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} onClick={openMessenger}>
             Chatbot AI
-          </Link>
+        </a>
         </li>
         <li>
           <Link className={`nav-links ${isActive('/Lythuyet') ? 'active' : ''}`} to="/Lythuyet">

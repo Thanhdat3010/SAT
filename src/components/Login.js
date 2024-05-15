@@ -1,6 +1,9 @@
+import './Login.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import { auth } from './firebase'; // Import Firebase authentication
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -9,113 +12,41 @@ const Login = (props) => {
     const [passwordError, setPasswordError] = useState('');
     const [authMode, setAuthMode] = useState('signin'); // Mặc định là signin
     const navigate = useNavigate();
-    
-    const checkAccountExists = (callback) => {
-        fetch('http://localhost:3080/check-account', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email }),
-        })
-          .then((r) => r.json())
-          .then((r) => {
-            callback(r?.userExists)
-          })
-      }
-    const onButtonClick = () => {
-        // Xóa mọi lỗi trước đó
+
+    const onButtonClick = async () => {
         setEmailError('');
         setPasswordError('');
-        checkAccountExists((accountExists) => {
-        if (authMode === 'signin' && accountExists) {
-            // Login logic
-            if ('' === email) {
-                setEmailError('Hãy nhập email của bạn');
-                return;
-            }
-            if ('' === password) {
-                setPasswordError('Hãy nhập mật khẩu của bạn');
-                return;
-            }
-           
-            // Thực hiện lệnh gọi API đăng nhập
-            fetch('http://localhost:3080/auth', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-              })
-            .then((r) => r.json())
-            .then((r) => {
-                if ('success' === r.message) {
-                    // Login successful
-                    localStorage.setItem('user', JSON.stringify({ email, token: r.token }));
-                    localStorage.setItem('isLoggedIn', true);
-                    props.setLoggedIn(true);
-                    props.setEmail(email);
-                    navigate('/');
-                } else {
-                    // Login failed
-                    window.alert('Bạn đã nhập sai Email hoặc mật khẩu');
-                }
-            })
-            .catch(error => console.error('Login error:', error));
-        } else{
-            setAuthMode('signup'); //Quay lại màn hình ký
 
+        try {
+            if (authMode === 'signin') {
+                // Đăng nhập
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log('Đăng nhập thành công:', user);
+                localStorage.setItem('user', JSON.stringify({ email }));
+                localStorage.setItem('isLoggedIn', true);
+                props.setLoggedIn(true);
+                props.setEmail(email);
+                navigate('/');
+            } else {
+                // Đăng ký
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log('Đăng ký thành công:', user);
+                navigate('/signin');
+            }
+        } catch (error) {
+            console.error('Lỗi xác thực:', error);
+            if (error.code === 'auth/email-already-in-use') {
+                setEmailError('Email đã được sử dụng');
+            } else if (error.code === 'auth/invalid-email') {
+                setEmailError('Email không hợp lệ');
+            } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                setPasswordError('Email hoặc mật khẩu không đúng');
+            } else {
+                setPasswordError('Đăng nhập/Đăng ký không thành công');
+            }
         }
-        
-        if (authMode === 'signup') {
-            // Registration logic
-           
-            if ('' === email) {
-                setEmailError('Hãy nhập email của bạn');
-                return;
-            }
-            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-                setEmailError('Hãy nhập email hợp lệ');
-                return;
-            }
-            if ('' === password) {
-                setPasswordError('Hãy nhập mật khẩu của bạn');
-                return;
-            }
-            if (password.length < 7) {
-                setPasswordError('The password must be 8 characters or longer');
-                return;
-            }
-            
-            checkAccountExists((accountExists) => {
-                if (accountExists) {
-                    window.alert('Địa chỉ email này đã tồn tại');
-                    setAuthMode('signin'); //Quay lại màn hình đăng nhập
-                } else {
-            // Thực hiện lệnh gọi API đăng ký
-            fetch('http://localhost:3080/auth', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            })
-            .then((r) => r.json())
-            .then((r) => {
-                if ('success' === r.message) {
-                    // Registration successful
-                    window.confirm(
-                        'Bạn có muốn tạo tài khoản mới',
-                      )                  
-                      setAuthMode('signin'); //Quay lại màn hình ký
-                } else {
-                    // Registration failed
-                    window.alert('Đăng ký thất bại');
-                }
-            })
-            .catch(error => console.error('Registration error:', error));
-        }})}
-    })
     };
 
     const changeAuthMode = () => {

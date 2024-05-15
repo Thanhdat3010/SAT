@@ -15,7 +15,6 @@ import FLashcard from "./routes/Flashcard";
 import Chapter2 from "./Chapter2/Chapter2";
 import Chapter3 from "./Chapter3/Chapter3";
 import Chapter4 from "./Chapter4/Chapter4";
-import AI from "./components/AI";
 import Post from "./Blog/Post";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
