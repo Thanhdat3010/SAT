@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Chapter1cauhoi.css';
 import formatChemicalFormula from '../components/formatChemicalFormula';
 const Chapter1cauhoi = ({ onCompletion,onReset }) => {
+  
   const user = JSON.parse(localStorage.getItem('user'));
   const [questions, setQuestions] = useState([]);
   const chapterId = 'chapter1'; // Tạo một ID riêng cho mỗi chương
   const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
   const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
+  
   function shuffleArray(array) { //Hàm trộn mảng
     let currentIndex = array.length, randomIndex;
   
@@ -24,6 +26,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   
     return array;
   }
+  
   useEffect(() => {
   const questions = [
     {
@@ -40,8 +43,8 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
     },
     {
       question: "Chất nào đại diện cho một hỗn hợp đồng nhất?",
-      options: [formatChemicalFormula("CH3OH(l)"), formatChemicalFormula("CH3OH(aq)"), formatChemicalFormula("CH3OH(g)"), formatChemicalFormula("CH3OH(s)"), "Không chất nào ở trên"],
-      correctAnswer: formatChemicalFormula("CH3OH(aq)"),
+      options: ["CH3OH(l)", "CH3OH(aq)", "CH3OH(g)", "CH3OH(s)", "Không chất nào ở trên"],
+      correctAnswer: "CH3OH(aq)",
       explain: "Tất cả các dung dịch phải đồng nhất. Ký hiệu (aq) được sử dụng để chỉ định điều này.",
     },
     {
@@ -153,6 +156,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
       explain: "Năng lượng kích hoạt là năng lượng cần thiết để đạt tới phức hợp được kích hoạt, điểm mà chất phản ứng trở thành sản phẩm."
     },
   ];
+  
   setQuestions(shuffleArray([...questions])); // Trộn và thiết lập câu hỏi
 }, []); // Chỉ chạy một lần khi component được mount
 
@@ -201,7 +205,7 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
       }
     }
   };
-
+  
   const nextQuestion = () => {
     setSelectedOption(null);
     setShowExplanation(false);  // Reset trạng thái hiển thị giải thích khi chuyển câu hỏi
@@ -262,7 +266,7 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
                 answerState[currentQuestion] !== null &&
                 selectedOption === option && option !== questions[currentQuestion].correctAnswer ? 'incorrect' : ''
                    }>
-            ({String.fromCharCode(65 + index)}) {option}
+            ({String.fromCharCode(65 + index)}) {formatChemicalFormula(option)}
             {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
             {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
               </li>

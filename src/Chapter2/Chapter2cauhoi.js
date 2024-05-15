@@ -30,19 +30,19 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
   const questions = [
     {
         question: "Loại khí nào dưới nhiệt độ cao và áp suất thấp hành xử giống nhất như một khí lý tưởng?",
-        options: ["He", formatChemicalFormula ("O2"), formatChemicalFormula("NH3"), formatChemicalFormula("CO2"), "Ne"],
+        options: ["He",  "O2", "NH3", "CO2", "Ne"],
         correctAnswer: "He",
         explain: "Càng nhỏ khí, nó sẽ càng hành xử giống như khí lý tưởng hơn. Hơn nữa, khí hành xử giống như khí lý tưởng nhất khi cách xa nhau. Điều này xảy ra ở áp suất thấp và nhiệt độ cao."
       },
       {
         question: "Mẫu nào thể hiện hạt được sắp xếp theo một mẫu hình hình học đều?",
-        options: [formatChemicalFormula("CO2 (g)"), formatChemicalFormula("CO2 (s)"), formatChemicalFormula("CO2 (l)"), formatChemicalFormula("CO2 (aq)"), "Không có cái nào phù hợp"],
-        correctAnswer: formatChemicalFormula("CO2 (s)"),
+        options: ["CO2 (g)", "CO2 (s)", "CO2 (l)", "CO2 (aq)", "Không có cái nào phù hợp"],
+        correctAnswer: ("CO2 (s)"),
         explain: "Một mô hình hình học đều mô tả tốt nhất một chất rắn."
       },
       {
         question: "Ở nhiệt độ nào, mẫu nước có năng lượng kinet trung bình cao nhất?",
-        options: ["0 độ Celsius", "100 độ Celsius", "0K", "100K", "273K"],
+        options: ["0 độ Celsius", "100 độ Celsius", "0 K", "100 K", "273 K"],
         correctAnswer: "100 độ Celsius",
         explain: "Năng lượng Kinet Trung bình là thuật ngữ mô tả nhiệt độ. Nhiệt độ cao nhất có mặt trong các mẫu này là 100 độ Celsius, tương ứng với 373 Kelvin."
       },
@@ -54,7 +54,7 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
       },
       {
         question: "Khí nào được dự kiến sẽ có tỷ lệ tràn ra cao nhất?",
-        options: [formatChemicalFormula("O2"), formatChemicalFormula("F2"), formatChemicalFormula("H2O"), "He", formatChemicalFormula("CH4")],
+        options: ["O2", "F2", "H2O", "He", "CH4"],
         correctAnswer: "He",
         explain: "Khí nhẹ nhất sẽ có mật độ thấp nhất và tỷ lệ tràn ra cao nhất. Trong số các lựa chọn, helium là khí nhẹ nhất."
       },
@@ -72,13 +72,13 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
       },
       {
         question: "Một hỗn hợp khí tồn tại trong một container kín với các phần trăm sau đây: helium 40%, neon 50%, và argon 10% Nếu áp suất tổng của các khí là 1100 torr, thì điều nào sau đây đúng về các khí này?",
-        options: ["Thể tích và nhiệt độ có một mối quan hệ nghịch thìch", "Thể tích và áp suất có một mối quan hệ thuận", "Áp suất riêng của khí neon là 550 torr", "Áp suất riêng của khí argon là 100 torr", "Các áp suất riêng của các khí không thể được tính toán với thông tin đã cho"],
+        options: ["Thể tích và nhiệt độ có một mối quan hệ tỉ lệ nghịch", "Thể tích và áp suất có một mối quan hệ thuận", "Áp suất riêng của khí neon là 550 torr", "Áp suất riêng của khí argon là 100 torr", "Các áp suất riêng của các khí không thể được tính toán với thông tin đã cho"],
         correctAnswer: "Áp suất riêng của khí neon là 550 torr",
         explain: "Neon chiếm 50% số phân tử khí hiện có. Neon cũng sẽ đóng góp 50% tổng áp suất. (1100 torr)(0.50) = 550 torr."
       },
       {
         question: "Khí nào được dự kiến sẽ có mật độ thấp nhất ở STP?",
-        options: [formatChemicalFormula("SO2"),formatChemicalFormula("CO2"),formatChemicalFormula("Cl2"), "Xe", "Ar"],
+        options: ["SO2","CO2","Cl2", "Xe", "Ar"],
         correctAnswer: "Ar",
         explain: "Mật độ của một khí là khối lượng mol của khí chia cho 22.4L. Đối với argon, điều này sẽ là 39.95g/22.4L = 1.78 g/L. Hãy nhớ rằng không cần máy tính. Vì argon là khí nhẹ nhất, nó sẽ có mật độ thấp nhất."
       },
@@ -217,7 +217,7 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
                 answerState[currentQuestion] !== null &&
                 selectedOption === option && option !== questions[currentQuestion].correctAnswer ? 'incorrect' : ''
                    } >
-            ({String.fromCharCode(65 + index)}) {option}
+            ({String.fromCharCode(65 + index)}) {formatChemicalFormula(option)}
             {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
             {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
               </li>

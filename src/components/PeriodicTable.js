@@ -88,6 +88,7 @@ class PeriodicTable extends React.Component {
 
     return (
       <div className="block contactBlock">
+      <div className='Bangtuanhoan'>
         {/* <div className="search-container">
           <input
             type="text"
@@ -104,9 +105,10 @@ class PeriodicTable extends React.Component {
           </ul>
         </div> */}
         <h1 style={{ fontFamily: 'Roboto', color: '#1089ff', marginTop: '50px', textAlign: 'center' }}>
-          <b>Bảng tuần hoàn hóa học</b>
+          <b>BẢNG TUẦN HOÀN HÓA HỌC</b>
         </h1>
         <center>
+        <div className="table-container">
           <table>
         <tr>
             <td className="H"><a href="https://www.canva.com/design/DAFi_WQ09Ww/E3wAuJWz5psFK-gPmMQBZg/edit?utm_content=DAFi_WQ09Ww&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">1<br />H</a></td>
@@ -253,8 +255,9 @@ class PeriodicTable extends React.Component {
             <td className="Ac"><a href="lawrencium.html">103<br />Lr</a></td>
         </tr>
         </table>
-       
+        </div>
         </center>
+        </div>
       </div>
     );
   }
