@@ -291,7 +291,7 @@ function AI() {
         }
         if ( nameAI === "Gold"){
           const Gold = "Xem chi tiết";
-          const GoldAI = Gold.link("gold.html");
+          const GoldAI = Gold.link("https://www.canva.com/design/DAFj4Ryd54c/VJRTjrxeXxqQ6OdjEktDZQ/edit?utm_content=DAFj4Ryd54c&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton");
           document.getElementById("text").innerHTML = GoldAI;
           document.getElementById("myDIV").style.display = "block";
         }
@@ -547,7 +547,7 @@ function AI() {
         }
         if ( nameAI === "Potassium"){
           const Potassium = "Xem chi tiết";
-          const PotassiumAI = Potassium.link("potassium.html");
+          const PotassiumAI = Potassium.link("https://www.canva.com/design/DAFjoidUDt4/SIh7zcFP5PFhofsucdyrLg/edit?utm_content=DAFjoidUDt4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton");
           document.getElementById("text").innerHTML = PotassiumAI;
           document.getElementById("myDIV").style.display = "block";
         }
@@ -665,7 +665,7 @@ function AI() {
         }
         if ( nameAI === "Sodium"){
           const Sodium = "Xem chi tiết";
-          const SodiumAI = Sodium.link("sodium.html");
+          const SodiumAI = Sodium.link("https://www.canva.com/design/DAFjjN-Thl8/G7zbIhktY8XOATroMcem4A/edit?utm_content=DAFjjN-Thl8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton");
           document.getElementById("text").innerHTML = SodiumAI;
           document.getElementById("myDIV").style.display = "block";
         }
