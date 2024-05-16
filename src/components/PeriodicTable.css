@@ -10,6 +10,15 @@
 .table-container{
   margin-top: 20px;
 }
+.periodic-table-heading{
+  font-family: 'Roboto', sans-serif; /* Sử dụng font Roboto */
+  color: #1089ff; /* Màu chữ */
+  margin-top: 50px; /* Khoảng cách từ phía trên */
+  text-align: center; /* Căn giữa */
+  font-size: 48px; /* Kích thước chữ */
+  text-transform: uppercase; /* Chuyển đổi thành chữ in hoa */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Tạo hiệu ứng bóng đổ */
+}
 #container {
   position: fixed;
   z-index: 1000;
@@ -61,8 +70,25 @@ td
   width: 50px;
   border: 1px solid black;
   text-align:center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+td:hover::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  transition: height 0.3s ease;
 }
 
+td:hover {
+  transform: translateY(-5px); /* Di chuyển ô lên trên khi hover */
+}
+
+td:hover::after {
+  height: 100%; /* Kéo dài đến đáy của ô khi hover */
+}
 .noBorder
 {
   border:none;

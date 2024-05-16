@@ -37,3 +37,33 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+.btn-google {
+  display: inline-block;
+  background-color: transparent; /* Đổi màu nền thành trong suốt */
+  border: 2px solid #000000; /* Thay đổi màu viền thành đen */
+  color: #000000; /* Đổi màu chữ thành đen */
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-google:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Hiển thị một màu nền nhẹ khi hover */
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.Auth-form-content a {
+  color: #007bff; /* Màu của link */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  cursor: pointer; /* Biểu tượng con trỏ khi hover */
+}
+
+.Auth-form-content a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}

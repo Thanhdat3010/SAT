@@ -20,7 +20,7 @@ class PeriodicTable extends React.Component {
       goToUrl = () => {
   const { searchText } = this.state;
   const url = this.isValidUrl();
-
+        
     // Nếu URL hợp lệ, chuyển hướng
     if (url !== searchText) {
      window.location.href = url;
@@ -104,7 +104,7 @@ class PeriodicTable extends React.Component {
             ))}
           </ul>
         </div> */}
-        <h1 style={{ fontFamily: 'Roboto', color: '#1089ff', marginTop: '50px', textAlign: 'center' }}>
+        <h1 className="periodic-table-heading">
           <b>BẢNG TUẦN HOÀN HÓA HỌC</b>
         </h1>
         <center>

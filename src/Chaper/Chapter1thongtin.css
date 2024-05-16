@@ -65,17 +65,39 @@
     margin: 0 10px 0 0;
   }
 
-.Panel{
-  font-weight: bold;
-  text-align: left;
-}
-.Panel p{
-  font-weight: 400;
-  line-height: 2;
-  text-indent: 40px;
-  margin-top: 0.2em;  /* Giảm khoảng cách trên mỗi đoạn */
-  margin-bottom: 0.2em; /* Giảm khoảng cách dưới mỗi đoạn */
-}
+  .Panel {
+    font-weight: bold;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 20px; /* Thêm khoảng cách giữa các panel */
+  }
+  
+  .Panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .Panel p {
+    font-weight: 400;
+    line-height: 2;
+    text-indent: 40px;
+    margin-top: 0.2em;  
+    margin-bottom: 0.2em; 
+  }
+  
+  .Panel-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    cursor: pointer;
+  }
+  
+  .Panel-header:hover {
+    background-color: #e0e0e0;
+  }
 .Hinhchapter{
   width: 50%;
 }
