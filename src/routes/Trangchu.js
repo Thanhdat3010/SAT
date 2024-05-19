@@ -12,7 +12,7 @@ function Trangchu(props) {
     useEffect(() => {
         const handleScroll = () => {
             const position = window.scrollY;
-            if (position > 500) {
+            if (position > 250) {
                 setShowGioithieu(true);
             } else {
                 setShowGioithieu(false);
