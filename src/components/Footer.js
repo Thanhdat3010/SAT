@@ -11,9 +11,9 @@ function Footer() {
           <li><a href="https://www.instagram.com/"><i className="fab fa-instagram"></i></a></li>
         </ul>
         <div className="footer-text">
-        <p>🐻‍❄️ Ôn luyện hóa học ngay tại nhà</p>
-        <p>💌 Email - fivecgroup@gmail.com</p>
-        <p>🏐 Số điện thoại - 0799747780</p>
+        <p>🐻 Ôn luyện hóa học ngay tại nhà</p>
+        <p>💌 Email - fivecreatorsgroup@gmail.com</p>
+        <p>🏐 Số điện thoại liên lạc - 0799747780</p>
       </div>
       </div>
   );

@@ -67,3 +67,12 @@ label {
 .Auth-form-content a:hover {
   text-decoration: underline; /* Gạch chân khi hover */
 }
+
+
+/* Kiểu cho phần hiển thị lỗi */
+.errorLabel {
+  color: #dc3545; /* Màu đỏ tương phản */
+  font-size: 0.85rem; /* Kích thước font nhỏ hơn */
+  margin-top: 0.25rem; /* Giảm khoảng cách giữa các phần tử */
+}
+

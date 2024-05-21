@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './Chapter2cauhoi.css';
 import formatChemicalFormula from '../components/formatChemicalFormula';
+import Notification from '../components/Notification';
 const Chapter2cauhoi = ({ onCompletion,onReset }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [questions, setQuestions] = useState([]);
   const chapterId = 'chapter2'; // Tạo một ID riêng cho mỗi chương
-
   const userId = user ? user.email : 'defaultUser'; // Dùng email làm khóa
   const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
+  const [showNotification, setShowNotification] = useState(false); // Thêm state mới cho thông báo
+  const [notificationMessage, setNotificationMessage] = useState(''); // Thêm state cho thông báo
   function shuffleArray(array) { //Hàm trộn mảng
     let currentIndex = array.length, randomIndex;
   
@@ -108,8 +110,15 @@ const Chapter2cauhoi = ({ onCompletion,onReset }) => {
       }
       // Các câu hỏi khác ở đây...
   ];
-  setQuestions(shuffleArray([...questions])); // Trộn và thiết lập câu hỏi
-}, []); // Chỉ chạy một lần khi component được mount
+  const savedQuestions = localStorage.getItem(`${userId}_${chapterId}_questions`);
+    if (savedQuestions) {
+      setQuestions(JSON.parse(savedQuestions));
+    } else {
+      const shuffledQuestions = shuffleArray([...questions]);
+      setQuestions(shuffledQuestions);
+      localStorage.setItem(`${userId}_${chapterId}_questions`, JSON.stringify(shuffledQuestions));
+    }
+  }, [chapterId, userId]);
 
 const [currentQuestion, setCurrentQuestion] = useState(() => {
   const saved = localStorage.getItem(`${userId}_${chapterId}_currentQuestion`);
@@ -158,6 +167,12 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
   };
 
   const nextQuestion = () => {
+    if (selectedOption === null) {
+      setNotificationMessage("Bạn cần chọn đáp án trước khi tiếp tục.");
+      setShowNotification(true);
+      return;
+    }
+
     setSelectedOption(null);
     setShowExplanation(false);  // Reset trạng thái hiển thị giải thích khi chuyển câu hỏi
 
@@ -240,6 +255,12 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
           <button onClick={nextQuestion} className="next-button">Câu hỏi tiếp theo</button>
         )}
       </div>
+      {showNotification && (
+        <Notification
+          message={notificationMessage}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </div>
   );
 };

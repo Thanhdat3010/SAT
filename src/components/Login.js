@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from './firebase'; // Import Firebase authentication
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
 import google from "../assets/google-icon.png";
-
+import Notification from './Notification';
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,6 +12,8 @@ const Login = (props) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [authMode, setAuthMode] = useState('signin'); // Mặc định là signin
+    const [showNotification, setShowNotification] = useState(false); // Thêm state mới cho thông báo
+    const [notificationMessage, setNotificationMessage] = useState(''); // Thêm state cho thông báo
     const navigate = useNavigate();
 
     const onButtonClick = async () => {
@@ -39,8 +41,7 @@ const Login = (props) => {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log('Đăng ký thành công:', user);
-                 setAuthMode('signin'); // Chuyển về chế độ đăng nhập sau khi đăng ký thành công
-
+                setAuthMode('signin'); // Chuyển về chế độ đăng nhập sau khi đăng ký thành công
             }
         } catch (error) {
             console.error('Lỗi xác thực:', error);
@@ -51,7 +52,11 @@ const Login = (props) => {
             } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
                 setPasswordError('Email hoặc mật khẩu không đúng');
             } else {
-                setPasswordError('Đăng nhập/Đăng ký không thành công');
+                if (authMode === 'signin') {
+                    setPasswordError('Đăng nhập không thành công');
+                } else {
+                    setPasswordError('Đăng ký không thành công');
+                }
             }
         }
     };
@@ -74,7 +79,8 @@ const Login = (props) => {
     const onResetPasswordClick = async () => {
         try {
             await sendPasswordResetEmail(auth, email);
-            alert('Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư đến của bạn.');
+            setNotificationMessage("Đã gửi email đặt lại mật khẩu, vui lòng kiểm tra hộp thư đến của bạn");
+            setShowNotification(true);
         } catch (error) {
             console.error('Lỗi khi gửi email đặt lại mật khẩu:', error);
             setEmailError('Đã xảy ra lỗi khi gửi email đặt lại mật khẩu. Vui lòng thử lại sau.');
@@ -153,6 +159,12 @@ const Login = (props) => {
                     </div>
                 </div>
             </form>
+            {showNotification && (
+        <Notification
+          message={notificationMessage}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
         </div>
     );
 };

@@ -45,14 +45,17 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+  background-color: #007bff;
+  transition: transform 0.3s, box-shadow 0.3s; /* Transition for transform and shadow */
 }
 
 .next-button:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px); /* Move button up slightly */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increase shadow */
 }
 .score-container {
   margin-top: 20px;
