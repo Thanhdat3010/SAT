@@ -1,4 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import {db,auth} from '../components/firebase'; // Import Firebase Firestore instance
 import BackgroundContext from '../components/BackgroundContext';
 import "./Profile.css";
 
@@ -11,32 +13,43 @@ const Profile = () => {
   const [profilePictureUrl, setProfilePictureUrl] = useState('');
 
   useEffect(() => {
-    // Khôi phục thông tin người dùng từ localStorage khi component được tải
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userEmail = user ? user.email : null;
+    const fetchUserData = async () => {
+      // Check if user is logged in
+      const user = auth.currentUser;
+      if (user) {
+        setEmail(user.email);
 
-    if (userEmail) {
-      const userData = JSON.parse(localStorage.getItem(userEmail + '_profileData'));
-      if (userData) {
-        setFullName(userData.fullName || '');
-        setUsername(userData.username || '');
-        setEmail(userEmail); // Email là khóa và chỉ đọc
-        setBio(userData.bio || '');
-        setProfilePictureUrl(userData.profilePictureUrl || '');
-        setBackground(userData.profilePictureUrl || '');
+        // Fetch user data from Firestore
+        const userDoc = doc(db, 'profiles', user.uid);
+        const docSnap = await getDoc(userDoc);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setFullName(userData.fullName || '');
+          setUsername(userData.username || '');
+          setBio(userData.bio || '');
+          setProfilePictureUrl(userData.profilePictureUrl || '');
+          setBackground(userData.profilePictureUrl || '');
+        }
       }
-    }
+    };
+
+    fetchUserData();
   }, [setBackground]);
 
-  // Lưu thông tin người dùng vào localStorage
-  const saveUserData = (userData) => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.email) {
-      localStorage.setItem(user.email + '_profileData', JSON.stringify(userData));
+  // Save user data to Firestore
+  const saveUserData = async (userData) => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const userDoc = doc(db, 'profiles', user.uid);
+        await setDoc(userDoc, userData);
+      }
+    } catch (error) {
+      console.error('Error saving user data:', error);
     }
   };
 
-  // Chuyển đổi file thành base64 và cập nhật trạng thái và localStorage
+  // Convert file to base64 and update state and Firestore
   const convertToBase64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -78,7 +91,7 @@ const Profile = () => {
           value={fullName}
           onChange={(e) => {
             setFullName(e.target.value);
-            saveUserData({fullName: e.target.value, username, email, bio, profilePictureUrl});
+            saveUserData({ fullName: e.target.value, username, email, bio, profilePictureUrl });
           }}
         />
       </div>
@@ -89,7 +102,7 @@ const Profile = () => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
-            saveUserData({fullName, username: e.target.value, email, bio, profilePictureUrl});
+            saveUserData({ fullName, username: e.target.value, email, bio, profilePictureUrl });
           }}
         />
       </div>
@@ -107,7 +120,7 @@ const Profile = () => {
           value={bio}
           onChange={(e) => {
             setBio(e.target.value);
-            saveUserData({fullName, username, email, bio: e.target.value, profilePictureUrl});
+            saveUserData({ fullName, username, email, bio: e.target.value, profilePictureUrl });
           }}
         />
       </div>
