@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Chapter1cauhoi.css';
 import formatChemicalFormula from '../components/formatChemicalFormula';
 import Notification from '../components/Notification';
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import db from '../components/firebase'; // Import Firebase Firestore instance
-
 const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   
   const user = JSON.parse(localStorage.getItem('user'));
@@ -14,7 +11,6 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
   const [showExplanation, setShowExplanation] = useState(false);  // Thêm state mới để quản lý việc hiển thị giải thích
   const [showNotification, setShowNotification] = useState(false); // Thêm state mới cho thông báo
   const [notificationMessage, setNotificationMessage] = useState(''); // Thêm state cho thông báo
-  
 
   function shuffleArray(array) { //Hàm trộn mảng
     let currentIndex = array.length, randomIndex;

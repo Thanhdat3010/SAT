@@ -1,24 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.body{
+.body {
   background-color: #fafafa;
 }
-.Bangtuanhoan{
+
+.Bangtuanhoan {
   margin-top: 100px;
 }
-.table-container{
+
+.table-container {
   margin-top: 20px;
 }
-.periodic-table-heading{
-  font-family: 'Roboto', sans-serif; /* Sử dụng font Roboto */
-  color: #1089ff; /* Màu chữ */
-  margin-top: 50px; /* Khoảng cách từ phía trên */
-  text-align: center; /* Căn giữa */
-  font-size: 48px; /* Kích thước chữ */
-  text-transform: uppercase; /* Chuyển đổi thành chữ in hoa */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Tạo hiệu ứng bóng đổ */
+
+.periodic-table-heading {
+  font-family: 'Roboto', sans-serif; /* Use Roboto font */
+  color: #1089ff; /* Text color */
+  margin-top: 50px; /* Margin from top */
+  text-align: center; /* Center align */
+  font-size: 48px; /* Font size */
+  text-transform: uppercase; /* Transform to uppercase */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow effect */
 }
+
 #container {
   position: fixed;
   z-index: 1000;
@@ -33,10 +37,11 @@
   justify-content: space-evenly;
 }
 
-*{
- box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
-#search-text{
+
+#search-text {
   padding: 10px;
   border: none;
   border-radius: 10px;
@@ -56,23 +61,26 @@
   font-size: 14px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} 
+}
+
 .search-container {
-    position: relative;
-    margin-top: 100px;
-    display: inline-block; /* Để phần tử con không chiếm toàn bộ chiều rộng của thanh tìm kiếm */
-  }
-table a{
+  position: relative;
+  margin-top: 100px;
+  display: inline-block; /* To make the child element not occupy the entire width of the search bar */
+}
+
+table a {
   text-decoration: none;
 }
-td
-{
+
+td {
   width: 50px;
   border: 1px solid black;
-  text-align:center;
+  text-align: center;
   position: relative;
   transition: transform 0.3s ease;
 }
+
 td:hover::after {
   position: absolute;
   left: 0;
@@ -83,29 +91,27 @@ td:hover::after {
 }
 
 td:hover {
-  transform: translateY(-5px); /* Di chuyển ô lên trên khi hover */
+  transform: translateY(-5px); /* Move cell up on hover */
 }
 
 td:hover::after {
-  height: 100%; /* Kéo dài đến đáy của ô khi hover */
+  height: 100%; /* Extend to the bottom of the cell on hover */
 }
-.noBorder
-{
-  border:none;
+
+.noBorder {
+  border: none;
 }
-.H, .H a
-{
+
+.H, .H a {
   background-color: #e2eeff;
   font-family: Poppins;
   font-weight: 700;
   color: #0060f0;
   border-radius: 5px;
   border-color: #0060f0;
-  
 }
 
-.He, .He a
-{
+.He, .He a {
   background-color: #ffe7eb;
   font-family: Poppins;
   font-weight: 700;
@@ -114,8 +120,7 @@ td:hover::after {
   border-color: #cd1d5e;
 }
 
-.Li , .Li a
-{
+.Li, .Li a {
   background-color: #d8f8ff;
   font-family: Poppins;
   font-weight: 700;
@@ -123,8 +128,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #00758c;
 }
-.Be, .Be a
-{
+
+.Be, .Be a {
   background-color: #ffe7e7;
   font-family: Poppins;
   font-weight: 700;
@@ -132,8 +137,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #d60024;
 }
-.Sc, .Sc a
-{
+
+.Sc, .Sc a {
   background-color: #f3e8fd;
   font-family: Poppins;
   font-weight: 700;
@@ -141,8 +146,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #6232ec;
 }
-.B, .B a
-{
+
+.B, .B a {
   background-color: #fef7e0;
   font-family: Poppins;
   font-weight: 700;
@@ -150,8 +155,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #945700;
 }
-.Mt, .Mt a
-{
+
+.Mt, .Mt a {
   background-color: #e7e7ea;
   font-family: Poppins;
   font-weight: 700;
@@ -159,8 +164,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #3f374f;
 }
-.Al, .Al a
-{
+
+.Al, .Al a {
   background-color: #d6f9e8;
   font-family: Poppins;
   font-weight: 700;
@@ -168,8 +173,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #227754;
 }
-.C, .C a
-{
+
+.C, .C a {
   background-color: #e2eeff;
   font-family: Poppins;
   font-weight: 700;
@@ -177,8 +182,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #0060f0;
 }
-.La, .La a
-{
+
+.La, .La a {
   background-color: #dff3ff;
   font-family: Poppins;
   font-weight: 700;
@@ -186,8 +191,8 @@ td:hover::after {
   border-radius: 5px;
   border-color: #003355;
 }
-.Ac, .Ac a
-{
+
+.Ac, .Ac a {
   background-color: #ffe6d4;
   font-family: Poppins;
   font-weight: 700;
@@ -197,106 +202,129 @@ td:hover::after {
 }
 
 #suggestionList {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 20px); /* Width equal to the width of the search bar */
+  background-color: white; /* Background color of the suggestion list */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+#suggestionList li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+#suggestionList li:hover {
+  background-color: #ddd;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+@keyframes bounceUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Adjust bounce height */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce {
+  animation-name: bounceUp;
+  animation-duration: 0.5s;
+}
+
+@media only screen and (max-width: 768px) {
+  #container {
+    height: auto;
+    padding: 10px; /* Add some padding for better spacing */
+    display: inline-flex;
+    justify-content: space-between; /* Align items to the sides */
+    align-items: center; /* Center items vertically */
+    background-color: #1f1f1f;
+  }
+  
+  header {
+    padding: 10px 20px; /* Reduce padding for smaller screens */
+  }
+  
+  header ul {
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+  }
+  
+  header ul li {
+    margin-left: 0; /* Remove margin for smaller screens */
+    margin-bottom: 10px; /* Add some space between items */
+  }
+
+  #texthome {
+    z-index: 9;
     position: absolute;
-    z-index: 1;
-    width: calc(100% - 20px); /* Chiều rộng bằng chiều rộng của ô tìm kiếm */
-    background-color: white; /* Màu nền của danh sách gợi ý */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng đổ */
+    white-space: nowrap;
+    font-size: 8vw;
+    text-shadow: 1px 1px 1px #000;
+    color: #fff;
+    border-right: 2px solid; /* Create cursor-like effect */
+    overflow: hidden;
+    animation: typing 3.5s steps(30, end), blink-caret .5s step-end infinite;
   }
-  
-  #suggestionList li {
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    cursor: pointer;
+
+  .menu {
+    display: none;
+    max-height: 0;
+    width: 100%;
   }
-  
-  #suggestionList li:hover {
-    background-color: #ddd;
+
+  .menu.open {
+    display: block;
+  }
+
+  #main-menu {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #1f1f1f;
+  }
+
+  #toggler:checked ~ .menu {
+    max-height: 100%;
   }
 
   #menu-toggle {
-    display: none;
+    background-color: transparent;
+    border: none; /* Remove border */
+    padding: 10px; /* Add padding to button */
+    border-radius: 5px; /* Round corners */
+    cursor: pointer; /* Show pointer cursor */
+    display: flex;
   }
-  @keyframes bounceUp {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px); /* Điều chỉnh độ cao nảy lên */
-    }
-    100% {
-      transform: translateY(0);
-    }
+
+  #container img {
+    width: 15%;
   }
-  
-  .bounce {
-    animation-name: bounceUp;
-    animation-duration: 0.5s;
+
+  .table-container {
+    overflow-x: auto; /* Add horizontal scroll for table container */
   }
-  @media only screen and (max-width: 768px) {
-    #container {
-      height: auto;
-      padding: 10px; /* Add some padding for better spacing */
-      display: inline-flex;
-      justify-content: space-between; /* Căn các phần tử con ra hai bên */
-      align-items: center; /* Căn giữa theo chiều dọc */
-      background-color: #1f1f1f;
-    }
-    header {
-      padding: 10px 20px; /* Reduce padding for smaller screens */
-    }
-  
-    header ul {
-      flex-direction: column; /* Arrange items vertically */
-      align-items: center; /* Center items horizontally */
-    }
-  
-    header ul li {
-      margin-left: 0; /* Remove margin for smaller screens */
-      margin-bottom: 10px; /* Add some space between items */
-    }
-    #texthome{
-      z-index: 9;
-      position: absolute;
-      white-space: nowrap;
-      font-size: 8vw;
-      text-shadow: 1px 1px 1px #000;
-      color:#fff;
-      border-right: 2px solid; /* Tạo hiệu ứng như con trỏ đánh máy */
-      overflow: hidden;
-      animation: typing 3.5s steps(30, end), blink-caret .5s step-end infinite;
-    }
-    .menu {
-      display: none;
-      max-height: 0;
-      width: 100%;
-    }
-    
-    .menu.open {
-      display: block;
-    }
-    #main-menu {
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      background-color:#1f1f1f ;
-    }
-    #toggler:checked ~ .menu {
-      max-height: 100%;
-    }
-    #menu-toggle {
-      background-color: transparent; 
-      border: none; /* Loại bỏ viền */
-      padding: 10px; /* Thêm padding cho nút */
-      border-radius: 5px; /* Bo tròn góc cho nút */
-      cursor: pointer; /* Hiển thị biểu tượng con trỏ khi di chuột qua nút */
-      display: flex;
-    }
-    #container img {
-      width: 15%;
-    }
+
+  table {
+    width: 100%; /* Make table width 100% */
+    min-width: 800px; /* Minimum width to prevent squishing */
   }
+
+  td {
+    width: auto; /* Auto width for cells */
+    padding: 5px; /* Add padding for better touch targets */
+  }
+}

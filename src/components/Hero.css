@@ -30,7 +30,7 @@
     font-size: 3rem;
     font-weight: 800;
     background: black;
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 2; /* Đảm bảo nội dung hiển thị trên lớp phủ và hình nền */
 }
@@ -38,7 +38,7 @@
     font-size: 3rem;
     font-weight: 800;
     background: blueviolet;
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     padding: 0.5rem 0 2rem 0;
     z-index: 2;
@@ -114,10 +114,12 @@
 
 @media screen and (max-width:555px){
     .hero-text h1{
-        padding: 10px 20px;
+        font-size: 2.3rem;
         align-items: center;
+
     }
     .hero-text p{
+        font-size: 2.3rem;
         padding: 0 0 2rem 0;
         align-items: center;
     }
