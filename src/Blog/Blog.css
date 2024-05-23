@@ -1,51 +1,126 @@
+.blog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .blog-carousel {
-    width: 100%;
-    max-width: 1200px; /* Giới hạn chiều rộng tối đa để tránh quá khổ trên màn hình lớn */
-    margin: 20px auto; /* Tự động căn giữa và thêm khoảng cách trên dưới */
-  }
-  
-  .post-preview {
-    background-color: #ffffff; /* Nền trắng cho bài viết */
-    border-radius: 10px; /* Bo góc */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-    overflow: hidden; /* Ngăn nội dung tràn ra ngoài */
-    text-align: center; /* Căn giữa nội dung */
-  }
-  
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.post-preview {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.post-preview img {
+  width: 100%;
+  height: auto; /* Thay đổi chiều cao để giữ cho hình ảnh không bị méo */
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.post-preview h2 {
+  margin: 20px;
+  color: #333;
+  font-size: 28px;
+}
+
+.post-preview h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-preview p {
+  padding: 0 20px 20px;
+  color: #666;
+  font-size: 18px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  max-height: 200px; /* Giảm chiều cao để giữ cho thẻ card đồng đều */
+  object-fit: cover;
+}
+
+.card h2 {
+  text-decoration: none;
+  font-size: 1.2em;
+  margin: 10px;
+}
+
+.card p {
+  text-decoration: none;
+  font-size: 0.9em;
+  padding: 0 10px 10px 10px;
+  color: #666;
+}
+
+.search-bar {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-bar input {
+  width: 80%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
   .post-preview img {
-    width: 100%;
-    height: 400px; /* Cố định chiều cao của hình ảnh */
-    object-fit: cover; /* Đảm bảo hình ảnh phủ kín không gian mà không bị méo */
+    max-height: 300px; /* Giảm chiều cao của hình ảnh trên thiết bị nhỏ */
   }
-  
+
   .post-preview h2 {
-    margin: 20px; /* Thêm khoảng cách quanh tiêu đề */
-    color: #333; /* Màu sắc cho tiêu đề */
-    font-size: 28px; /* Kích thước chữ cho tiêu đề */
+    font-size: 24px; /* Giảm kích thước chữ tiêu đề */
   }
-  
-  .post-preview h2 a {
-    color: inherit; /* Kế thừa màu sắc từ phần tử cha */
-    text-decoration: none; /* Bỏ gạch chân */
-  }
-  
+
   .post-preview p {
-    padding: 0 20px 20px; /* Padding cho tóm tắt */
-    color: #666; /* Màu sắc cho tóm tắt */
-    font-size: 18px; /* Kích thước chữ cho tóm tắt */
+    font-size: 16px; /* Giảm kích thước chữ tóm tắt */
   }
-  
-  /* Responsive design adjustments */
-  @media (max-width: 768px) {
-    .post-preview img {
-      height: 300px; /* Giảm chiều cao hình ảnh trên thiết bị nhỏ */
-    }
-  
-    .post-preview h2 {
-      font-size: 24px; /* Giảm kích thước chữ tiêu đề */
-    }
-  
-    .post-preview p {
-      font-size: 16px; /* Giảm kích thước chữ tóm tắt */
-    }
+
+  .card img {
+    max-height: 150px; /* Giảm chiều cao của hình ảnh trên thiết bị nhỏ */
   }
+
+  .card h2 {
+    font-size: 1em; /* Giảm kích thước chữ tiêu đề */
+  }
+
+  .card p {
+    font-size: 0.8em; /* Giảm kích thước chữ tóm tắt */
+  }
+
+  .search-bar input {
+    width: 100%; /* Chiếm toàn bộ chiều rộng trên thiết bị nhỏ */
+  }
+}

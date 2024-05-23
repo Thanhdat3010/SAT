@@ -51,7 +51,6 @@ function App() {
     <Route path='/' element={<Trangchu />}/>
     <Route path='/Profile' element={<Profile />}/>
     <Route path='/Flashcard' element={<FLashcard />}/>
-
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
     <Route path='/Chapter3' element={<Chapter3 />}/>

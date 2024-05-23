@@ -6,6 +6,7 @@
     text-align: center;
   }
  .question p{
+    white-space: pre-line;
     font-weight: bold;
  }
   

@@ -40,7 +40,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
     },
     {
       question: "Những đơn vị nào có thể được sử dụng để biểu thị lượng năng lượng hấp thụ hoặc giải phóng trong phản ứng hóa học?",
-      options: ["Độ và gam", "Torr và mmHg", "Gam và lít", "Calo và joule", "Mét và cm3"],
+      options: ["Độ và gam", "Torr và mmHg", "Gam và lít", "Calo và joule", "Mét và cm³"],
       correctAnswer: "Calo và joule",
       explain: "Nhiệt được đo bằng calo hoặc joule. Một đơn vị khác mà bạn có thể gặp là kilojoule, trong đó 1 kilojoule bằng 1.000 joule.",
     },
@@ -135,7 +135,7 @@ const Chapter1cauhoi = ({ onCompletion,onReset }) => {
       explain: "Hóa học là nghiên cứu về cấu trúc, tính chất và biến đổi của vật chất."
     },
     {
-      question: "Tham khảo các lựa chọn sau:\nI. Rắn sang lỏng\nII. Lỏng sang khí\nIII. Rắn sang khí\nSự thay đổi trạng thái nào ở trên là thu nhiệt?",
+      question: "Tham khảo các lựa chọn sau\nI. Rắn sang lỏng\nII. Lỏng sang khí\nIII. Rắn sang khí\nSự thay đổi trạng thái nào ở trên là thu nhiệt?",
       options: [
         "Chỉ có I",
         "Chỉ có II",
