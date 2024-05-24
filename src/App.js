@@ -16,6 +16,7 @@ import Chapter2 from "./Chapter2/Chapter2";
 import Chapter3 from "./Chapter3/Chapter3";
 import Chapter4 from "./Chapter4/Chapter4";
 import Post from "./Blog/Post";
+import NewPost from "./Blog/NewPost";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
   useEffect(() => {
@@ -60,6 +61,8 @@ function App() {
     <Route path='/Onthi' element={<Onthi/>}/>    
     <Route path='/Vechungtoi' element={<Vechungtoi/>}/>    
     <Route path="/post/:id" element={<Post />} />
+    <Route path="/new-post" element={<NewPost />} />
+
 
     </Routes>
   </div>

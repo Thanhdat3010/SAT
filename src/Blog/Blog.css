@@ -60,6 +60,10 @@
   transform: scale(1.05);
 }
 
+.card-link {
+  text-decoration: none; /* Remove underline from links */
+}
+
 .card img {
   width: 100%;
   height: auto;
@@ -94,6 +98,48 @@
   border-radius: 4px;
 }
 
+/* Pagination styles */
+.pagination {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-number {
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page-number:hover,
+.page-number.active {
+  background-color: #333;
+  color: #fff;
+}
+.Newpost {
+  margin-bottom: 20px;
+}
+
+.Newpost button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.Newpost button:hover {
+  background-color: #45a049;
+}
 /* Responsive design adjustments */
 @media (max-width: 768px) {
   .post-preview img {

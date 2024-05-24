@@ -1,38 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './Post.css';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../components/firebase';
 
-const Post = () => {
+const Post = ({ fullName }) => {
   let { id } = useParams();
+  const [post, setPost] = useState(null);
 
-  const posts = {
-    '1': {
-      title: "Tính chất hóa học của nước",
-      content: "Nước, một hợp chất không thể thiếu trong cuộc sống, có nhiều tính chất hóa học đặc biệt mà bạn có thể chưa biết. Nó là một dung môi tuyệt vời và có khả năng phản ứng với rất nhiều chất khác.",
-      published: "Ngày 24 tháng 4 năm 2023",
-      author: "Hóa học Mỗi Ngày"
-    },
-    '2': {
-      title: "Phản ứng oxi hóa - khử",
-      content: "Phản ứng oxi hóa - khử là một trong những phản ứng hóa học cơ bản, đóng vai trò quan trọng trong nhiều quá trình sinh học và công nghiệp, giúp chuyển đổi năng lượng trong các tế bào.",
-      published: "Ngày 25 tháng 4 năm 2023",
-      author: "Phòng Thí Nghiệm 101"
-    },
-    '3': {
-      title: "Cấu trúc phân tử của Benzene",
-      content: "Benzene là một trong những hợp chất hữu cơ cơ bản và là nền tảng cho nhiều hợp chất khác trong hóa học tổng hợp, được sử dụng rộng rãi trong công nghiệp và sản xuất.",
-      published: "Ngày 26 tháng 4 năm 2023",
-      author: "Hóa học Thực Tiễn"
-    }
-  };
+  useEffect(() => {
+    const fetchPost = async () => {
+      const docRef = doc(db, 'posts', id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setPost(docSnap.data());
+      } else {
+        console.log('No such document!');
+      }
+    };
 
-  const post = posts[id]; // Lấy bài viết dựa trên ID từ URL
+    fetchPost();
+  }, [id]);
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
+  // Convert createdAt to a readable date string
+  const createdAt = post.createdAt?.toDate().toLocaleString();
 
   return (
     <div className="post-container">
       <h1 className="post-title">{post.title}</h1>
       <div className="post-meta">
-        Đăng bởi <strong>{post.author}</strong> vào <time>{post.published}</time>
+        Đăng bởi <strong>{post.fullName || fullName || 'Người dùng ẩn danh'}</strong> vào <time>{createdAt}</time>
       </div>
       <p className="post-content">{post.content}</p>
       <Link to="/Tainguyen" className="back-link">Quay về</Link>
