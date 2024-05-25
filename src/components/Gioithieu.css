@@ -5,6 +5,10 @@
 .Gioithieu h1 {
     font-size: 3rem;
     padding-bottom: 1rem;
+    background: linear-gradient(90deg, #00ffff, #ff00c3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .Gioithieu p {

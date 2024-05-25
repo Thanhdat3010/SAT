@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import './Blog.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../components/firebase';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import các biểu tượng từ thư viện react-icons
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,7 +32,9 @@ const Blog = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    cssEase: 'linear'
+    cssEase: 'linear',
+    prevArrow: <FaArrowLeft />, // Nút bấm bên trái
+    nextArrow: <FaArrowRight />, // Nút bấm bên phải
   };
 
   const handleSearch = event => {
@@ -60,11 +63,13 @@ const Blog = () => {
       <div className="blog-carousel">
         <Slider {...settings}>
           {featuredPosts.map(post => (
+            <Link className='card-link' to={`/post/${post.id}`}>
             <div key={post.id} className="post-preview">
               <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
-              <h2><Link to={`/post/${post.id}`}>{post.title}</Link></h2>
+              <h2>{post.title}</h2>
               <p>{post.summary}</p>
             </div>
+            </Link>
           ))}
         </Slider>
       </div>
@@ -76,8 +81,10 @@ const Blog = () => {
           onChange={handleSearch}
         />
       </div>
+      
       <div className="Newpost">
         <button onClick={() => navigate('/new-post')}>Thêm bài viết</button>
+        <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button>
       </div>
       <div className="card-grid">
         {currentPosts.map(post => (
@@ -102,6 +109,7 @@ const Blog = () => {
           </button>
         ))}
       </div>
+     
     </div>
   );
 };

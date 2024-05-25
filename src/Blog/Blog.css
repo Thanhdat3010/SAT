@@ -20,9 +20,10 @@
 
 .post-preview img {
   width: 100%;
-  height: auto; /* Thay đổi chiều cao để giữ cho hình ảnh không bị méo */
+  height: 350px; /* Thay đổi chiều cao để giữ cho hình ảnh không bị méo */
   max-height: 400px;
   object-fit: cover;
+  object-position: center;
 }
 
 .post-preview h2 {
@@ -46,6 +47,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  
 }
 
 .card {
@@ -66,8 +68,7 @@
 
 .card img {
   width: 100%;
-  height: auto;
-  max-height: 200px; /* Giảm chiều cao để giữ cho thẻ card đồng đều */
+  height: 200px;
   object-fit: cover;
 }
 
@@ -88,14 +89,26 @@
   margin-top: 50px;
   margin-bottom: 20px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-bar input {
   width: 80%;
-  padding: 10px;
+  max-width: 600px;
+  padding: 12px 20px;
   font-size: 1em;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+  border-color: #007BFF;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  outline: none;
 }
 
 /* Pagination styles */
@@ -135,11 +148,68 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 5px;
+
 }
 
 .Newpost button:hover {
   background-color: #45a049;
 }
+/* Blog.css */
+
+/* CSS cho Slider Arrow Buttons */
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px; /* Điều chỉnh kích thước của nút */
+  height: 50px; /* Điều chỉnh kích thước của nút */
+  color: #333;
+  border: none; /* Xóa viền */
+  cursor: pointer;
+  z-index: 999; /* Đặt z-index để nút hiển thị trên slider */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Màu nền khi hover */
+  color: #333; /* Màu chữ khi hover */
+}
+
+.slick-prev {
+  left: 10px; /* Khoảng cách từ mép trái */
+  border-top-left-radius: 25px; /* Làm tròn góc trên bên trái */
+  border-bottom-left-radius: 25px; /* Làm tròn góc dưới bên trái */
+}
+
+.slick-next {
+  right: 10px; /* Khoảng cách từ mép phải */
+  border-top-right-radius: 25px; /* Làm tròn góc trên bên phải */
+  border-bottom-right-radius: 25px; /* Làm tròn góc dưới bên phải */
+}
+
+/* CSS cho biểu tượng */
+.slick-prev:before,
+.slick-next:before {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 0 15px 25px; /* Kích thước biểu tượng */
+  border-color: transparent transparent transparent #333; /* Màu của biểu tượng */
+}
+
+.slick-prev:before {
+  transform: rotate(135deg); /* Xoay biểu tượng */
+}
+
+.slick-next:before {
+  transform: rotate(-45deg); /* Xoay biểu tượng */
+}
+
 /* Responsive design adjustments */
 @media (max-width: 768px) {
   .post-preview img {
