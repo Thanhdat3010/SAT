@@ -10,6 +10,7 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const postsPerPage = 3; // Số lượng bài viết mỗi trang
   const navigate = useNavigate();
 
@@ -82,10 +83,12 @@ const Blog = () => {
         />
       </div>
       
-      <div className="Newpost">
-        <button onClick={() => navigate('/new-post')}>Thêm bài viết</button>
-        <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button>
-      </div>
+      {isLoggedIn && (
+        <div className="Newpost">
+          <button onClick={() => navigate('/new-post')}>Thêm bài viết</button>
+          <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button>
+        </div>
+      )}
       <div className="card-grid">
         {currentPosts.map(post => (
           <Link to={`/post/${post.id}`} className="card-link" key={post.id}>

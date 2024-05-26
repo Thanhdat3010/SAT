@@ -5,7 +5,7 @@ import "./Navbar.css";
 import avatar from "../assets/profile-user.png";
 import BackgroundContext from './BackgroundContext';
 import { useLocation } from 'react-router-dom';
-
+import { auth } from "./firebase";
 const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/'; // Kiểm tra xem có phải trang chủ hay không
@@ -46,14 +46,22 @@ const Navbar = () => {
     setClicked(!clicked);
   };
 
-  const handleLogout = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.email) {
-        localStorage.removeItem(user.email); // Xóa thông tin người dùng lưu trữ theo email
-        localStorage.removeItem('user'); // Xóa thông tin người dùng từ localStorage
+  const handleLogout = async () => {
+    try {
+      // Đăng xuất người dùng từ Firebase
+      await auth.signOut();
+      
+      // Xóa thông tin người dùng từ localStorage
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.email) {
+          localStorage.removeItem(user.email); // Xóa thông tin người dùng lưu trữ theo email
+      }
+      localStorage.removeItem('user'); // Xóa thông tin người dùng từ localStorage
+      localStorage.removeItem('isLoggedIn');
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error('Error signing out:', error);
     }
-    localStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
   };
 
   const toggleDropdown = () => {

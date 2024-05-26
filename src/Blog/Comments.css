@@ -1,78 +1,220 @@
 .comments-container {
-    margin-top: 20px;
-    padding: 20px;
-    border-top: 1px solid #ddd;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.comments-container h3 {
+  text-align: left;
+  margin-bottom: 20px;
+  font-size: 24px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.comments-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.author-avatar1 {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%; /* Bọc avatar thành hình tròn */
+  margin-right: 10px;
+}
+
+.comments-container li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-user {
+  margin: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.comment-content {
+  margin: 5px 0 0 0;
+  color: #555;
+  white-space: pre-wrap; /* Preserve line breaks */
+}
+
+.actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.actions .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.actions .dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.actions .dropdown-content button {
+  color: black;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.actions .dropdown-content button:hover {
+  background-color: #ddd;
+}
+
+.actions .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.actions .dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.new-comment-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.new-comment-form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.new-comment-form button {
+  align-self: flex-end;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.new-comment-form button:hover {
+  background-color: #0056b3;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.comment-content {
+  text-align: left;
+}
+
+.comment-user {
+  text-align: left;
+}
+
+.edit-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  margin-right: 5px; /* Khoảng cách giữa Edit và Cancel */
+}
+
+.cancel-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.edit-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.edit-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 600px) {
+  .comments-container {
+    max-width: 100%;
+    margin: 10px;
   }
-  
+
+  .author-avatar1 {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+  }
+
   .comments-container h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    font-weight: bold;
+    font-size: 20px;
   }
-  
-  .comments-container ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .comments-container li {
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .comments-container li p {
-    margin: 5px 0;
-  }
-  
-  .comments-container li p strong {
-    font-weight: bold;
-  }
-  
-  .comments-container .delete-comment-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-top: 5px;
-  }
-  
-  .comments-container .delete-comment-button:hover {
-    background-color: darkred;
-  }
-  
-  .new-comment-form {
-    margin-top: 20px;
-  }
-  
+
   .new-comment-form textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    resize: vertical;
-    font-size: 1em;
+    font-size: 14px;
   }
-  
+
   .new-comment-form button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    font-size: 1em;
-    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
   }
-  
-  .new-comment-form button:hover {
-    background-color: #0056b3;
+
+  .edit-button,
+  .cancel-button {
+    padding: 8px 16px;
+    font-size: 14px;
   }
-  
-  .new-comment-form button:disabled {
-    background-color: #999;
-    cursor: not-allowed;
-  }
+}

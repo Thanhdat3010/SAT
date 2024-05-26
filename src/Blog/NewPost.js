@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../components/firebase';
+import { doc,getDoc, } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill'; // Import React Quill
 import 'react-quill/dist/quill.snow.css'; // Import CSS cho React Quill
@@ -14,6 +15,8 @@ const NewPost = ({ fullName }) => {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [profilePictureUrl, setProfilePictureUrl] = useState('');
+
   const quillRef = useRef(null); // Tham chiếu đến React Quill
 
   const navigate = useNavigate();
@@ -34,7 +37,21 @@ const NewPost = ({ fullName }) => {
     'bold', 'italic', 'underline',
     'link', 'image'
   ];
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const profileDoc = doc(db, 'profiles', user.uid);
+        const profileSnap = await getDoc(profileDoc);
+        if (profileSnap.exists()) {
+          const profileData = profileSnap.data();
+          setProfilePictureUrl(profileData.profilePictureUrl || '');
+        }
+      }
+    };
 
+    fetchProfileData();
+  }, []);
   const handlePaste = (e) => {
     const clipboardData = e.clipboardData || window.clipboardData;
     const items = clipboardData?.items;
