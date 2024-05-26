@@ -13,7 +13,7 @@ const Comments = ({ postId }) => {
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const [authors, setAuthors] = useState({});
-
+  
   useEffect(() => {
     const fetchComments = async () => {
       const q = query(collection(db, 'comments'), where('postId', '==', postId));
@@ -141,34 +141,42 @@ const Comments = ({ postId }) => {
               <li key={comment.id}>
                 <div className="comment-header">
                   {authors[comment.userId] && authors[comment.userId].profilePictureUrl && (
-                    <img src={authors[comment.userId].profilePictureUrl} alt="Avatar" className="author-avatar1" />
+                    <img src={authors[comment.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
                   )}
-                  <p className='comment-user'><strong>{comment.fullName}</strong> ({new Date(comment.createdAt.seconds * 1000).toLocaleString()}):</p>
-                </div>
-                {editingCommentId === comment.id ? (
-                  <div>
-                    <textarea
-                      value={editingCommentContent}
-                      onChange={(e) => setEditingCommentContent(e.target.value)}
-                      required
-                    />
-                    <button className="edit-button" onClick={() => handleSaveEdit(comment.id)}>Lưu</button>
-                    <button className="cancel-button" onClick={handleCancelEdit}>Hủy</button>
-                  </div>
-                ) : (
-                  <p className='comment-content'>{comment.content}</p>
-                )}
-                {auth.currentUser && auth.currentUser.uid === comment.userId && (
-                  <div className="actions">
-                    <div className="dropdown">
-                      <button className="dropdown-toggle">⋮</button>
-                      <div className="dropdown-content">
-                        <button onClick={() => handleEditComment(comment.id, comment.content)} className="edit-comment-button">Chỉnh sửa</button>
-                        <button onClick={() => handleDeleteComment(comment.id)} className="delete-comment-button">Xóa</button>
+                  <div className="comment-details">
+                    <p className='comment-user'><strong>{comment.fullName}</strong> ({new Date(comment.createdAt.seconds * 1000).toLocaleString()}):</p>
+                    {editingCommentId === comment.id ? (
+                      <div>
+                        <textarea
+                          value={editingCommentContent}
+                          onChange={(e) => setEditingCommentContent(e.target.value)}
+                          required
+                        />
+                        <button className="edit-button" onClick={() => handleSaveEdit(comment.id)}>Lưu</button>
+                        <button className="cancel-button" onClick={handleCancelEdit}>Hủy</button>
                       </div>
+                    ) : (
+                      <p className='comment-content'>{comment.content}</p>
+                    )}
+                    <div className='comment-icons'>
+                  <button className="icon-button"><i className="fas fa-thumbs-up"></i></button>
+                  <button className="icon-button"><i className="fas fa-thumbs-down"></i></button>
+                  <button className="icon-button"><i className="fas fa-reply"></i></button>
+                </div>
+                    <div className="actions">
+                      {auth.currentUser && auth.currentUser.uid === comment.userId && (
+                        <div className="dropdown">
+                          <button className="dropdown-toggle">⋮</button>
+                          <div className="dropdown-content">
+                            <button onClick={() => handleEditComment(comment.id, comment.content)} className="edit-comment-button">Chỉnh sửa</button>
+                            <button onClick={() => handleDeleteComment(comment.id)} className="delete-comment-button">Xóa</button>
+                          </div>
+                        </div>
+                      )}
                     </div>
+                    
                   </div>
-                )}
+                </div>
               </li>
             ))}
           </ul>

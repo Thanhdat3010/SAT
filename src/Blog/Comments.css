@@ -44,8 +44,8 @@
   margin: 0;
   font-weight: bold;
   color: #333;
-}
 
+}
 .comment-content {
   margin: 5px 0 0 0;
   color: #555;
@@ -185,7 +185,23 @@ button:disabled {
 .cancel-button:hover {
   background-color: #c82333;
 }
+.comment-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
 
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.comment-details {
+  flex: 1;
+}
 /* Responsive adjustments */
 @media only screen and (max-width: 600px) {
   .comments-container {
