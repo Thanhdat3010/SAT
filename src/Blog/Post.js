@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './Post.css';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../components/firebase';
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { db, auth } from '../components/firebase';
 import Comments from './Comments';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaThumbsUp } from 'react-icons/fa';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 const Post = ({ fullName }) => {
   let { id } = useParams();
   const [post, setPost] = useState(null);
   const [author, setAuthor] = useState(null);
+  const [showComments, setShowComments] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
+
+  const user = auth.currentUser;
+  const authenticatedUserId = user ? user.uid : null;
 
   useEffect(() => {
     const fetchPost = async () => {
       const docRef = doc(db, 'posts', id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setPost(docSnap.data());
-        fetchAuthor(docSnap.data().userId); // Fetch author details
+        const postData = docSnap.data();
+        setPost(postData);
+        setLikes(postData.likes || 0);
+        setLiked(postData.likesBy && postData.likesBy.includes(authenticatedUserId));
+        fetchAuthor(postData.userId); // Fetch author details
       } else {
         console.log('No such document!');
       }
@@ -33,7 +44,40 @@ const Post = ({ fullName }) => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [id, authenticatedUserId]);
+
+  const handleLike = async () => {
+    try {
+      const postRef = doc(db, 'posts', id);
+      let newLikes = likes;
+      let newLiked = liked;
+
+      if (liked) {
+        await updateDoc(postRef, {
+          likes: newLikes - 1,
+          likesBy: arrayRemove(authenticatedUserId)
+        });
+        newLikes -= 1;
+        newLiked = false;
+      } else {
+        await updateDoc(postRef, {
+          likes: newLikes + 1,
+          likesBy: arrayUnion(authenticatedUserId)
+        });
+        newLikes += 1;
+        newLiked = true;
+      }
+
+      setLikes(newLikes);
+      setLiked(newLiked);
+    } catch (error) {
+      console.error('Error updating likes:', error);
+    }
+  };
+
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
 
   if (!post || !author) {
     return <div>Loading...</div>;
@@ -52,7 +96,23 @@ const Post = ({ fullName }) => {
         Đăng bởi <strong>{post.fullName || fullName || 'Người dùng ẩn danh'}</strong> vào <time>{createdAt}</time>
       </div>
       <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
-      <Comments postId={id} />
+      
+      {/* Thanh ngăn cách */}
+      <hr className="separator" />
+      
+      {/* Phần thích bài viết và nút bình luận */}
+      <div className="post-actions">
+      <button className={`like-button ${liked ? 'liked' : ''}`} onClick={handleLike}>
+      <FontAwesomeIcon  icon={faThumbsUp} className="icon-like" /> Thích ({likes})
+      </button>
+        <button className="comment-button" onClick={toggleComments}>Bình luận</button>
+      </div>
+      
+      {/* Thanh ngăn cách */}
+      <hr className="separator" />
+      
+      {/* Phần bình luận */}
+      {showComments && <Comments postId={id} />}
     </div>
   );
 };
