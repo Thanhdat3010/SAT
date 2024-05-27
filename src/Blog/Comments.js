@@ -6,13 +6,19 @@ import Notification from '../components/Notification';
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
+  const [replies, setReplies] = useState({});
   const [newComment, setNewComment] = useState('');
+  const [newReply, setNewReply] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentContent, setEditingCommentContent] = useState('');
   const [loading, setLoading] = useState(true);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const [authors, setAuthors] = useState({});
+  const [replyingToCommentId, setReplyingToCommentId] = useState(null);
+  const [expandedComments, setExpandedComments] = useState({});
+  const [editingReplyId, setEditingReplyId] = useState(null);
+  const [editingReplyContent, setEditingReplyContent] = useState('');
   
   useEffect(() => {
     const fetchComments = async () => {
@@ -47,6 +53,68 @@ const Comments = ({ postId }) => {
     fetchAuthors();
   }, [comments]);
 
+  useEffect(() => {
+    const fetchAllReplies = async () => {
+      const repliesData = {};
+      for (const comment of comments) {
+        const repliesQuery = query(collection(db, 'comments', comment.id, 'replies'));
+        const repliesSnapshot = await getDocs(repliesQuery);
+        repliesData[comment.id] = repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
+      setReplies(repliesData);
+    };
+
+    if (comments.length > 0) {
+      fetchAllReplies();
+    }
+  }, [comments]);
+  const handleEditReply = (replyId, content) => {
+    setEditingReplyId(replyId);
+    setEditingReplyContent(content);
+  };
+  
+  const handleSaveEditReply = async (commentId, replyId) => {
+    try {
+      const replyRef = doc(db, 'comments', commentId, 'replies', replyId);
+      await updateDoc(replyRef, {
+        content: editingReplyContent,
+      });
+      setEditingReplyId(null);
+      setEditingReplyContent('');
+  
+      // Reload replies for the comment
+      const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
+      const repliesSnapshot = await getDocs(repliesQuery);
+      setReplies(prevReplies => ({
+        ...prevReplies,
+        [commentId]: repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      }));
+      setNotificationMessage('Phản hồi đã được chỉnh sửa thành công.');
+      setShowNotification(true);
+    } catch (error) {
+      console.error('Error updating reply:', error);
+    }
+  };
+  
+  const handleDeleteReply = async (commentId, replyId) => {
+    try {
+      const replyRef = doc(db, 'comments', commentId, 'replies', replyId);
+      await deleteDoc(replyRef);
+  
+      // Reload replies for the comment
+      const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
+      const repliesSnapshot = await getDocs(repliesQuery);
+      setReplies(prevReplies => ({
+        ...prevReplies,
+        [commentId]: repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      }));
+      setNotificationMessage('Phản hồi đã được xóa thành công.');
+      setShowNotification(true);
+    } catch (error) {
+      console.error('Error deleting reply:', error);
+    }
+  };
+
   const handleAddComment = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -71,6 +139,36 @@ const Comments = ({ postId }) => {
         setComments(commentsData);
       } catch (error) {
         console.error('Error adding comment:', error);
+      }
+    }
+  };
+
+  const handleAddReply = async (commentId, e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+
+    if (user) {
+      try {
+        await addDoc(collection(db, 'comments', commentId, 'replies'), {
+          content: newReply,
+          userId: user.uid,
+          fullName: user.displayName || 'Người dùng ẩn danh',
+          createdAt: serverTimestamp(),
+        });
+        setNewReply('');
+        setReplyingToCommentId(null);
+        setShowNotification(true);
+        setNotificationMessage('Phản hồi đã được thêm thành công.');
+
+        // Reload replies for the comment
+        const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
+        const repliesSnapshot = await getDocs(repliesQuery);
+        setReplies(prevReplies => ({
+          ...prevReplies,
+          [commentId]: repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        }));
+      } catch (error) {
+        console.error('Error adding reply:', error);
       }
     }
   };
@@ -131,11 +229,27 @@ const Comments = ({ postId }) => {
     setEditingCommentContent('');
   };
 
+  const toggleReplies = (commentId) => {
+    setExpandedComments(prev => ({
+      ...prev,
+      [commentId]: !prev[commentId]
+    }));
+  };
+
   return (
     <div className="comments-container">
       <h3>Bình luận</h3>
       {loading ? <div>Loading...</div> : (
         <>
+        <form onSubmit={handleAddComment} className="new-comment-form">
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Viết bình luận của bạn..."
+              required
+            />
+            <button type="submit">Gửi</button>
+          </form>
           <ul>
             {comments.map(comment => (
               <li key={comment.id}>
@@ -159,10 +273,10 @@ const Comments = ({ postId }) => {
                       <p className='comment-content'>{comment.content}</p>
                     )}
                     <div className='comment-icons'>
-                  <button className="icon-button"><i className="fas fa-thumbs-up"></i></button>
-                  <button className="icon-button"><i className="fas fa-thumbs-down"></i></button>
-                  <button className="icon-button"><i className="fas fa-reply"></i></button>
-                </div>
+                      <button className="icon-button"><i className="fas fa-thumbs-up"></i></button>
+                      <button className="icon-button"><i className="fas fa-thumbs-down"></i></button>
+                      <button className="icon-button" onClick={() => setReplyingToCommentId(comment.id)}>Trả lời</button>
+                    </div>
                     <div className="actions">
                       {auth.currentUser && auth.currentUser.uid === comment.userId && (
                         <div className="dropdown">
@@ -174,21 +288,84 @@ const Comments = ({ postId }) => {
                         </div>
                       )}
                     </div>
-                    
                   </div>
                 </div>
+                {replyingToCommentId === comment.id && (
+                  <form onSubmit={(e) => handleAddReply(comment.id, e)} className="new-comment-form">
+                    <textarea
+                      value={newReply}
+                      onChange={(e) => setNewReply(e.target.value)}
+                      placeholder="Viết phản hồi của bạn..."
+                      required
+                    />
+                    <button type="submit">Gửi</button>
+                  </form>
+                )}
+                <ul className="replies-list">
+                 {replies[comment.id] && (
+  expandedComments[comment.id] ? (
+    replies[comment.id].map(reply => (
+      <li key={reply.id}>
+        <div className="comment-header">
+          {authors[reply.userId] && authors[reply.userId].profilePictureUrl && (
+            <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
+          )}
+          <div className="comment-details">
+            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
+            {editingReplyId === reply.id ? (
+              <div>
+                <textarea
+                  value={editingReplyContent}
+                  onChange={(e) => setEditingReplyContent(e.target.value)}
+                  required
+                />
+                <button className="edit-button" onClick={() => handleSaveEditReply(comment.id, reply.id)}>Lưu</button>
+                <button className="cancel-button" onClick={() => { setEditingReplyId(null); setEditingReplyContent(''); }}>Hủy</button>
+              </div>
+            ) : (
+              <p className='comment-content'>{reply.content}</p>
+            )}
+            <div className="actions">
+              {auth.currentUser && auth.currentUser.uid === reply.userId && (
+                <div className="dropdown">
+                  <button className="dropdown-toggle">⋮</button>
+                  <div className="dropdown-content">
+                    <button onClick={() => handleEditReply(reply.id, reply.content)} className="edit-comment-button">Chỉnh sửa</button>
+                    <button onClick={() => handleDeleteReply(comment.id, reply.id)} className="delete-comment-button">Xóa</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </li>
+    ))
+  ) : (
+    replies[comment.id].slice(0, 0).map(reply => (
+      <li key={reply.id}>
+        <div className="comment-header">
+          {authors[reply.userId] && authors[reply.userId].profilePictureUrl && (
+            <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
+          )}
+          <div className="comment-details">
+            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
+            <p className='comment-content'>{reply.content}</p>
+          </div>
+        </div>
+      </li>
+    ))
+  )
+)}
+{replies[comment.id] && replies[comment.id].length > 0 && (
+  <button className="toggle-replies-button" onClick={() => toggleReplies(comment.id)}>
+    {expandedComments[comment.id] ? 'Ẩn' : `${replies[comment.id].length} phản hồi`}
+  </button>
+)}
+              </ul>
               </li>
             ))}
           </ul>
-          <form onSubmit={handleAddComment} className="new-comment-form">
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Viết bình luận của bạn..."
-              required
-            />
-            <button type="submit">Gửi</button>
-          </form>
+         
         </>
       )}
       {showNotification && <Notification message={notificationMessage} />}

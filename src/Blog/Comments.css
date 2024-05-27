@@ -202,6 +202,32 @@ button:disabled {
 .comment-details {
   flex: 1;
 }
+.replies-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.replies-list li {
+  margin-left: 40px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.toggle-replies-button {
+  color: #007BFF;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  background-color: white;
+  display: block;
+  width: 100%;
+  transition: box-shadow 0.3s ease; /* Hiệu ứng transition */
+}
+
+.toggle-replies-button:hover {
+  box-shadow: 0 0 5px 2px #007BFF; /* Hiệu ứng box-shadow khi hover */
+}
 /* Responsive adjustments */
 @media only screen and (max-width: 600px) {
   .comments-container {
