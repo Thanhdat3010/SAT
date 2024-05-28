@@ -104,3 +104,20 @@
     box-shadow: 0 3px #666; /* Bóng đổ nhỏ hơn khi nhấn */
     transform: translateY(2px); /* Dịch chuyển nút xuống ít hơn khi nhấn */
 }
+@media (max-width: 768px) {
+  .score {
+      font-size: 28px;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .score {
+      font-size: 24px;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+  }
+}

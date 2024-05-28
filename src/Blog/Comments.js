@@ -3,6 +3,8 @@ import { collection, query, where, getDocs, addDoc, deleteDoc, updateDoc, server
 import { db, auth } from '../components/firebase';
 import './Comments.css';
 import Notification from '../components/Notification';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
@@ -19,6 +21,7 @@ const Comments = ({ postId }) => {
   const [expandedComments, setExpandedComments] = useState({});
   const [editingReplyId, setEditingReplyId] = useState(null);
   const [editingReplyContent, setEditingReplyContent] = useState('');
+  const [likedComments, setLikedComments] = useState({});
   
   useEffect(() => {
     const fetchComments = async () => {
@@ -31,7 +34,7 @@ const Comments = ({ postId }) => {
 
     fetchComments();
   }, [postId]);
-
+  
   useEffect(() => {
     const fetchAuthors = async () => {
       const authorIds = [...new Set(comments.map(comment => comment.userId))];
@@ -127,6 +130,7 @@ const Comments = ({ postId }) => {
           userId: user.uid,
           fullName: user.displayName || 'Người dùng ẩn danh',
           createdAt: serverTimestamp(),
+          likes: 0, // Khởi tạo số lượt thích là 0
         });
         setNewComment('');
         setShowNotification(true);
@@ -154,6 +158,7 @@ const Comments = ({ postId }) => {
           userId: user.uid,
           fullName: user.displayName || 'Người dùng ẩn danh',
           createdAt: serverTimestamp(),
+          likes: 0, // Khởi tạo số lượt thích là 0
         });
         setNewReply('');
         setReplyingToCommentId(null);
@@ -186,13 +191,24 @@ const Comments = ({ postId }) => {
 
   const handleDeleteComment = async (commentId) => {
     try {
+      // Xóa bình luận
       await deleteDoc(doc(db, 'comments', commentId));
-      // Reload comments
+  
+      // Xóa tất cả phản hồi của bình luận này
+      const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
+      const repliesSnapshot = await getDocs(repliesQuery);
+      repliesSnapshot.docs.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+  
+      // Hiển thị thông báo
+      setNotificationMessage('Bình luận và các phản hồi đã được xóa thành công.');
+      setShowNotification(true);
+  
+      // Tải lại danh sách bình luận
       const q = query(collection(db, 'comments'), where('postId', '==', postId));
       const querySnapshot = await getDocs(q);
       const commentsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setNotificationMessage('Bình luận đã được xóa thành công.');
-      setShowNotification(true);
       setComments(commentsData);
     } catch (error) {
       console.error('Error deleting comment:', error);
@@ -236,10 +252,59 @@ const Comments = ({ postId }) => {
     }));
   };
 
+  const handleLikeComment = async (commentId) => {
+    try {
+      const commentRef = doc(db, 'comments', commentId);
+      const commentSnap = await getDoc(commentRef);
+      if (commentSnap.exists()) {
+        const currentLikes = commentSnap.data().likes || 0;
+        // Kiểm tra trạng thái liked của bình luận
+        if (!likedComments[commentId]) {
+          // Nếu chưa like, tăng số lượt thích và đặt liked thành true
+          await updateDoc(commentRef, {
+            likes: currentLikes + 1,
+          });
+          setLikedComments(prev => ({
+            ...prev,
+            [commentId]: true,
+          }));
+          setNotificationMessage('Bạn đã thích bình luận này.');
+        } else {
+          // Nếu đã like, giảm số lượt thích và đặt liked thành false
+          await updateDoc(commentRef, {
+            likes: currentLikes - 1,
+          });
+          setLikedComments(prev => ({
+            ...prev,
+            [commentId]: false,
+          }));
+          setNotificationMessage('Bạn đã hủy thích bình luận này.');
+        }
+        setShowNotification(true);
+        // Reload comments
+        const q = query(collection(db, 'comments'), where('postId', '==', postId));
+        const querySnapshot = await getDocs(q);
+        const commentsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setComments(commentsData);
+      }
+    } catch (error) {
+      console.error('Error liking comment:', error);
+    }
+  };
+
+  // Sắp xếp các bình luận theo số lượt thích
+  const sortedComments = [...comments].sort((a, b) => b.likes - a.likes);
+  
   return (
     <div className="comments-container">
       <h3>Bình luận</h3>
-      {loading ? <div>Loading...</div> : (
+      {loading ? <section className="dots-container">
+      <div className="dot"></div>
+      <div className="dot"></div>
+      <div className="dot"></div>
+      <div className="dot"></div>
+      <div className="dot"></div>
+      </section> : (
         <>
         <form onSubmit={handleAddComment} className="new-comment-form">
             <textarea
@@ -251,7 +316,7 @@ const Comments = ({ postId }) => {
             <button type="submit">Gửi</button>
           </form>
           <ul>
-            {comments.map(comment => (
+            {sortedComments.map(comment => (
               <li key={comment.id}>
                 <div className="comment-header">
                   {authors[comment.userId] && authors[comment.userId].profilePictureUrl && (
@@ -273,9 +338,12 @@ const Comments = ({ postId }) => {
                       <p className='comment-content'>{comment.content}</p>
                     )}
                     <div className='comment-icons'>
-                      <button className="icon-button"><i className="fas fa-thumbs-up"></i></button>
-                      <button className="icon-button"><i className="fas fa-thumbs-down"></i></button>
-                      <button className="icon-button" onClick={() => setReplyingToCommentId(comment.id)}>Trả lời</button>
+                    <button className={`comment-button-like ${likedComments[comment.id] ? 'liked' : ''}`} onClick={() => handleLikeComment(comment.id)}>
+                    <FontAwesomeIcon  icon={faThumbsUp} /> {comment.likes}
+                  </button>
+
+                      <button className="comment-button-dislike"><i className="fas fa-thumbs-down"></i></button>
+                      <button className="comment-button-reply" onClick={() => setReplyingToCommentId(comment.id)}>Trả lời</button>
                     </div>
                     <div className="actions">
                       {auth.currentUser && auth.currentUser.uid === comment.userId && (
@@ -302,65 +370,65 @@ const Comments = ({ postId }) => {
                   </form>
                 )}
                 <ul className="replies-list">
-                 {replies[comment.id] && (
-  expandedComments[comment.id] ? (
-    replies[comment.id].map(reply => (
-      <li key={reply.id}>
-        <div className="comment-header">
-          {authors[reply.userId] && authors[reply.userId].profilePictureUrl && (
-            <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
-          )}
-          <div className="comment-details">
-            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
-            {editingReplyId === reply.id ? (
-              <div>
-                <textarea
-                  value={editingReplyContent}
-                  onChange={(e) => setEditingReplyContent(e.target.value)}
-                  required
-                />
-                <button className="edit-button" onClick={() => handleSaveEditReply(comment.id, reply.id)}>Lưu</button>
-                <button className="cancel-button" onClick={() => { setEditingReplyId(null); setEditingReplyContent(''); }}>Hủy</button>
-              </div>
-            ) : (
-              <p className='comment-content'>{reply.content}</p>
-            )}
-            <div className="actions">
-              {auth.currentUser && auth.currentUser.uid === reply.userId && (
-                <div className="dropdown">
-                  <button className="dropdown-toggle">⋮</button>
-                  <div className="dropdown-content">
-                    <button onClick={() => handleEditReply(reply.id, reply.content)} className="edit-comment-button">Chỉnh sửa</button>
-                    <button onClick={() => handleDeleteReply(comment.id, reply.id)} className="delete-comment-button">Xóa</button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </li>
-    ))
-  ) : (
-    replies[comment.id].slice(0, 0).map(reply => (
-      <li key={reply.id}>
-        <div className="comment-header">
-          {authors[reply.userId] && authors[reply.userId].profilePictureUrl && (
-            <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
-          )}
-          <div className="comment-details">
-            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
-            <p className='comment-content'>{reply.content}</p>
-          </div>
-        </div>
-      </li>
-    ))
-  )
-)}
-{replies[comment.id] && replies[comment.id].length > 0 && (
-  <button className="toggle-replies-button" onClick={() => toggleReplies(comment.id)}>
-    {expandedComments[comment.id] ? 'Ẩn' : `${replies[comment.id].length} phản hồi`}
-  </button>
-)}
+                {replies[comment.id] && (
+                expandedComments[comment.id] ? (
+                replies[comment.id].map(reply => (
+                <li key={reply.id}>
+                        <div className="comment-header">
+                          {authors[reply.userId] && authors[reply.userId].profilePictureUrl && (
+                            <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
+                          )}
+                          <div className="comment-details">
+                            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
+                            {editingReplyId === reply.id ? (
+                              <div>
+                                <textarea
+                                  value={editingReplyContent}
+                                  onChange={(e) => setEditingReplyContent(e.target.value)}
+                                  required
+                                />
+                                <button className="edit-button" onClick={() => handleSaveEditReply(comment.id, reply.id)}>Lưu</button>
+                                <button className="cancel-button" onClick={() => { setEditingReplyId(null); setEditingReplyContent(''); }}>Hủy</button>
+                              </div>
+                            ) : (
+                              <p className='comment-content'>{reply.content}</p>
+                            )}
+                            <div className="actions">
+                              {auth.currentUser && auth.currentUser.uid === reply.userId && (
+                                <div className="dropdown">
+                                  <button className="dropdown-toggle">⋮</button>
+                                  <div className="dropdown-content">
+                                    <button onClick={() => handleEditReply(reply.id, reply.content)} className="edit-comment-button">Chỉnh sửa</button>
+                                    <button onClick={() => handleDeleteReply(comment.id, reply.id)} className="delete-comment-button">Xóa</button>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    replies[comment.id].slice(0, 0).map(reply => (
+                      <li key={reply.id}>
+                        <div className="comment-header">
+                          {authors[reply.userId] && authors[reply.userId].profilePictureUrl && (
+                            <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
+                          )}
+                          <div className="comment-details">
+                            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
+                            <p className='comment-content'>{reply.content}</p>
+                          </div>
+                        </div>
+                      </li>
+                    ))
+                  )
+                )}
+                {replies[comment.id] && replies[comment.id].length > 0 && (
+                  <button className="toggle-replies-button" onClick={() => toggleReplies(comment.id)}>
+                    {expandedComments[comment.id] ? 'Ẩn' : `${replies[comment.id].length} phản hồi`}
+                  </button>
+                )}
               </ul>
               </li>
             ))}

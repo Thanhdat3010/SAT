@@ -37,7 +37,7 @@
 .hero-text p {
     font-size: 3rem;
     font-weight: 800;
-    background: blueviolet;
+    background: linear-gradient(75deg, #00ffff, #ff00c3);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     padding: 0.5rem 0 2rem 0;

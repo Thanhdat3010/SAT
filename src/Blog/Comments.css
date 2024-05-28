@@ -107,12 +107,23 @@
 }
 
 .new-comment-form textarea {
-  padding: 10px;
+  padding: 12px; /* Tăng padding */
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #ddd; /* Sử dụng border mềm mại */
+  border-radius: 8px; /* Tăng độ cong cho border */
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px; /* Tăng chiều cao tối thiểu */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Thêm hiệu ứng transition */
+}
+
+.new-comment-form textarea:focus {
+  border-color: #007BFF; /* Thay đổi màu border khi focus */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); /* Thêm shadow khi focus */
+  outline: none; /* Loại bỏ outline */
+}
+
+.new-comment-form textarea:hover {
+  border-color: #aaa; /* Thay đổi màu border khi hover */
 }
 
 .new-comment-form button {
@@ -192,11 +203,27 @@ button:disabled {
   justify-content: flex-start;
 }
 
-.icon-button {
+.comment-button-like,
+.comment-button-dislike,
+.comment-button-reply {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 18px;
+  color: #333; /* Màu mặc định */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+
+.comment-button-like:hover,
+.comment-button-dislike:hover,
+.comment-button-reply:hover {
+  color: #1877f2; /* Màu xanh dương khi rê chuột vào */
+}
+
+.comment-button-like.liked,
+.comment-button-dislike.liked,
+.comment-button-reply.liked {
+  color: #1877f2; /* Màu xanh dương khi đã thích */
 }
 
 .comment-details {
@@ -227,6 +254,58 @@ button:disabled {
 
 .toggle-replies-button:hover {
   box-shadow: 0 0 5px 2px #007BFF; /* Hiệu ứng box-shadow khi hover */
+}
+.dots-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: #b3d4fc;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child {
+  margin-right: 0;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    background-color: #b3d4fc;
+    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #6793fb;
+    box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+  }
+
+  100% {
+    transform: scale(0.8);
+    background-color: #b3d4fc;
+    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+  }
 }
 /* Responsive adjustments */
 @media only screen and (max-width: 600px) {

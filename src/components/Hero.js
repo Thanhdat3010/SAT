@@ -4,37 +4,23 @@ import './Hero.css';
 function Hero(props) {
     const [typedText, setTypedText] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(false); // New state to track completion
 
     useEffect(() => {
+        if (isCompleted) return; // Dừng hiệu ứng nếu đã hoàn thành
+
         let typingDelay;
-        
-        if (isDeleting) {
-            if (typedText.length === 0) {
-                setIsDeleting(false);
-                typingDelay = setTimeout(() => {
-                    setTypedText(props.text[0]);
-                }, 500);
-            } else {
-                typingDelay = setTimeout(() => {
-                    setTypedText(typedText.slice(0, typedText.length - 1));
-                }, 100);
-            }
+
+        if (typedText.length < props.text.length) {
+            typingDelay = setTimeout(() => {
+                setTypedText(props.text.substring(0, typedText.length + 1));
+            }, 100); // Thời gian trễ giữa các ký tự gõ vào
         } else {
-            if (typedText.length === props.text.length) {
-                // Đợi một lúc trước khi bắt đầu xóa
-                typingDelay = setTimeout(() => {
-                    setIsDeleting(true);
-                }, 2000);
-            } else {
-                typingDelay = setTimeout(() => {
-                    setTypedText(props.text.substring(0, typedText.length + 1));
-                }, 150);
-            }
+            setIsCompleted(true); // Đánh dấu là đã hoàn thành khi gõ xong
         }
 
         return () => clearTimeout(typingDelay);
-    }, [typedText, props.text, isDeleting]);
-
+    }, [typedText, props.text, isCompleted]);
     return (
         <>
             <div className={props.cName}>

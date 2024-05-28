@@ -5,8 +5,8 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firest
 import { db, auth } from '../components/firebase';
 import Comments from './Comments';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaThumbsUp } from 'react-icons/fa';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+
 const Post = ({ fullName }) => {
   let { id } = useParams();
   const [post, setPost] = useState(null);
@@ -17,7 +17,7 @@ const Post = ({ fullName }) => {
 
   const user = auth.currentUser;
   const authenticatedUserId = user ? user.uid : null;
-
+  
   useEffect(() => {
     const fetchPost = async () => {
       const docRef = doc(db, 'posts', id);
