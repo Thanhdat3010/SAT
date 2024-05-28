@@ -22,13 +22,26 @@ const Comments = ({ postId }) => {
   const [editingReplyId, setEditingReplyId] = useState(null);
   const [editingReplyContent, setEditingReplyContent] = useState('');
   const [likedComments, setLikedComments] = useState({});
-  
+  const [likedReplies, setLikedReplies] = useState({});
+  const user = auth.currentUser;
+  const authenticatedUserId = user ? user.uid : null;
   useEffect(() => {
     const fetchComments = async () => {
       const q = query(collection(db, 'comments'), where('postId', '==', postId));
       const querySnapshot = await getDocs(q);
       const commentsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setComments(commentsData);
+      const likedCommentsObj = {};
+      commentsData.forEach(comment => {
+        const user = auth.currentUser;
+        if (user && comment.likesBy.includes(user.uid)) {
+          likedCommentsObj[comment.id] = true;
+        } else {
+          likedCommentsObj[comment.id] = false;
+        }
+      });
+      setLikedComments(likedCommentsObj);
+      
       setLoading(false);
     };
 
@@ -71,11 +84,12 @@ const Comments = ({ postId }) => {
       fetchAllReplies();
     }
   }, [comments]);
+
   const handleEditReply = (replyId, content) => {
     setEditingReplyId(replyId);
     setEditingReplyContent(content);
   };
-  
+
   const handleSaveEditReply = async (commentId, replyId) => {
     try {
       const replyRef = doc(db, 'comments', commentId, 'replies', replyId);
@@ -84,7 +98,7 @@ const Comments = ({ postId }) => {
       });
       setEditingReplyId(null);
       setEditingReplyContent('');
-  
+
       // Reload replies for the comment
       const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
       const repliesSnapshot = await getDocs(repliesQuery);
@@ -98,12 +112,12 @@ const Comments = ({ postId }) => {
       console.error('Error updating reply:', error);
     }
   };
-  
+
   const handleDeleteReply = async (commentId, replyId) => {
     try {
       const replyRef = doc(db, 'comments', commentId, 'replies', replyId);
       await deleteDoc(replyRef);
-  
+
       // Reload replies for the comment
       const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
       const repliesSnapshot = await getDocs(repliesQuery);
@@ -131,6 +145,7 @@ const Comments = ({ postId }) => {
           fullName: user.displayName || 'Người dùng ẩn danh',
           createdAt: serverTimestamp(),
           likes: 0, // Khởi tạo số lượt thích là 0
+          likesBy: [], // Khởi tạo mảng likesBy rỗng
         });
         setNewComment('');
         setShowNotification(true);
@@ -159,6 +174,7 @@ const Comments = ({ postId }) => {
           fullName: user.displayName || 'Người dùng ẩn danh',
           createdAt: serverTimestamp(),
           likes: 0, // Khởi tạo số lượt thích là 0
+          likesBy: [], // Khởi tạo mảng likesBy rỗng
         });
         setNewReply('');
         setReplyingToCommentId(null);
@@ -193,18 +209,18 @@ const Comments = ({ postId }) => {
     try {
       // Xóa bình luận
       await deleteDoc(doc(db, 'comments', commentId));
-  
+
       // Xóa tất cả phản hồi của bình luận này
       const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
       const repliesSnapshot = await getDocs(repliesQuery);
       repliesSnapshot.docs.forEach(async (doc) => {
         await deleteDoc(doc.ref);
       });
-  
+
       // Hiển thị thông báo
       setNotificationMessage('Bình luận và các phản hồi đã được xóa thành công.');
       setShowNotification(true);
-  
+
       // Tải lại danh sách bình luận
       const q = query(collection(db, 'comments'), where('postId', '==', postId));
       const querySnapshot = await getDocs(q);
@@ -254,15 +270,20 @@ const Comments = ({ postId }) => {
 
   const handleLikeComment = async (commentId) => {
     try {
+      const user = auth.currentUser;
       const commentRef = doc(db, 'comments', commentId);
       const commentSnap = await getDoc(commentRef);
-      if (commentSnap.exists()) {
-        const currentLikes = commentSnap.data().likes || 0;
+      if (commentSnap.exists() && user) {
+        const commentData = commentSnap.data();
+        const currentLikes = commentData.likes || 0;
+        const likesBy = commentData.likesBy || [];
+
         // Kiểm tra trạng thái liked của bình luận
-        if (!likedComments[commentId]) {
-          // Nếu chưa like, tăng số lượt thích và đặt liked thành true
+        if (!likesBy.includes(user.uid)) {
+          // Nếu chưa like, tăng số lượt thích và thêm userId vào mảng likesBy
           await updateDoc(commentRef, {
             likes: currentLikes + 1,
+            likesBy: [...likesBy, user.uid],
           });
           setLikedComments(prev => ({
             ...prev,
@@ -270,9 +291,10 @@ const Comments = ({ postId }) => {
           }));
           setNotificationMessage('Bạn đã thích bình luận này.');
         } else {
-          // Nếu đã like, giảm số lượt thích và đặt liked thành false
+          // Nếu đã like, giảm số lượt thích và xóa userId khỏi mảng likesBy
           await updateDoc(commentRef, {
             likes: currentLikes - 1,
+            likesBy: likesBy.filter(id => id !== user.uid),
           });
           setLikedComments(prev => ({
             ...prev,
@@ -281,6 +303,7 @@ const Comments = ({ postId }) => {
           setNotificationMessage('Bạn đã hủy thích bình luận này.');
         }
         setShowNotification(true);
+
         // Reload comments
         const q = query(collection(db, 'comments'), where('postId', '==', postId));
         const querySnapshot = await getDocs(q);
@@ -292,9 +315,58 @@ const Comments = ({ postId }) => {
     }
   };
 
+  const handleLikeReply = async (commentId, replyId) => {
+    try {
+      const user = auth.currentUser;
+      const replyRef = doc(db, 'comments', commentId, 'replies', replyId);
+      const replySnap = await getDoc(replyRef);
+      if (replySnap.exists() && user) {
+        const replyData = replySnap.data();
+        const currentLikes = replyData.likes || 0;
+        const likesBy = replyData.likesBy || [];
+
+        // Kiểm tra trạng thái liked của phản hồi
+        if (!likesBy.includes(user.uid)) {
+          // Nếu chưa like, tăng số lượt thích và thêm userId vào mảng likesBy
+          await updateDoc(replyRef, {
+            likes: currentLikes + 1,
+            likesBy: [...likesBy, user.uid],
+          });
+          setLikedReplies(prev => ({
+            ...prev,
+            [replyId]: true,
+          }));
+          setNotificationMessage('Bạn đã thích phản hồi này.');
+        } else {
+          // Nếu đã like, giảm số lượt thích và xóa userId khỏi mảng likesBy
+          await updateDoc(replyRef, {
+            likes: currentLikes - 1,
+            likesBy: likesBy.filter(id => id !== user.uid),
+          });
+          setLikedReplies(prev => ({
+            ...prev,
+            [replyId]: false,
+          }));
+          setNotificationMessage('Bạn đã hủy thích phản hồi này.');
+        }
+        setShowNotification(true);
+
+        // Reload replies for the comment
+        const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
+        const repliesSnapshot = await getDocs(repliesQuery);
+        setReplies(prevReplies => ({
+          ...prevReplies,
+          [commentId]: repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        }));
+      }
+    } catch (error) {
+      console.error('Error liking reply:', error);
+    }
+  };
+
   // Sắp xếp các bình luận theo số lượt thích
   const sortedComments = [...comments].sort((a, b) => b.likes - a.likes);
-  
+
   return (
     <div className="comments-container">
       <h3>Bình luận</h3>
@@ -393,6 +465,13 @@ const Comments = ({ postId }) => {
                             ) : (
                               <p className='comment-content'>{reply.content}</p>
                             )}
+                            <div className='comment-icons'>
+                            <button className={`comment-button-like ${likedReplies[reply.id] ? 'liked' : ''}`} onClick={() => handleLikeReply(comment.id, reply.id)}>
+                            <FontAwesomeIcon icon={faThumbsUp} /> {reply.likes}
+                          </button>
+                              <button className="comment-button-dislike"><i className="fas fa-thumbs-down"></i></button>
+                              <button className="comment-button-reply" onClick={() => setReplyingToCommentId(comment.id)}>Trả lời</button>
+                            </div>
                             <div className="actions">
                               {auth.currentUser && auth.currentUser.uid === reply.userId && (
                                 <div className="dropdown">

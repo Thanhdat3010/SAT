@@ -44,8 +44,8 @@
   margin: 0;
   font-weight: bold;
   color: #333;
-
 }
+
 .comment-content {
   margin: 5px 0 0 0;
   color: #555;
@@ -196,6 +196,7 @@ button:disabled {
 .cancel-button:hover {
   background-color: #c82333;
 }
+
 .comment-icons {
   display: flex;
   gap: 10px;
@@ -220,7 +221,7 @@ button:disabled {
   color: #1877f2; /* Màu xanh dương khi rê chuột vào */
 }
 
-.comment-button-like.liked,
+.comment-button-like.liked ,
 .comment-button-dislike.liked,
 .comment-button-reply.liked {
   color: #1877f2; /* Màu xanh dương khi đã thích */
@@ -229,6 +230,7 @@ button:disabled {
 .comment-details {
   flex: 1;
 }
+
 .replies-list {
   list-style-type: none;
   padding: 0;
@@ -255,6 +257,7 @@ button:disabled {
 .toggle-replies-button:hover {
   box-shadow: 0 0 5px 2px #007BFF; /* Hiệu ứng box-shadow khi hover */
 }
+
 .dots-container {
   display: flex;
   align-items: center;
@@ -307,6 +310,7 @@ button:disabled {
     box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
   }
 }
+
 /* Responsive adjustments */
 @media only screen and (max-width: 600px) {
   .comments-container {
