@@ -4,14 +4,14 @@ import Slider from 'react-slick';
 import './Blog.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../components/firebase';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import các biểu tượng từ thư viện react-icons
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
-  const postsPerPage = 3; // Số lượng bài viết mỗi trang
+  const postsPerPage = 3;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,16 +34,15 @@ const Blog = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     cssEase: 'linear',
-    prevArrow: <FaArrowLeft />, // Nút bấm bên trái
-    nextArrow: <FaArrowRight />, // Nút bấm bên phải
+    prevArrow: <FaArrowLeft />,
+    nextArrow: <FaArrowRight />,
   };
 
   const handleSearch = event => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset về trang đầu tiên khi tìm kiếm
+    setCurrentPage(1);
   };
 
-  // Lọc và phân trang bài viết
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -56,20 +55,46 @@ const Blog = () => {
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  // Lọc bài viết nổi bật
   const featuredPosts = posts.filter(post => post.featured);
+
+  const generatePagination = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > 3) {
+        pages.push('...');
+      }
+      let startPage = Math.max(2, currentPage - 1);
+      let endPage = Math.min(totalPages - 1, currentPage + 1);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
 
   return (
     <div className="blog-container">
       <div className="blog-carousel">
         <Slider {...settings}>
           {featuredPosts.map(post => (
-            <Link className='card-link' to={`/post/${post.id}`}>
-            <div key={post.id} className="post-preview">
-              <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
-              <h2>{post.title}</h2>
-              <p>{post.summary}</p>
-            </div>
+            <Link className='card-link' to={`/post/${post.id}`} key={post.id}>
+              <div className="post-preview">
+                <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
+                <h2>{post.title}</h2>
+                <p>{post.summary}</p>
+              </div>
             </Link>
           ))}
         </Slider>
@@ -102,17 +127,17 @@ const Blog = () => {
       </div>
 
       <div className="pagination">
-        {Array.from({ length: totalPages }, (_, index) => (
+        {generatePagination().map((page, index) => (
           <button
-            key={index + 1}
-            onClick={() => paginate(index + 1)}
-            className={`page-number ${currentPage === index + 1 ? 'active' : ''}`}
+            key={index}
+            onClick={() => page !== '...' && paginate(page)}
+            className={`page-number ${currentPage === page ? 'active' : ''}`}
+            disabled={page === '...'}
           >
-            {index + 1}
+            {page}
           </button>
         ))}
       </div>
-     
     </div>
   );
 };

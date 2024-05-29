@@ -64,6 +64,7 @@ function App() {
     <Route path='/Onthi' element={<Onthi/>}/>    
     <Route path='/Vechungtoi' element={<Vechungtoi/>}/>    
     <Route path="/post/:id" element={<Post />} />
+
     <Route path="/new-post" element={<NewPost />} />
     <Route path="/my-post" element={<MyPost />} />
 

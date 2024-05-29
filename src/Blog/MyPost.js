@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
-import { db, storage, auth } from '../components/firebase'; // Giả sử bạn đã thiết lập auth trong firebase.js
+import { collection, getDocs, query, where, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db, storage, auth } from '../components/firebase';
 import { ref, deleteObject } from 'firebase/storage';
-import './MyPost.css'; // Import CSS cho MyPost
+import './MyPost.css';
+import EditPost from './EditPost'; // Import thành phần EditPost
 
 const MyPost = () => {
   const [userPosts, setUserPosts] = useState([]);
-  const [confirmDelete, setConfirmDelete] = useState(false); // State cho xác nhận xóa
-  const [postIdToDelete, setPostIdToDelete] = useState(null); // State lưu ID bài viết cần xóa
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [postIdToDelete, setPostIdToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editingPost, setEditingPost] = useState(null); // State cho bài viết đang chỉnh sửa
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -32,30 +34,61 @@ const MyPost = () => {
 
   const handleDeletePost = async (postId, imageUrl) => {
     try {
-      // Xác nhận trước khi xóa bài viết
       if (!confirmDelete) {
-        // Nếu chưa xác nhận, hiển thị cửa sổ xác nhận
         setConfirmDelete(true);
         setPostIdToDelete(postId);
       } else {
-        // Nếu đã xác nhận, thực hiện xóa bài viết
+        // Xóa tất cả các comments và replies liên quan đến bài viết
+        const commentsQuery = query(collection(db, 'comments'), where('postId', '==', postId));
+        const commentsSnapshot = await getDocs(commentsQuery);
+
+        const deletePromises = commentsSnapshot.docs.map(async (commentDoc) => {
+          const commentId = commentDoc.id;
+
+          // Xóa tất cả các phản hồi của bình luận
+          const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
+          const repliesSnapshot = await getDocs(repliesQuery);
+
+          const deleteReplyPromises = repliesSnapshot.docs.map((replyDoc) =>
+            deleteDoc(doc(db, 'comments', commentId, 'replies', replyDoc.id))
+          );
+          await Promise.all(deleteReplyPromises);
+
+          // Xóa bình luận
+          await deleteDoc(doc(db, 'comments', commentId));
+        });
+
+        await Promise.all(deletePromises);
+
+        // Xóa bài viết
         await deleteDoc(doc(db, 'posts', postId));
 
-        // Xóa hình ảnh từ kho lưu trữ Firebase nếu có
         if (imageUrl) {
           const imageRef = ref(storage, imageUrl);
           await deleteObject(imageRef);
         }
 
-        // Cập nhật danh sách bài viết của người dùng sau khi xóa
         setUserPosts(userPosts.filter(post => post.id !== postId));
-
-        // Đặt lại trạng thái của xác nhận
         setConfirmDelete(false);
         setPostIdToDelete(null);
       }
     } catch (error) {
       console.error('Error deleting post:', error);
+    }
+  };
+
+  const handleEditPost = (post) => {
+    setEditingPost(post);
+  };
+
+  const handleUpdatePost = async (updatedPost) => {
+    try {
+      const postDoc = doc(db, 'posts', updatedPost.id);
+      await updateDoc(postDoc, updatedPost);
+      setUserPosts(userPosts.map(post => (post.id === updatedPost.id ? updatedPost : post)));
+      setEditingPost(null);
+    } catch (error) {
+      console.error('Error updating post:', error);
     }
   };
 
@@ -72,24 +105,24 @@ const MyPost = () => {
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
               <div className="card-buttons">
-                {/* Thêm hàm xóa bài viết khi nhấn nút */}
+                <button onClick={() => handleEditPost(post)} className="edit-button">Sửa</button>
                 <button onClick={() => handleDeletePost(post.id, post.imageUrl)} className="delete-button">Xóa</button>
               </div>
             </div>
           ))}
         </div>
       )}
-      {/* Hiển thị cửa sổ xác nhận xóa bài viết */}
       {confirmDelete && (
         <div className="confirm-delete">
           <p>Bạn có chắc chắn muốn xóa bài viết này?</p>
           <div className="confirm-buttons">
-            {/* Nút xác nhận */}
             <button onClick={() => handleDeletePost(postIdToDelete)} className="confirm-delete-button">Xác nhận</button>
-            {/* Nút hủy */}
             <button onClick={() => setConfirmDelete(false)} className="cancel-delete-button">Hủy</button>
           </div>
         </div>
+      )}
+      {editingPost && (
+        <EditPost post={editingPost} onUpdatePost={handleUpdatePost} onCancel={() => setEditingPost(null)} />
       )}
     </div>
   );

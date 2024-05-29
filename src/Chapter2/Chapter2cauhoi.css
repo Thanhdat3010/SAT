@@ -1,11 +1,13 @@
 .question {
   padding: 20px;
-  text-align: left; /* Hoặc có thể sử dụng justify-content: flex-start; nếu sử dụng flexbox */
+  text-align: left;
 }
+
 .questions-page {
   text-align: center;
 }
-.question p{
+
+.question p {
   white-space: pre-line;
   font-weight: bold;
 }
@@ -13,6 +15,7 @@
 .questions-container {
   margin-top: 20px;
 }
+
 .question ul {
   list-style-type: none;
   padding: 0;
@@ -21,6 +24,15 @@
 .question li {
   cursor: pointer;
   margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.question li:hover {
+  background-color: #f1f1f1;
+  border-color: #ccc;
 }
 
 .correct {
@@ -49,15 +61,16 @@
   color: #fff;
   border: none;
   border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #007bff;
-  transition: transform 0.3s, box-shadow 0.3s; /* Transition for transform and shadow */
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .next-button:hover {
-  transform: translateY(-2px); /* Move button up slightly */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increase shadow */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
+
 .score-container {
   margin-top: 20px;
   text-align: center;
@@ -79,30 +92,72 @@
   height: 100px;
   line-height: 100px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .explanation-button {
-  background-color: #4CAF50; /* Màu nền xanh lá */
-  color: white; /* Màu chữ trắng */
-  border: none; /* Không viền */
-  padding: 5px 10px; /* Đệm nhỏ hơn xung quanh nội dung nút */
-  text-align: center; /* Căn giữa chữ trong nút */
-  text-decoration: none; /* Không gạch chân */
-  display: inline-block; /* Hiển thị dạng khối nội tuyến */
-  font-size: 15px; /* Cỡ chữ nhỏ hơn */
-  margin: 2px 1px; /* Khoảng cách nhỏ hơn xung quanh nút */
-  cursor: pointer; /* Con trỏ chuột hiển thị dạng pointer */
-  border-radius: 5px; /* Bo góc nút nhỏ hơn */
-  transition-duration: 0.4s; /* Thời gian chuyển đổi hiệu ứng */
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 2px 1px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.4s, transform 0.3s, box-shadow 0.3s;
 }
 
 .explanation-button:hover {
-  background-color: #45a049; /* Màu nền khi hover */
+  background-color: #45a049;
 }
 
 .explanation-button:active {
-  background-color: #3e8e41; /* Màu nền khi nhấn */
-  box-shadow: 0 3px #666; /* Bóng đổ nhỏ hơn khi nhấn */
-  transform: translateY(2px); /* Dịch chuyển nút xuống ít hơn khi nhấn */
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+  .score {
+      font-size: 28px;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+  }
+
+  .next-button {
+      padding: 8px 16px;
+      font-size: 14px;
+  }
+
+  .explanation-button {
+      padding: 4px 8px;
+      font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .score {
+      font-size: 24px;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+  }
+
+  .next-button {
+      padding: 6px 12px;
+      font-size: 12px;
+  }
+
+  .explanation-button {
+      padding: 3px 6px;
+      font-size: 12px;
+  }
 }
 .subscript {
   font-size: 0.8em; /* Tùy chỉnh kích thước phù hợp với thiết kế của bạn */
