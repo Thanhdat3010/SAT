@@ -23,8 +23,8 @@ const Comments = ({ postId }) => {
   const [editingReplyContent, setEditingReplyContent] = useState('');
   const [likedComments, setLikedComments] = useState({});
   const [likedReplies, setLikedReplies] = useState({});
-  const user = auth.currentUser;
-  const authenticatedUserId = user ? user.uid : null;
+  
+
   useEffect(() => {
     const fetchComments = async () => {
       const q = query(collection(db, 'comments'), where('postId', '==', postId));
@@ -72,14 +72,32 @@ const Comments = ({ postId }) => {
   useEffect(() => {
     const fetchAllReplies = async () => {
       const repliesData = {};
+      const likedRepliesObj = {};
+  
       for (const comment of comments) {
         const repliesQuery = query(collection(db, 'comments', comment.id, 'replies'));
         const repliesSnapshot = await getDocs(repliesQuery);
-        repliesData[comment.id] = repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        let replies = repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+        // Sắp xếp các phản hồi theo số lượt thích giảm dần
+        replies = replies.sort((a, b) => b.likes - a.likes);
+  
+        repliesData[comment.id] = replies;
+  
+        replies.forEach(reply => {
+          const user = auth.currentUser;
+          if (user && reply.likesBy.includes(user.uid)) {
+            likedRepliesObj[reply.id] = true;
+          } else {
+            likedRepliesObj[reply.id] = false;
+          }
+        });
       }
+  
       setReplies(repliesData);
+      setLikedReplies(likedRepliesObj);
     };
-
+  
     if (comments.length > 0) {
       fetchAllReplies();
     }
@@ -165,7 +183,7 @@ const Comments = ({ postId }) => {
   const handleAddReply = async (commentId, e) => {
     e.preventDefault();
     const user = auth.currentUser;
-
+  
     if (user) {
       try {
         await addDoc(collection(db, 'comments', commentId, 'replies'), {
@@ -180,13 +198,18 @@ const Comments = ({ postId }) => {
         setReplyingToCommentId(null);
         setShowNotification(true);
         setNotificationMessage('Phản hồi đã được thêm thành công.');
-
+  
         // Reload replies for the comment
         const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
         const repliesSnapshot = await getDocs(repliesQuery);
+        let replies = repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+        // Sắp xếp các phản hồi theo số lượt thích giảm dần
+        replies = replies.sort((a, b) => b.likes - a.likes);
+  
         setReplies(prevReplies => ({
           ...prevReplies,
-          [commentId]: repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+          [commentId]: replies
         }));
       } catch (error) {
         console.error('Error adding reply:', error);
