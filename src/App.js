@@ -15,6 +15,7 @@ import FLashcard from "./routes/Flashcard";
 import Chapter2 from "./Chapter2/Chapter2";
 import Chapter3 from "./Chapter3/Chapter3";
 import Chapter4 from "./Chapter4/Chapter4";
+import Chapter5 from "./Chapter5/Chapter5";
 import Post from "./Blog/Post";
 import NewPost from "./Blog/NewPost";
 import MyPost from "./Blog/MyPost";
@@ -57,6 +58,7 @@ function App() {
     <Route path='/Chapter2' element={<Chapter2 />}/>
     <Route path='/Chapter3' element={<Chapter3 />}/>
     <Route path='/Chapter4' element={<Chapter4/>}/>
+    <Route path='/Chapter5' element={<Chapter5/>}/>
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
     <Route path='/Onthi' element={<Onthi/>}/>    

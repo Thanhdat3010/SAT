@@ -27,7 +27,7 @@ function Trangchulythuyet() {
         { id: 2, title: "Chương 2: Các pha của vật chất", image: image2, path: "/Chapter2" },
         { id: 3, title: "Chương 3: Cấu trúc nguyên tử", image: image3, path: "/Chapter3" },
         { id: 4, title: "Chương 4: Bảng tuần hoàn và xu hướng tuần hoàn", image: image4, path: "/Chapter4" },
-        { id: 5, title: "Chương 5: Liên kết", image: image5, path: "/" },
+        { id: 5, title: "Chương 5: Liên kết", image: image5, path: "/Chapter5" },
         { id: 6, title: "Chương 6: Phép cân bằng hóa học và giải pháp hóa học", image: image6, path: "/" },
         { id: 7, title: "Chương 7", image: image7, path: "/" },
         { id: 8, title: "Chương 8: Tốc độ phản ứng và cân bằng hóa học", image: image8, path: "/" },
