@@ -126,7 +126,7 @@
   border-color: #aaa; /* Thay đổi màu border khi hover */
 }
 
-.new-comment-form button {
+.submit-comment {
   align-self: flex-end;
   margin-top: 10px;
   padding: 10px 20px;
@@ -138,7 +138,7 @@
   cursor: pointer;
 }
 
-.new-comment-form button:hover {
+.submit-comment:hover {
   background-color: #0056b3;
 }
 

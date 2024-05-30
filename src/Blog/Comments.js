@@ -23,7 +23,9 @@ const Comments = ({ postId }) => {
   const [editingReplyContent, setEditingReplyContent] = useState('');
   const [likedComments, setLikedComments] = useState({});
   const [likedReplies, setLikedReplies] = useState({});
-  
+  const [addingComment, setAddingComment] = useState(false);
+  const [addingReply, setAddingReply] = useState(false);
+
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -153,9 +155,10 @@ const Comments = ({ postId }) => {
   const handleAddComment = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-
+  
     if (user) {
       try {
+        setAddingComment(true); // Bắt đầu loading
         await addDoc(collection(db, 'comments'), {
           postId,
           content: newComment,
@@ -166,9 +169,7 @@ const Comments = ({ postId }) => {
           likesBy: [], // Khởi tạo mảng likesBy rỗng
         });
         setNewComment('');
-        setShowNotification(true);
-        setNotificationMessage('Bình luận đã được thêm thành công.');
-
+  
         // Reload comments
         const q = query(collection(db, 'comments'), where('postId', '==', postId));
         const querySnapshot = await getDocs(q);
@@ -176,6 +177,8 @@ const Comments = ({ postId }) => {
         setComments(commentsData);
       } catch (error) {
         console.error('Error adding comment:', error);
+      } finally {
+        setAddingComment(false); // Tắt loading
       }
     }
   };
@@ -186,6 +189,7 @@ const Comments = ({ postId }) => {
   
     if (user) {
       try {
+        setAddingReply(true); // Bắt đầu loading
         await addDoc(collection(db, 'comments', commentId, 'replies'), {
           content: newReply,
           userId: user.uid,
@@ -213,6 +217,8 @@ const Comments = ({ postId }) => {
         }));
       } catch (error) {
         console.error('Error adding reply:', error);
+      } finally {
+        setAddingReply(false); // Tắt loading
       }
     }
   };
@@ -312,7 +318,6 @@ const Comments = ({ postId }) => {
             ...prev,
             [commentId]: true,
           }));
-          setNotificationMessage('Bạn đã thích bình luận này.');
         } else {
           // Nếu đã like, giảm số lượt thích và xóa userId khỏi mảng likesBy
           await updateDoc(commentRef, {
@@ -323,9 +328,7 @@ const Comments = ({ postId }) => {
             ...prev,
             [commentId]: false,
           }));
-          setNotificationMessage('Bạn đã hủy thích bình luận này.');
         }
-        setShowNotification(true);
 
         // Reload comments
         const q = query(collection(db, 'comments'), where('postId', '==', postId));
@@ -359,7 +362,6 @@ const Comments = ({ postId }) => {
             ...prev,
             [replyId]: true,
           }));
-          setNotificationMessage('Bạn đã thích phản hồi này.');
         } else {
           // Nếu đã like, giảm số lượt thích và xóa userId khỏi mảng likesBy
           await updateDoc(replyRef, {
@@ -370,9 +372,7 @@ const Comments = ({ postId }) => {
             ...prev,
             [replyId]: false,
           }));
-          setNotificationMessage('Bạn đã hủy thích phản hồi này.');
         }
-        setShowNotification(true);
 
         // Reload replies for the comment
         const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
@@ -401,15 +401,19 @@ const Comments = ({ postId }) => {
       <div className="dot"></div>
       </section> : (
         <>
-        <form onSubmit={handleAddComment} className="new-comment-form">
+        {!addingComment ? (
+          <form onSubmit={handleAddComment} className="new-comment-form">
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Viết bình luận của bạn..."
               required
             />
-            <button type="submit">Gửi</button>
+            <button className='submit-comment' type="submit">Gửi</button>
           </form>
+        ) : (
+          <div className="loading-indicator">Đang thêm bình luận...</div>
+        )}
           <ul>
             {sortedComments.map(comment => (
               <li key={comment.id}>
@@ -453,17 +457,21 @@ const Comments = ({ postId }) => {
                     </div>
                   </div>
                 </div>
-                {replyingToCommentId === comment.id && (
-                  <form onSubmit={(e) => handleAddReply(comment.id, e)} className="new-comment-form">
-                    <textarea
-                      value={newReply}
-                      onChange={(e) => setNewReply(e.target.value)}
-                      placeholder="Viết phản hồi của bạn..."
-                      required
-                    />
-                    <button type="submit">Gửi</button>
-                  </form>
-                )}
+                                {replyingToCommentId === comment.id && (
+                    addingReply ? (
+                      <div className="loading-indicator">Đang thêm phản hồi...</div>
+                    ) : (
+                      <form onSubmit={(e) => handleAddReply(comment.id, e)} className="new-comment-form">
+                        <textarea
+                          value={newReply}
+                          onChange={(e) => setNewReply(e.target.value)}
+                          placeholder="Viết phản hồi của bạn..."
+                          required
+                        />
+                        <button className='submit-comment' type="submit">Gửi</button>
+                      </form>
+                    )
+                  )}
                 <ul className="replies-list">
                 {replies[comment.id] && (
                 expandedComments[comment.id] ? (

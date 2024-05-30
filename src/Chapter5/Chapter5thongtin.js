@@ -185,7 +185,6 @@ function Chapter5thongtin() {
             <p><b>Vấn đề:</b></p>
             <p>Công thức hóa học của tin(IV) fluoride và lead(IV) oxide?</p>
             <p><b>Giải pháp:</b> Sử dụng phương pháp chéo, tin(IV) fluoride sẽ là SnF₄. Khi sử dụng phương pháp chéo cho lead(IV) oxide, ban đầu công thức sẽ giống Pb2O4 nhưng hãy nhớ rằng tất cả các hợp chất ion đều được viết ở tỷ lệ thấp nhất, công thức thực là PbO₂.</p>
-
             </Panel>
           </Collapse>
         </div>
