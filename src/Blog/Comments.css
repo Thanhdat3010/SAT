@@ -290,7 +290,16 @@ button:disabled {
 .dot:nth-child(3) {
   animation-delay: 0.1s;
 }
-
+.edited-label {
+  color: #888;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
+.Timestamp{
+  color: #888;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
 @keyframes pulse {
   0% {
     transform: scale(0.8);

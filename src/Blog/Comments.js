@@ -5,7 +5,8 @@ import './Comments.css';
 import Notification from '../components/Notification';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { formatDistanceToNowStrict  } from 'date-fns'; // Import from date-fns
+import { vi } from 'date-fns/locale';
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState({});
@@ -115,10 +116,11 @@ const Comments = ({ postId }) => {
       const replyRef = doc(db, 'comments', commentId, 'replies', replyId);
       await updateDoc(replyRef, {
         content: editingReplyContent,
+        edited: true, // Cập nhật trường edited
       });
       setEditingReplyId(null);
       setEditingReplyContent('');
-
+  
       // Reload replies for the comment
       const repliesQuery = query(collection(db, 'comments', commentId, 'replies'));
       const repliesSnapshot = await getDocs(repliesQuery);
@@ -167,6 +169,7 @@ const Comments = ({ postId }) => {
           createdAt: serverTimestamp(),
           likes: 0, // Khởi tạo số lượt thích là 0
           likesBy: [], // Khởi tạo mảng likesBy rỗng
+          edited: false, // Thêm trường edited
         });
         setNewComment('');
   
@@ -182,7 +185,7 @@ const Comments = ({ postId }) => {
       }
     }
   };
-
+  
   const handleAddReply = async (commentId, e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -197,6 +200,7 @@ const Comments = ({ postId }) => {
           createdAt: serverTimestamp(),
           likes: 0, // Khởi tạo số lượt thích là 0
           likesBy: [], // Khởi tạo mảng likesBy rỗng
+          edited: false, // Thêm trường edited
         });
         setNewReply('');
         setReplyingToCommentId(null);
@@ -270,6 +274,7 @@ const Comments = ({ postId }) => {
       const commentRef = doc(db, 'comments', commentId);
       await updateDoc(commentRef, {
         content: editingCommentContent,
+        edited: true, // Cập nhật trường edited
       });
       setEditingCommentId(null);
       setEditingCommentContent('');
@@ -289,7 +294,10 @@ const Comments = ({ postId }) => {
     setEditingCommentId(null);
     setEditingCommentContent('');
   };
-
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return '';
+    return formatDistanceToNowStrict(new Date(timestamp.seconds * 1000), { addSuffix: true, locale: vi });
+  };
   const toggleReplies = (commentId) => {
     setExpandedComments(prev => ({
       ...prev,
@@ -422,7 +430,10 @@ const Comments = ({ postId }) => {
                     <img src={authors[comment.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
                   )}
                   <div className="comment-details">
-                    <p className='comment-user'><strong>{comment.fullName}</strong> ({new Date(comment.createdAt.seconds * 1000).toLocaleString()}):</p>
+                    <p className='comment-user'><strong>{comment.fullName}</strong> 
+                    <span className='Timestamp'>{formatTimestamp(comment.createdAt)}</span>
+                    {comment.edited && <span className="edited-label">(đã chỉnh sửa)</span>}
+                    </p>
                     {editingCommentId === comment.id ? (
                       <div>
                         <textarea
@@ -482,7 +493,10 @@ const Comments = ({ postId }) => {
                             <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
                           )}
                           <div className="comment-details">
-                            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
+                            <p className='comment-user'><strong>{reply.fullName}</strong> 
+                            <span className='Timestamp'>{formatTimestamp(comment.createdAt)}</span>
+                            {reply.edited && <span className="edited-label">(đã chỉnh sửa)</span>}
+                            </p>
                             {editingReplyId === reply.id ? (
                               <div>
                                 <textarea
@@ -526,7 +540,11 @@ const Comments = ({ postId }) => {
                             <img src={authors[reply.userId].profilePictureUrl} alt="Avatar" className="author-avatar" />
                           )}
                           <div className="comment-details">
-                            <p className='comment-user'><strong>{reply.fullName}</strong> ({new Date(reply.createdAt.seconds * 1000).toLocaleString()}):</p>
+                            <p className='comment-user'><strong>{reply.fullName}</strong> 
+                            <span className='Timestamp'>{formatTimestamp(comment.createdAt)}</span>
+                            {reply.edited && <span className="edited-label">(đã chỉnh sửa)</span>}
+
+                            </p>
                             <p className='comment-content'>{reply.content}</p>
                           </div>
                         </div>
