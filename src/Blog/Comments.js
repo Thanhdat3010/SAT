@@ -420,8 +420,14 @@ const Comments = ({ postId }) => {
             <button className='submit-comment' type="submit">Gửi</button>
           </form>
         ) : (
-          <div className="loading-indicator">Đang thêm bình luận...</div>
-        )}
+            <section className="dots-container">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            </section>        
+            )}
           <ul>
             {sortedComments.map(comment => (
               <li key={comment.id}>
@@ -470,7 +476,13 @@ const Comments = ({ postId }) => {
                 </div>
                                 {replyingToCommentId === comment.id && (
                     addingReply ? (
-                      <div className="loading-indicator">Đang thêm phản hồi...</div>
+                      <section className="dots-container">
+                      <div className="dot"></div>
+                      <div className="dot"></div>
+                      <div className="dot"></div>
+                      <div className="dot"></div>
+                      <div className="dot"></div>
+                      </section>
                     ) : (
                       <form onSubmit={(e) => handleAddReply(comment.id, e)} className="new-comment-form">
                         <textarea

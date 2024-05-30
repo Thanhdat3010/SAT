@@ -4,6 +4,7 @@ import { db, storage, auth } from '../components/firebase';
 import { ref, deleteObject } from 'firebase/storage';
 import './MyPost.css';
 import EditPost from './EditPost'; // Import thành phần EditPost
+import { Link, useNavigate } from 'react-router-dom';
 
 const MyPost = () => {
   const [userPosts, setUserPosts] = useState([]);
@@ -11,6 +12,7 @@ const MyPost = () => {
   const [postIdToDelete, setPostIdToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState(null); // State cho bài viết đang chỉnh sửa
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -97,11 +99,15 @@ const MyPost = () => {
       <h1>Bài viết của tôi</h1>
       {loading ? (
         <p>Đang tải...</p>
+      ) : editingPost ? (
+        <EditPost post={editingPost} onUpdatePost={handleUpdatePost} onCancel={() => setEditingPost(null)} />
       ) : (
         <div className="card-grid">
           {userPosts.map(post => (
             <div className="card" key={post.id}>
+            <Link className='card-link' to={`/post/${post.id}`} key={post.id}>
               <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
+              </Link>
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
               <div className="card-buttons">
@@ -111,6 +117,7 @@ const MyPost = () => {
             </div>
           ))}
         </div>
+        
       )}
       {confirmDelete && (
         <div className="confirm-delete">
@@ -120,9 +127,6 @@ const MyPost = () => {
             <button onClick={() => setConfirmDelete(false)} className="cancel-delete-button">Hủy</button>
           </div>
         </div>
-      )}
-      {editingPost && (
-        <EditPost post={editingPost} onUpdatePost={handleUpdatePost} onCancel={() => setEditingPost(null)} />
       )}
     </div>
   );

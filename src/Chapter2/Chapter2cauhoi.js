@@ -206,7 +206,8 @@ const [quizCompleted, setQuizCompleted] = useState(() => {
         <h2>Hoàn thành</h2>
         <div className="score-container">
           <p className="score-label">Điểm số của bạn:</p>
-          <p className="score">{score} / {questions.length}</p>
+          <p className="score">{score}</p>
+          {/* <p className="score">{score} / {questions.length}</p> */}
           <button onClick={resetQuiz} className="next-button">Làm lại</button>
         </div>
       </div>

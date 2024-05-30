@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import './Blog.css';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from '../components/firebase';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
@@ -19,6 +19,32 @@ const Blog = () => {
       const postsCollection = collection(db, 'posts');
       const snapshot = await getDocs(postsCollection);
       const postsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+      // Sắp xếp các bài viết dựa trên số lượt thích
+      const sortedPosts = postsData.sort((a, b) => b.likes - a.likes);
+      
+      // Lấy top 4 bài viết
+      const topPosts = sortedPosts.slice(0, 4);
+      
+      // Đặt thuộc tính featured cho 4 bài viết top
+      const batchUpdates = topPosts.map(async (post, index) => {
+        const postRef = doc(db, 'posts', post.id);
+        await updateDoc(postRef, {
+          featured: true
+        });
+      });
+
+      // Đặt thuộc tính featured cho các bài viết còn lại thành false
+      const nonTopPosts = sortedPosts.slice(4);
+      const resetNonTopPosts = nonTopPosts.map(async (post, index) => {
+        const postRef = doc(db, 'posts', post.id);
+        await updateDoc(postRef, {
+          featured: false
+        });
+      });
+
+      await Promise.all([...batchUpdates, ...resetNonTopPosts]);
+
       setPosts(postsData);
     };
 
@@ -55,8 +81,6 @@ const Blog = () => {
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  const featuredPosts = posts.filter(post => post.featured);
-
   const generatePagination = () => {
     const pages = [];
     const maxPagesToShow = 5;
@@ -88,15 +112,17 @@ const Blog = () => {
     <div className="blog-container">
       <div className="blog-carousel">
         <Slider {...settings}>
-          {featuredPosts.map(post => (
-            <Link className='card-link' to={`/post/${post.id}`} key={post.id}>
-              <div className="post-preview">
-                <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
-                <h2>{post.title}</h2>
-                <p>{post.summary}</p>
-              </div>
-            </Link>
-          ))}
+          {posts
+            .filter(post => post.featured)
+            .map(post => (
+              <Link className='card-link' to={`/post/${post.id}`} key={post.id}>
+                <div className="post-preview">
+                  <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
+                  <h2>{post.title}</h2>
+                  <p>{post.summary}</p>
+                </div>
+              </Link>
+            ))}
         </Slider>
       </div>
       <div className="search-bar">

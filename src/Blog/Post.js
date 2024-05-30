@@ -80,7 +80,16 @@ const Post = ({ fullName }) => {
   };
 
   if (!post || !author) {
-    return <div>Loading...</div>;
+    return <div className="loader-container">
+    <div className="wrapper-post">
+    <div className="blue ball"></div>
+    <div className="red ball"></div>
+    <div className="yellow ball"></div>
+    <div className="green ball"></div>
+  </div>
+  </div>
+    
+    ;
   }
 
   // Convert createdAt to a readable date string
