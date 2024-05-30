@@ -19,37 +19,40 @@ const Blog = () => {
       const postsCollection = collection(db, 'posts');
       const snapshot = await getDocs(postsCollection);
       const postsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-      // Sắp xếp các bài viết dựa trên số lượt thích
-      const sortedPosts = postsData.sort((a, b) => b.likes - a.likes);
-      
-      // Lấy top 4 bài viết
-      const topPosts = sortedPosts.slice(0, 4);
-      
-      // Đặt thuộc tính featured cho 4 bài viết top
-      const batchUpdates = topPosts.map(async (post, index) => {
-        const postRef = doc(db, 'posts', post.id);
-        await updateDoc(postRef, {
-          featured: true
+  
+      // Kiểm tra nếu người dùng đã đăng nhập
+      if (isLoggedIn) {
+        // Sắp xếp các bài viết dựa trên số lượt thích
+        const sortedPosts = postsData.sort((a, b) => b.likes - a.likes);
+        
+        // Lấy top 4 bài viết
+        const topPosts = sortedPosts.slice(0, 4);
+        
+        // Đặt thuộc tính featured cho 4 bài viết top
+        const batchUpdates = topPosts.map(async (post, index) => {
+          const postRef = doc(db, 'posts', post.id);
+          await updateDoc(postRef, {
+            featured: true
+          });
         });
-      });
-
-      // Đặt thuộc tính featured cho các bài viết còn lại thành false
-      const nonTopPosts = sortedPosts.slice(4);
-      const resetNonTopPosts = nonTopPosts.map(async (post, index) => {
-        const postRef = doc(db, 'posts', post.id);
-        await updateDoc(postRef, {
-          featured: false
+  
+        // Đặt thuộc tính featured cho các bài viết còn lại thành false
+        const nonTopPosts = sortedPosts.slice(4);
+        const resetNonTopPosts = nonTopPosts.map(async (post, index) => {
+          const postRef = doc(db, 'posts', post.id);
+          await updateDoc(postRef, {
+            featured: false
+          });
         });
-      });
-
-      await Promise.all([...batchUpdates, ...resetNonTopPosts]);
-
+  
+        await Promise.all([...batchUpdates, ...resetNonTopPosts]);
+      }
+  
       setPosts(postsData);
     };
-
+  
     fetchPosts();
-  }, []);
+  }, [isLoggedIn]); // Kích hoạt lại useEffect khi trạng thái đăng nhập thay đổi
 
   const settings = {
     dots: true,
