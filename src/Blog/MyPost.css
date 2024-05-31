@@ -1,115 +1,137 @@
+/* Container cho lưới các thẻ */
 .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  
-  .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    text-align: center;
-    transition: transform 0.3s;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .card h2 {
-    margin: 10px;
-  }
-  
-  .card p {
-    padding: 0 10px 10px 10px;
-    color: #666;
-  }
-  
-  .card-buttons {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .edit-link,
-  .delete-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .edit-link {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .edit-link:hover {
-    background-color: #0056b3;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: #fff;
-  }
-  
-  .delete-button:hover {
-    background-color: #bd2130;
-  }
-  .confirm-delete {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .confirm-delete p {
-    margin-bottom: 10px;
-  }
-  
-  .confirm-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .confirm-delete-button,
-  .cancel-delete-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .confirm-delete-button {
-    background-color: #dc3545;
-    color: #fff;
-    margin-right: 10px;
-  }
-  
-  .confirm-delete-button:hover {
-    background-color: #bd2130;
-  }
-  
-  .cancel-delete-button {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .cancel-delete-button:hover {
-    background-color: #0056b3;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Styling cho từng thẻ */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hiệu ứng khi hover vào thẻ */
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* Ảnh bên trong thẻ */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Tiêu đề thẻ */
+.card h2 {
+  margin: 10px;
+}
+
+/* Tóm tắt của thẻ */
+.card p {
+  padding: 0 10px 10px;
+  color: #666;
+  flex-grow: 1;
+}
+
+/* Container cho các nút bên trong thẻ */
+.card-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px 0;
+}
+
+/* Nút chỉnh sửa và xóa */
+.edit-button,
+.delete-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Nút chỉnh sửa */
+.edit-button {
+  background-color: #007bff;
+  color: #fff;
+  flex: 1;
+  margin: 0 5px;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Nút xóa */
+.delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  flex: 1;
+  margin: 0 5px;
+}
+
+.delete-button:hover {
+  background-color: #bd2130;
+}
+
+/* Xác nhận xóa */
+.confirm-delete {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-delete p {
+  margin-bottom: 10px;
+}
+
+/* Container cho các nút xác nhận */
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Nút xác nhận xóa và hủy xóa */
+.confirm-delete-button,
+.cancel-delete-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.confirm-delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.confirm-delete-button:hover {
+  background-color: #bd2130;
+}
+
+.cancel-delete-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.cancel-delete-button:hover {
+  background-color: #0056b3;
+}

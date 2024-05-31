@@ -8,13 +8,15 @@ import ReactQuill from 'react-quill'; // Import React Quill
 import 'react-quill/dist/quill.snow.css'; // Import CSS cho React Quill
 import './NewPost.css';
 
-const NewPost = ({ fullName }) => {
+const NewPost = () => {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [content, setContent] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [fullName, setFullName] = useState(''); // State for fullName
+
   const [profilePictureUrl, setProfilePictureUrl] = useState('');
 
   const quillRef = useRef(null); // Tham chiếu đến React Quill
@@ -46,6 +48,7 @@ const NewPost = ({ fullName }) => {
         if (profileSnap.exists()) {
           const profileData = profileSnap.data();
           setProfilePictureUrl(profileData.profilePictureUrl || '');
+          setFullName(profileData.username || ''); // Set the fullName with username
         }
       }
     };
@@ -115,7 +118,7 @@ const NewPost = ({ fullName }) => {
           imageUrl: uploadedImageUrl,
           userId: user.uid, // Thêm userId để liên kết bài viết với người dùng
           email: user.email,
-          fullName: user.displayName || 'Người dùng ẩn danh',
+          fullName: fullName  || 'Người dùng ẩn danh',
           createdAt: new Date(),
           featured: false,
         });

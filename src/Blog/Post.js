@@ -7,7 +7,7 @@ import Comments from './Comments';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
-const Post = ({ fullName }) => {
+const Post = () => {
   let { id } = useParams();
   const [post, setPost] = useState(null);
   const [author, setAuthor] = useState(null);
@@ -102,7 +102,7 @@ const Post = ({ fullName }) => {
         {author.profilePictureUrl && (
           <img src={author.profilePictureUrl} alt="Avatar" className="author-avatar" />
         )}
-        Đăng bởi <strong>{post.fullName || fullName || 'Người dùng ẩn danh'}</strong> vào <time>{createdAt}</time>
+        Đăng bởi <strong>{post.fullName || 'Người dùng ẩn danh'}</strong> vào <time>{createdAt}</time>
       </div>
       <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
       
