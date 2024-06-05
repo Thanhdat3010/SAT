@@ -1,3 +1,11 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
 .blog-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -12,24 +20,38 @@
 
 .post-preview {
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.post-preview:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
 }
 
 .post-preview img {
   width: 100%;
-  height: 350px; /* Thay đổi chiều cao để giữ cho hình ảnh không bị méo */
+  height: 350px;
   max-height: 400px;
-  object-fit: fill;
+  object-fit: cover;
   object-position: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.post-preview:hover img {
+  transform: scale(1.07);
+  filter: brightness(0.9);
 }
 
 .post-preview h2 {
   margin: 20px;
   color: #333;
-  font-size: 28px;
+  font-size: 32px;
+  font-weight: bold;
+  transition: color 0.4s ease;
 }
 
 .post-preview h2 a {
@@ -37,33 +59,40 @@
   text-decoration: none;
 }
 
+.post-preview:hover h2 {
+  color: #0056b3;
+}
+
 .post-preview p {
   padding: 0 20px 20px;
   color: #666;
   font-size: 18px;
+  line-height: 1.7;
 }
 
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  
 }
 
 .card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: #fff;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   text-align: center;
-  transition: transform 0.3s;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
 }
 
 .card-link {
-  text-decoration: none; /* Remove underline from links */
+  text-decoration: none;
 }
 
 .card img {
@@ -71,22 +100,25 @@
   height: 200px;
   object-fit: cover;
 }
-
 .card h2 {
-  text-decoration: none;
-  font-size: 1.2em;
-  margin: 10px;
+  font-size: 1.6em;
+  margin: 15px;
+  color: #333;
+  transition: color 0.4s ease;
+}
+
+.card:hover h2 {
+  color: #0056b3;
 }
 
 .card p {
-  text-decoration: none;
-  font-size: 0.9em;
-  padding: 0 10px 10px 10px;
+  font-size: 1em;
+  padding: 0 20px 20px;
   color: #666;
+  line-height: 1.6;
 }
 
 .search-bar {
-  margin-top: 50px;
   margin-bottom: 20px;
   text-align: center;
   display: flex;
@@ -97,21 +129,21 @@
 .search-bar input {
   width: 80%;
   max-width: 600px;
-  padding: 12px 20px;
-  font-size: 1em;
+  padding: 15px 20px;
+  font-size: 1.2em;
   border: 1px solid #ccc;
   border-radius: 25px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
 .search-bar input:focus {
-  border-color: #007BFF;
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  border-color: #0056b3;
+  box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2);
   outline: none;
 }
 
-/* Pagination styles */
+/* Kiểu phân trang */
 .pagination {
   margin: 20px 0;
   display: flex;
@@ -130,18 +162,20 @@
 
 .page-number:hover,
 .page-number.active {
-  background-color: #333;
+  background-color: #0056b3;
   color: #fff;
 }
+
 .Newpost {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .Newpost button {
   background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 25px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -149,48 +183,46 @@
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 5px;
-
+  transition: background-color 0.3s ease;
+  margin-top: 30px;
 }
 
 .Newpost button:hover {
   background-color: #45a049;
 }
-/* Blog.css */
 
-/* CSS cho Slider Arrow Buttons */
+/* CSS cho nút mũi tên Slider */
 .slick-prev,
 .slick-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 50px; /* Điều chỉnh kích thước của nút */
-  height: 50px; /* Điều chỉnh kích thước của nút */
+  width: 50px;
+  height: 50px;
   color: #333;
-  border: none; /* Xóa viền */
+  border: none;
   cursor: pointer;
-  z-index: 999; /* Đặt z-index để nút hiển thị trên slider */
+  z-index: 999;
   transition: background-color 0.3s, color 0.3s;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
 }
 
 .slick-prev:hover,
 .slick-next:hover {
-  background-color: rgba(255, 255, 255, 0.9); /* Màu nền khi hover */
-  color: #333; /* Màu chữ khi hover */
+  background-color: rgba(255, 255, 255, 1);
+  color: #0056b3;
 }
 
 .slick-prev {
-  left: 10px; /* Khoảng cách từ mép trái */
-  border-top-left-radius: 25px; /* Làm tròn góc trên bên trái */
-  border-bottom-left-radius: 25px; /* Làm tròn góc dưới bên trái */
+  left: 10px;
 }
 
 .slick-next {
-  right: 10px; /* Khoảng cách từ mép phải */
-  border-top-right-radius: 25px; /* Làm tròn góc trên bên phải */
-  border-bottom-right-radius: 25px; /* Làm tròn góc dưới bên phải */
+  right: 10px;
 }
 
-/* CSS cho biểu tượng */
+/* CSS cho biểu tượng Slider */
 .slick-prev:before,
 .slick-next:before {
   content: '';
@@ -198,45 +230,83 @@
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 15px 0 15px 25px; /* Kích thước biểu tượng */
-  border-color: transparent transparent transparent #333; /* Màu của biểu tượng */
+  border-width: 15px 0 15px 25px;
+  border-color: transparent transparent transparent #333;
 }
 
 .slick-prev:before {
-  transform: rotate(135deg); /* Xoay biểu tượng */
+  transform: rotate(135deg);
 }
 
 .slick-next:before {
-  transform: rotate(-45deg); /* Xoay biểu tượng */
+  transform: rotate(-45deg);
 }
 
-/* Responsive design adjustments */
+.author-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.author-avatar {
+  max-height: 40px;
+  max-width: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.publish-time {
+  color: #999;
+  font-size: 0.8em;
+  text-align: right;
+}
+
+/* Điều chỉnh thiết kế responsive */
 @media (max-width: 768px) {
   .post-preview img {
-    max-height: 300px; /* Giảm chiều cao của hình ảnh trên thiết bị nhỏ */
+    max-height: 300px;
   }
 
   .post-preview h2 {
-    font-size: 24px; /* Giảm kích thước chữ tiêu đề */
+    font-size: 24px;
   }
 
   .post-preview p {
-    font-size: 16px; /* Giảm kích thước chữ tóm tắt */
+    font-size: 16px;
   }
 
   .card img {
-    max-height: 150px; /* Giảm chiều cao của hình ảnh trên thiết bị nhỏ */
+    max-height: 150px;
   }
 
   .card h2 {
-    font-size: 1em; /* Giảm kích thước chữ tiêu đề */
+    font-size: 1.2em;
   }
 
   .card p {
-    font-size: 0.8em; /* Giảm kích thước chữ tóm tắt */
+    font-size: 0.9em;
   }
 
   .search-bar input {
-    width: 100%; /* Chiếm toàn bộ chiều rộng trên thiết bị nhỏ */
+    width: 100%;
+  }
+
+  .author-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .author-avatar {
+    max-height: 40px !important;
+    max-width: 40px !important;
+    margin-bottom: 10px;
+  }
+
+  .publish-time {
+    font-size: 0.9em;
+    text-align: left;
   }
 }

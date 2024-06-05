@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import './Blog.css';
-import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../components/firebase';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
@@ -19,24 +19,30 @@ const Blog = () => {
       const postsCollection = collection(db, 'posts');
       const snapshot = await getDocs(postsCollection);
       const postsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  
-      // Kiểm tra nếu người dùng đã đăng nhập
+
+      const postsWithAuthors = await Promise.all(
+        postsData.map(async (post) => {
+          const authorRef = doc(db, 'profiles', post.userId);
+          const authorSnap = await getDoc(authorRef);
+          if (authorSnap.exists()) {
+            const authorData = authorSnap.data();
+            return { ...post, author: authorData };
+          }
+          return post;
+        })
+      );
+
       if (isLoggedIn) {
-        // Sắp xếp các bài viết dựa trên số lượt thích
-        const sortedPosts = postsData.sort((a, b) => b.likes - a.likes);
-        
-        // Lấy top 4 bài viết
+        const sortedPosts = postsWithAuthors.sort((a, b) => b.likes - a.likes);
         const topPosts = sortedPosts.slice(0, 4);
-        
-        // Đặt thuộc tính featured cho 4 bài viết top
+
         const batchUpdates = topPosts.map(async (post, index) => {
           const postRef = doc(db, 'posts', post.id);
           await updateDoc(postRef, {
             featured: true
           });
         });
-  
-        // Đặt thuộc tính featured cho các bài viết còn lại thành false
+
         const nonTopPosts = sortedPosts.slice(4);
         const resetNonTopPosts = nonTopPosts.map(async (post, index) => {
           const postRef = doc(db, 'posts', post.id);
@@ -44,15 +50,15 @@ const Blog = () => {
             featured: false
           });
         });
-  
+
         await Promise.all([...batchUpdates, ...resetNonTopPosts]);
       }
-  
-      setPosts(postsData);
+
+      setPosts(postsWithAuthors);
     };
-  
+
     fetchPosts();
-  }, [isLoggedIn]); // Kích hoạt lại useEffect khi trạng thái đăng nhập thay đổi
+  }, [isLoggedIn]);
 
   const settings = {
     dots: true,
@@ -128,6 +134,12 @@ const Blog = () => {
             ))}
         </Slider>
       </div>
+      {isLoggedIn && (
+        <div className="Newpost">
+          <button onClick={() => navigate('/new-post')}>Thêm bài viết</button>
+          <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button>
+        </div>
+      )}
       <div className="search-bar">
         <input
           type="text"
@@ -137,12 +149,7 @@ const Blog = () => {
         />
       </div>
       
-      {isLoggedIn && (
-        <div className="Newpost">
-          <button onClick={() => navigate('/new-post')}>Thêm bài viết</button>
-          <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button>
-        </div>
-      )}
+     
       <div className="card-grid">
         {currentPosts.map(post => (
           <Link to={`/post/${post.id}`} className="card-link" key={post.id}>
@@ -150,6 +157,17 @@ const Blog = () => {
               <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
+              <div className="author-info">
+                <div className="left">
+                  {post.author?.profilePictureUrl && (
+                    <img src={post.author.profilePictureUrl} alt="Author Avatar" className="author-avatar" />
+                  )}
+                  <span>{post.author?.fullName || 'Người dùng ẩn danh'}</span>
+                </div>
+                <div className="publish-time">
+                  <time>{new Date(post.createdAt.seconds * 1000).toLocaleString()}</time>
+                </div>
+              </div>
             </div>
           </Link>
         ))}

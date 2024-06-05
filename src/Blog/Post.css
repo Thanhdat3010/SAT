@@ -45,13 +45,7 @@
 .back-link:hover {
   background-color: #555;
 }
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
-  cursor: pointer;
-}
+
 
 .avatar-container.active .dropdown-menu {
   display: block; /* Hiển thị dropdown menu khi phần tử cha có class 'active' */
