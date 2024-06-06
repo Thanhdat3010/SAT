@@ -4,7 +4,6 @@ import Slider from 'react-slick';
 import './Blog.css';
 import { collection, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../components/firebase';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,8 +68,6 @@ const Blog = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     cssEase: 'linear',
-    prevArrow: <FaArrowLeft />,
-    nextArrow: <FaArrowRight />,
   };
 
   const handleSearch = event => {
@@ -157,15 +154,15 @@ const Blog = () => {
               <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
-              <div className="author-info">
+              <div className="author-info-blog">
                 <div className="left">
                   {post.author?.profilePictureUrl && (
-                    <img src={post.author.profilePictureUrl} alt="Author Avatar" className="author-avatar" />
+                    <img src={post.author.profilePictureUrl} alt="Author Avatar" className="author-avatar-blog" />
                   )}
                   <span>{post.author?.fullName || 'Người dùng ẩn danh'}</span>
                 </div>
                 <div className="publish-time">
-                  <time>{new Date(post.createdAt.seconds * 1000).toLocaleString()}</time>
+                  <time>{new Date(post.createdAt.seconds * 1000).toLocaleDateString()}</time>
                 </div>
               </div>
             </div>

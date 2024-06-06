@@ -26,7 +26,7 @@ const Comments = ({ postId }) => {
   const [likedReplies, setLikedReplies] = useState({});
   const [addingComment, setAddingComment] = useState(false);
   const [addingReply, setAddingReply] = useState(false);
-
+  
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -193,15 +193,16 @@ const Comments = ({ postId }) => {
     if (user) {
       try {
         setAddingReply(true); // Bắt đầu loading
-        await addDoc(collection(db, 'comments', commentId, 'replies'), {
+        const replyData = {
           content: newReply,
           userId: user.uid,
           fullName: user.displayName || 'Người dùng ẩn danh',
-          createdAt: serverTimestamp(),
-          likes: 0, // Khởi tạo số lượt thích là 0
-          likesBy: [], // Khởi tạo mảng likesBy rỗng
-          edited: false, // Thêm trường edited
-        });
+          createdAt: serverTimestamp(), // Lấy thời gian hiện tại của máy chủ
+          likes: 0,
+          likesBy: [],
+          edited: false,
+        };
+        await addDoc(collection(db, 'comments', commentId, 'replies'), replyData);
         setNewReply('');
         setReplyingToCommentId(null);
         setShowNotification(true);
@@ -298,6 +299,7 @@ const Comments = ({ postId }) => {
     if (!timestamp) return '';
     return formatDistanceToNowStrict(new Date(timestamp.seconds * 1000), { addSuffix: true, locale: vi });
   };
+  
   const toggleReplies = (commentId) => {
     setExpandedComments(prev => ({
       ...prev,
@@ -506,7 +508,7 @@ const Comments = ({ postId }) => {
                           )}
                           <div className="comment-details">
                             <p className='comment-user'><strong>{reply.fullName}</strong> 
-                            <span className='Timestamp'>{formatTimestamp(comment.createdAt)}</span>
+                            <span className='Timestamp'>{formatTimestamp(reply.createdAt)}</span>
                             {reply.edited && <span className="edited-label">(đã chỉnh sửa)</span>}
                             </p>
                             {editingReplyId === reply.id ? (
@@ -553,7 +555,7 @@ const Comments = ({ postId }) => {
                           )}
                           <div className="comment-details">
                             <p className='comment-user'><strong>{reply.fullName}</strong> 
-                            <span className='Timestamp'>{formatTimestamp(comment.createdAt)}</span>
+                            <span className='Timestamp'>{formatTimestamp(reply.createdAt)}</span>
                             {reply.edited && <span className="edited-label">(đã chỉnh sửa)</span>}
 
                             </p>
