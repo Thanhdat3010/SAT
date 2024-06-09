@@ -135,17 +135,15 @@
   width: 100%;
   margin-bottom: 10px;
 }
+.fill-in-the-blank-input.correct-answer {
+  color: green;
+}
 
+.fill-in-the-blank-input.incorrect-answer {
+  color: red;
+}
 .submit-button {
-  padding: 10px 20px;
-  font-size: 15px;
-  cursor: pointer;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #007bff;
-  transition: transform 0.3s, box-shadow 0.3s;
+  display: none;
 }
 
 .submit-button:hover {
@@ -206,10 +204,5 @@
   .fill-in-the-blank-input {
     width: 100%;
     font-size: 14px;
-  }
-
-  .submit-button {
-    padding: 6px 12px;
-    font-size: 16px;
   }
 }

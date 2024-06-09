@@ -277,8 +277,24 @@ const Chapter1cauhoi = ({ onCompletion, onReset }) => {
       if (isCorrect) {
         setScore(prevScore => prevScore + 1);
       }
+      event.target.elements[0].classList.toggle('correct-answer', isCorrect);
+      event.target.elements[0].classList.toggle('incorrect-answer', !isCorrect);
     }
   };
+  
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const submitButton = document.getElementById('submit-button');
+      submitButton.click();
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const nextQuestion = () => {
     if (selectedOption === null) {
@@ -416,25 +432,26 @@ const Chapter1cauhoi = ({ onCompletion, onReset }) => {
               </ul>
             )}
             {questions[currentQuestion].type === "fill-in-the-blank" && (
-  <form onSubmit={handleFillInTheBlankSubmit} className="fill-in-the-blank-form">
-    <input type="text" className="fill-in-the-blank-input" />
-    <button type="submit" className="submit-button">submit</button>
-    {selectedOption !== null && (
-      <>
-        <p className={`feedback ${answerState[currentQuestion] ? 'correct' : 'incorrect'}`}>
-          {answerState[currentQuestion] ? "Đúng rồi!" : "Sai rồi!"}
-        </p>
-        <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
-        {showExplanation && (
-          <div className="explanation">
-            <p>Đáp án đúng: {questions[currentQuestion].correctAnswer.toString()}</p>
-            <p>Giải thích: {questions[currentQuestion].explain}</p>
-          </div>
-        )}
-      </>
-    )}
-  </form>
-)}
+              <form onSubmit={handleFillInTheBlankSubmit} className="fill-in-the-blank-form">
+              <input type="text" 
+              className="fill-in-the-blank-input" 
+
+              />
+              <button type="submit" id="submit-button" className="submit-button">submit</button>
+              {/* Hiển thị dấu tích hoặc dấu x tùy thuộc vào đáp án */}
+            </form>
+            )}
+            {selectedOption !== null && (
+              <>
+                <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
+                {showExplanation && (
+                  <div className="explanation">
+                    <p>Đáp án đúng: {questions[currentQuestion].correctAnswer.toString()}</p>
+                    <p>Giải thích: {questions[currentQuestion].explain}</p>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         )}
         {currentQuestion < questions.length && (
