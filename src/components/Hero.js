@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
+import { Link } from 'react-router-dom';
 
 function Hero(props) {
     const [typedText, setTypedText] = useState('');
@@ -27,9 +28,9 @@ function Hero(props) {
                 <div className='hero-text'>
                     <h1>{props.title}</h1>
                     <p>{typedText}</p>
-                    <a href='/Lythuyet' className={props.btnClass}>
+                    <Link to='/Lythuyet' className={props.btnClass}>
                         {props.buttonText}
-                    </a>
+                    </Link>
                 </div>
             </div>
         </>
