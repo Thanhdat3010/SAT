@@ -13,7 +13,6 @@ const Chapter1cauhoi = ({ onCompletion, onReset }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
-
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [answerState, setAnswerState] = useState([]);

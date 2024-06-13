@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Progress } from 'antd';
-import { BookOutlined } from '@ant-design/icons';
+import { BookOutlined, PlusOutlined } from '@ant-design/icons';
 import Chapter1cauhoi from '../Chaper/Chapter1cauhoi';
 import Chapter2cauhoi from '../Chapter2/Chapter2cauhoi';
 import './Onthi.css';
@@ -8,7 +8,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { db } from '../components/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-
+import CreateQuiz from '../CreateQuiz/CreateQuiz';
+import CustomQuiz from '../CreateQuiz/CustomQuiz';
 const { Sider, Content } = Layout;
 
 const Onthi = () => {
@@ -66,7 +67,10 @@ const Onthi = () => {
     const totalChapters = Object.keys(chapterCompletion).length;
     return (completedChapters / totalChapters) * 100;
   };
-
+  const handleQuizCreation = () => {
+    // Điều hướng đến CustomQuiz sau khi thêm câu hỏi
+    setSelectedChapter('customQuiz');
+  };
   return (
     <Layout>
       <Navbar />
@@ -111,6 +115,12 @@ const Onthi = () => {
                 Luyện đề
               </Menu.Item>
             </Menu.SubMenu>
+            <Menu.Item key="create" icon={<PlusOutlined />} onClick={() => handleMenuClick('create')}>
+              Tạo câu hỏi
+            </Menu.Item>
+            <Menu.Item key="Custom"  onClick={() => handleMenuClick('Custom')}>
+              Bộ câu hỏi của bạn
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
@@ -121,6 +131,9 @@ const Onthi = () => {
             <div className='content-wrapper'>
               {selectedChapter === 1 && <Chapter1cauhoi onCompletion={() => handleChapterCompletion(1)} onReset={() => handleChapterReset(1)} />}
               {selectedChapter === 4 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(4)} onReset={() => handleChapterReset(4)} />}
+              {selectedChapter === 'create' && <CreateQuiz/>}
+              {selectedChapter === 'Custom' && <CustomQuiz/>}
+
               {/* Add more chapters here */}
             </div>
           </Content>

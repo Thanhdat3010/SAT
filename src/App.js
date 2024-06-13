@@ -20,6 +20,8 @@ import Chapter6 from "./Chapter6/Chapter6";
 import Post from "./Blog/Post";
 import NewPost from "./Blog/NewPost";
 import MyPost from "./Blog/MyPost";
+import CreateQuiz from "./CreateQuiz/CreateQuiz";
+import CustomQuiz from "./CreateQuiz/CustomQuiz";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
   useEffect(() => {
@@ -55,19 +57,20 @@ function App() {
     <Route path='/' element={<Trangchu />}/>
     <Route path='/Profile' element={<Profile />}/>
     <Route path='/Flashcard' element={<FLashcard />}/>
+    <Route path='/CreateQuiz' element={<CreateQuiz/>}/>
+    <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
+
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
     <Route path='/Chapter3' element={<Chapter3 />}/>
     <Route path='/Chapter4' element={<Chapter4/>}/>
     <Route path='/Chapter5' element={<Chapter5/>}/>
     <Route path='/Chapter6' element={<Chapter6/>}/>
-
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
     <Route path='/Onthi' element={<Onthi/>}/>    
     <Route path='/Vechungtoi' element={<Vechungtoi/>}/>    
     <Route path="/post/:id" element={<Post />} />
-
     <Route path="/new-post" element={<NewPost />} />
     <Route path="/my-post" element={<MyPost />} />
 
