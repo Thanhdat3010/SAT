@@ -7,13 +7,14 @@ const CreateQuiz = () => {
   const initialQuestionState = {
     type: 'multiple-choice',
     question: '',
-    correctAnswer: '', // Thêm một trường correctAnswer
+    correctAnswer: '',
     explain: '',
     options: ['', '', '', ''],
   };
 
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({ ...initialQuestionState });
+  const [quizTitle, setQuizTitle] = useState('');
 
   const handleAddQuestion = () => {
     if (currentQuestion.question.trim() === '') {
@@ -47,15 +48,21 @@ const CreateQuiz = () => {
   };
 
   const handleSaveQuiz = async () => {
+    if (quizTitle.trim() === '') {
+      alert('Vui lòng nhập tiêu đề cho bộ câu hỏi.');
+      return;
+    }
+
     if (questions.length === 0) {
       alert('Bạn phải thêm ít nhất một câu hỏi để lưu.');
       return;
     }
 
     try {
-      const docRef = doc(db, 'createdQuizzes', 'userGeneratedQuiz'); // Đổi 'userGeneratedQuiz' thành tên bạn muốn
-      await setDoc(docRef, { questions });
+      const docRef = doc(db, 'createdQuizzes', quizTitle); // Sử dụng tiêu đề làm tên tài liệu
+      await setDoc(docRef, { title: quizTitle, questions });
       alert('Bộ câu hỏi đã được lưu thành công.');
+      setQuizTitle('');
       setQuestions([]);
     } catch (error) {
       console.error('Error saving quiz:', error);
@@ -82,7 +89,17 @@ const CreateQuiz = () => {
 
   return (
     <div className="create-quiz-page">
-      <h1>Tạo Bộ Câu Hỏi</h1>
+      <h1 className="title">Tạo Bộ Câu Hỏi</h1>
+      <div className="quiz-title-form">
+        <label htmlFor="quizTitle">Tiêu đề bộ câu hỏi:</label>
+        <input
+          id="quizTitle"
+          name="quizTitle"
+          value={quizTitle}
+          onChange={(e) => setQuizTitle(e.target.value)}
+          placeholder="Nhập tiêu đề bộ câu hỏi..."
+        />
+      </div>
       <div className="question-form">
         <label htmlFor="questionType">Loại câu hỏi:</label>
         <select
@@ -160,7 +177,7 @@ const CreateQuiz = () => {
           rows={3}
           placeholder="Nhập giải thích cho câu trả lời đúng của bạn..."
         />
-        <button onClick={handleAddQuestion}>Thêm câu hỏi</button>
+        <button className="add-question-btn" onClick={handleAddQuestion}>Thêm câu hỏi</button>
       </div>
       <div className="question-list">
         <h2>Danh sách câu hỏi:</h2>
@@ -177,7 +194,7 @@ const CreateQuiz = () => {
         ) : (
           <p>Chưa có câu hỏi nào được thêm.</p>
         )}
-        <button onClick={handleSaveQuiz}>Lưu bộ câu hỏi</button>
+        <button className="save-quiz-btn" onClick={handleSaveQuiz}>Lưu bộ câu hỏi</button>
       </div>
     </div>
   );

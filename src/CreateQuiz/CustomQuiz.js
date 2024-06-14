@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './CustomQuiz.css';
 import Notification from '../components/Notification';
 import { db } from '../components/firebase';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
 import formatChemicalFormula from '../components/formatChemicalFormula';
 const CustomQuiz = ({ userId }) => {
   const [quizzes, setQuizzes] = useState([]);
@@ -40,7 +40,14 @@ const CustomQuiz = ({ userId }) => {
     setProgress(0);
     setQuizCompleted(false);
   };
-
+  const deleteQuiz = async (quizId) => {
+    try {
+      await deleteDoc(doc(db, 'createdQuizzes', quizId));
+      setQuizzes(quizzes.filter(quiz => quiz.id !== quizId));
+    } catch (error) {
+      console.error('Error deleting quiz:', error);
+    }
+  };
   const handleOptionClick = (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
@@ -159,7 +166,8 @@ const CustomQuiz = ({ userId }) => {
           {quizzes.map((quiz, index) => (
             <div key={index} className="quiz-item">
               <h3>{quiz.title}</h3>
-              <button onClick={() => startQuiz(quiz)}>Bắt đầu</button>
+              <button onClick={() => startQuiz(quiz)} className='start-button'>Bắt đầu</button>
+              <button onClick={() => deleteQuiz(quiz.id)} className="delete-button">Xóa</button>
             </div>
           ))}
         </div>
@@ -188,7 +196,7 @@ const CustomQuiz = ({ userId }) => {
                           : ""
                       }
                     >
-                      ({String.fromCharCode(65 + index)}) {formatChemicalFormula(option)}
+                      ({String.fromCharCode(65 + index)}) {(option)}
                       {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
                       {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
                     </li>
