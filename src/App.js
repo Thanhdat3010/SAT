@@ -22,6 +22,7 @@ import NewPost from "./Blog/NewPost";
 import MyPost from "./Blog/MyPost";
 import CreateQuiz from "./CreateQuiz/CreateQuiz";
 import CustomQuiz from "./CreateQuiz/CustomQuiz";
+import EditQuiz from "./CreateQuiz/EditQuiz";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
   useEffect(() => {
@@ -59,7 +60,7 @@ function App() {
     <Route path='/Flashcard' element={<FLashcard />}/>
     <Route path='/CreateQuiz' element={<CreateQuiz/>}/>
     <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
-
+    <Route path="/edit-quiz/:quizId" element={<EditQuiz/>} />
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
     <Route path='/Chapter3' element={<Chapter3 />}/>
@@ -73,8 +74,6 @@ function App() {
     <Route path="/post/:id" element={<Post />} />
     <Route path="/new-post" element={<NewPost />} />
     <Route path="/my-post" element={<MyPost />} />
-
-
 
     </Routes>
   </div>

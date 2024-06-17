@@ -3,7 +3,6 @@ import './CustomQuiz.css';
 import Notification from '../components/Notification';
 import { db } from '../components/firebase';
 import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
-import formatChemicalFormula from '../components/formatChemicalFormula';
 const CustomQuiz = ({ userId }) => {
   const [quizzes, setQuizzes] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -16,7 +15,7 @@ const CustomQuiz = ({ userId }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
-
+  
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {

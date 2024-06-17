@@ -5,7 +5,6 @@ import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import { Layout } from "antd";
 import "./Trangchu.css"; // Tạo một tệp CSS mới cho Trangchu nếu cần
-
 function Trangchu(props) {
     const [showGioithieu, setShowGioithieu] = useState(false);
 
