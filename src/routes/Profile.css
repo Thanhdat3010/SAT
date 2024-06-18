@@ -1,33 +1,52 @@
+.profilePage {
+  display: flex;
+  gap: 10px; /* Khoảng cách giữa các phần tử */
+  max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+  margin: 0 auto; /* Căn giữa trang */
+}
+
 .userProfileContainer {
-  max-width: 600px;
-  margin: 0 auto;
+  flex: 2; /* Chia layout theo tỷ lệ */
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.userProfileContainer img {
+.sidebar {
+  flex: 1; /* Chia layout theo tỷ lệ */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.userProfileContainer img,
+.fileInputLabel img {
   width: 100%;
   border-radius: 10px;
   margin-bottom: 20px;
+  border: 1px solid #ccc;
 }
 
-.userProfileContainer h2 {
+.userProfileContainer h2,
+.sidebar h2 {
   font-size: 24px;
   margin-top: 10px;
   margin-bottom: 20px;
   color: #333;
 }
 
-.userProfileContainer label {
+.userProfileContainer label,
+.sidebar label {
   display: block;
   margin-bottom: 10px;
 }
 
 .userProfileContainer input[type="text"],
 .userProfileContainer input[type="email"],
-.userProfileContainer textarea {
+.userProfileContainer textarea,
+.sidebar input[type="text"] {
   width: calc(100% - 20px);
   padding: 10px;
   margin-top: 5px;
@@ -37,7 +56,8 @@
   font-size: 16px;
 }
 
-.userProfileContainer textarea {
+.userProfileContainer textarea,
+.sidebar textarea {
   resize: vertical;
   min-height: 100px;
 }
@@ -50,20 +70,134 @@
   display: inline-block;
   position: relative;
   cursor: pointer;
+  width: 150px; /* Điều chỉnh kích thước chiều rộng */
+  height: 150px; /* Điều chỉnh kích thước chiều cao */
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
 
 .fileInputLabel img {
   width: 100%;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fileInput {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
+  display: none;
+}
+
+.searchResults,
+.friendsList,
+.friendRequests {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.searchResultItem,
+.friendItem,
+.friendRequestItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.searchResultItem img,
+.friendItem img,
+.friendRequestItem img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.searchResultItem p,
+.friendItem p,
+.friendRequestItem p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.searchResultItem button,
+.friendRequestItem button {
+  margin-left: auto;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+.searchResultItem button:hover,
+.friendRequestItem button:hover {
+  background-color: #0056b3;
+}
+
+/* Chỉnh sửa cho danh sách bạn bè */
+.friendsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.friendItem {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.friendItem img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px;
+}
+
+.friendItem p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+.searchButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.searchButton:hover {
+  background-color: #0056b3;
+}
+.backButton {
+  background-color: #007bff; /* Màu nền */
+  color: white; /* Màu chữ */
+  padding: 10px 20px; /* Khoảng đệm trong nút */
+  border: none; /* Bỏ đường viền mặc định */
+  border-radius: 5px; /* Bo góc */
+  cursor: pointer; /* Đổi con trỏ thành hình bàn tay khi hover */
+  font-size: 16px; /* Kích thước chữ */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.backButton:hover {
+  background-color: #0056b3; /* Màu nền khi hover */
 }

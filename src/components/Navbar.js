@@ -114,11 +114,7 @@ const Navbar = () => {
             Tài nguyên và thảo luận
           </Link>
         </li>
-        <li>
-          <Link className={`nav-links ${isActive('/Vechungtoi') ? 'active' : ''}`} to="/Vechungtoi">
-            Liên hệ
-          </Link>
-        </li>
+        
         
         {isLoggedIn ? (
           <li className={avatarActive ? "avatar-container active" : "avatar-container"} onClick={toggleDropdown}>

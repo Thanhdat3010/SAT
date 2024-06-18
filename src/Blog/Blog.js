@@ -159,7 +159,7 @@ const Blog = () => {
                   {post.author?.profilePictureUrl && (
                     <img src={post.author.profilePictureUrl} alt="Author Avatar" className="author-avatar-blog" />
                   )}
-                  <span>{post.author?.fullName || 'Người dùng ẩn danh'}</span>
+                  <span>{post.author?.username || 'Người dùng ẩn danh'}</span>
                 </div>
                 <div className="publish-time">
                   <time>{new Date(post.createdAt.seconds * 1000).toLocaleDateString()}</time>

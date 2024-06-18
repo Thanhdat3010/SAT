@@ -3,6 +3,9 @@ import Footer from "../components/Footer";
 import Gioithieu from "../components/Gioithieu";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import AboutUs from "../components/AboutUs";
+import Contact from "../components/Contact";
+
 import { Layout } from "antd";
 import "./Trangchu.css"; // Tạo một tệp CSS mới cho Trangchu nếu cần
 function Trangchu(props) {
@@ -38,6 +41,10 @@ function Trangchu(props) {
             />
             <div className={`gioithieu ${showGioithieu ? 'show' : ''}`}>
                 <Gioithieu />
+                <hr className="separator" />
+
+                <AboutUs/>
+                <Contact/>
             </div>
             <Footer />
         </Layout>

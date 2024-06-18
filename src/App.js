@@ -4,7 +4,6 @@ import { Routes, Route} from "react-router-dom";
 import Trangchu from "./routes/Trangchu";
 import Lythuyet from "./routes/Lythuyet";
 import Onthi from "./routes/Onthi";
-import Vechungtoi from "./routes/Vechungtoi";
 import Login from "./components/Login";
 import Tainguyen from "./routes/Tainguyen";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -70,7 +69,6 @@ function App() {
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
     <Route path='/Onthi' element={<Onthi/>}/>    
-    <Route path='/Vechungtoi' element={<Vechungtoi/>}/>    
     <Route path="/post/:id" element={<Post />} />
     <Route path="/new-post" element={<NewPost />} />
     <Route path="/my-post" element={<MyPost />} />
