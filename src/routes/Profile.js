@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, collection, query, where, getDocs } from 'firebase/firestore';
-import { db, auth } from '../components/firebase'; // Import Firebase Firestore instance
+import { db, auth } from '../components/firebase'; 
 import BackgroundContext from '../components/BackgroundContext';
 import UserProfile from './UserProfile';
+import { debounce } from 'lodash';
 import "./Profile.css";
 
 const Profile = () => {
@@ -97,13 +98,23 @@ const Profile = () => {
     reader.onerror = (error) => console.error('Error: ', error);
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (term) => {
+    if (!term) {
+      setSearchResults([]);
+      return;
+    }
     const usersRef = collection(db, 'profiles');
-    const q = query(usersRef, where('username', '==', searchTerm));
+    const q = query(usersRef, where('username', '>=', term), where('username', '<=', term + '\uf8ff'));
     const querySnapshot = await getDocs(q);
     const users = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setSearchResults(users);
   };
+
+  const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
+
+  useEffect(() => {
+    debouncedSearch(searchTerm);
+  }, [searchTerm, debouncedSearch]);
 
   const sendFriendRequest = async (userId) => {
     const currentUser = auth.currentUser;
@@ -200,13 +211,14 @@ const Profile = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Tìm kiếm người dùng"
           />
-          <button className="searchButton" onClick={handleSearch}>Tìm kiếm</button>
           <div className="searchResults">
             {searchResults.map(user => (
               <div key={user.id} className="searchResultItem">
+              <div onClick={() => setSelectedUser(user.id)} className='searchResultItem1'>
                 <img src={user.profilePictureUrl} alt="Profile" />
                 <p>{user.username}</p>
-                <button onClick={() => setSelectedUser(user.id)}>Xem hồ sơ</button>
+                </div>
+                <button onClick={() => sendFriendRequest(user.id)}>Kết bạn</button>
               </div>
             ))}
           </div>
@@ -216,7 +228,7 @@ const Profile = () => {
         <div className="friendsList">
           {friends.map(friendId => (
             <div key={friendId} className="friendItem" onClick={() => setSelectedUser(friendId)}>
-              <img src={friendData[friendId]?.profilePictureUrl} alt="Profile" />
+              <img src={friendData[friendId]?.profilePictureUrl} alt="Profile"/>
               <p>{friendData[friendId]?.username}</p>
             </div>
           ))}
@@ -225,9 +237,11 @@ const Profile = () => {
         <h2>Lời mời kết bạn</h2>
         <div className="friendRequests">
           {friendRequests.map(requestId => (
-            <div key={requestId} className="friendRequestItem" onClick={() => setSelectedUser(requestId)}>
+            <div key={requestId} className="friendRequestItem" >
+              <div onClick={() => setSelectedUser(requestId)} className='friendRequestItem1'>
               <img src={requestData[requestId]?.profilePictureUrl} alt="Profile" />
               <p>{requestData[requestId]?.username}</p>
+              </div>
               <button onClick={() => acceptFriendRequest(requestId)}>Chấp nhận</button>
             </div>
           ))}

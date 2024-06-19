@@ -106,8 +106,19 @@
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9;
+  cursor: pointer; /* Thêm con trỏ chỉ tay */
 }
 
+.searchResultItem1 {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  cursor: pointer; /* Thêm con trỏ chỉ tay */
+}
+.friendRequestItem1{
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  cursor: pointer; /* Thêm con trỏ chỉ tay */
+}
 .searchResultItem img,
 .friendItem img,
 .friendRequestItem img {
@@ -143,35 +154,6 @@
   background-color: #0056b3;
 }
 
-/* Chỉnh sửa cho danh sách bạn bè */
-.friendsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-}
-
-.friendItem {
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
-  text-align: center;
-}
-
-.friendItem img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 10px;
-}
-
-.friendItem p {
-  margin: 5px 0;
-  font-size: 16px;
-  color: #333;
-}
 .searchButton {
   padding: 10px 20px;
   font-size: 16px;

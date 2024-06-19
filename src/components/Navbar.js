@@ -1,26 +1,28 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./Navbar.css";
 import avatar from "../assets/profile-user.png";
-import BackgroundContext from './BackgroundContext';
-import { useLocation } from 'react-router-dom';
-import { auth } from "./firebase";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { auth, db } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
+
 const Navbar = () => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/'; // Kiểm tra xem có phải trang chủ hay không
+  const isHomePage = location.pathname === '/';
   const [clicked, setClicked] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [showDropdown, setShowDropdown] = useState(false);
   const [avatarActive, setAvatarActive] = useState(false);
   const [transparent, setTransparent] = useState(true);
+  const [profilePictureUrl, setProfilePictureUrl] = useState('');
+  const navigate = useNavigate()
   const openMessenger = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const messengerURL = isMobile ? 'fb-messenger://user/296055206930567' : 'https://www.facebook.com/messages/t/296055206930567';
     window.open(messengerURL);
-};
+  };
 
-  const { background } = useContext(BackgroundContext); // Lấy background từ context
   useEffect(() => {
     const handleScroll = () => {
       const position = window.scrollY;
@@ -31,7 +33,6 @@ const Navbar = () => {
       }
     };
 
-    // Chỉ đăng ký sự kiện cuộn nếu đang ở trang chủ
     if (isHomePage) {
       window.addEventListener('scroll', handleScroll);
     } else {
@@ -41,22 +42,42 @@ const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isHomePage]); // Phụ thuộc vào trang hiện tại
+  }, [isHomePage]);
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userDoc = doc(db, 'profiles', user.uid);
+        const docSnap = await getDoc(userDoc);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setProfilePictureUrl(userData.profilePictureUrl || '');
+        }
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchProfilePicture();
+    }
+  }, [isLoggedIn]);
+
   const handleClick = () => {
+    setClicked(!clicked);
+  };
+  const handleClicklogo = () => {
+    navigate('/'); // Điều hướng về trang chủ
     setClicked(!clicked);
   };
 
   const handleLogout = async () => {
     try {
-      // Đăng xuất người dùng từ Firebase
       await auth.signOut();
-      
-      // Xóa thông tin người dùng từ localStorage
       const user = JSON.parse(localStorage.getItem('user'));
       if (user && user.email) {
-          localStorage.removeItem(user.email); // Xóa thông tin người dùng lưu trữ theo email
+        localStorage.removeItem(user.email);
       }
-      localStorage.removeItem('user'); // Xóa thông tin người dùng từ localStorage
+      localStorage.removeItem('user');
       localStorage.removeItem('isLoggedIn');
       setIsLoggedIn(false);
     } catch (error) {
@@ -72,13 +93,15 @@ const Navbar = () => {
   const closeDropdown = () => {
     setShowDropdown(false);
   };
+
   const isActive = (path) => {
     return location.pathname === path;
-};
+  };
+
   return (
-    <nav  className={`NavbarItems ${transparent ? '' : 'solid'}`} onClick={closeDropdown}>
-      <h1 className="navbar-logo">
-        <img alt="img" src={logo} className="logo" />
+    <nav className={`NavbarItems ${transparent ? '' : 'solid'}`} onClick={closeDropdown}>
+      <h1 className="navbar-logo" onClick={handleClicklogo}>
+        <img alt="logo" src={logo} className="logo" />
       </h1>
       <div className="menu-icons" onClick={handleClick}>
         <i className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
@@ -95,9 +118,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-        <a className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} onClick={openMessenger}>
+          <a className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} onClick={openMessenger}>
             Chatbot AI
-        </a>
+          </a>
         </li>
         <li>
           <Link className={`nav-links ${isActive('/Lythuyet') ? 'active' : ''}`} to="/Lythuyet">
@@ -114,17 +137,16 @@ const Navbar = () => {
             Tài nguyên và thảo luận
           </Link>
         </li>
-        
-        
+
         {isLoggedIn ? (
           <li className={avatarActive ? "avatar-container active" : "avatar-container"} onClick={toggleDropdown}>
-            <img alt="img" src={background ? background : avatar} className="avatar" /> {/* Sử dụng background người dùng đã chọn hoặc hình ảnh mặc định */}
+            <img alt="avatar" src={profilePictureUrl ? profilePictureUrl : avatar} className="avatar" />
             <ul className={showDropdown ? "dropdown-menu show" : "dropdown-menu"}>
               <li className="Profile">
                 <Link to="/Profile">Hồ sơ</Link>
               </li>
               <li className="Logout">
-                <Link onClick={handleLogout} >Đăng xuất</Link>
+                <Link onClick={handleLogout}>Đăng xuất</Link>
               </li>
             </ul>
           </li>

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db, auth } from '../components/firebase';
 import BackgroundContext from '../components/BackgroundContext';
-import "./Profile.css";
+import "./UserProfile.css";
 
 const UserProfile = ({ userId, onBack }) => {
   const { background, setBackground } = useContext(BackgroundContext);
@@ -14,6 +14,8 @@ const UserProfile = ({ userId, onBack }) => {
   const [friendRequests, setFriendRequests] = useState([]);
   const [friendData, setFriendData] = useState({});
   const [requestData, setRequestData] = useState({});
+  const [isFriend, setIsFriend] = useState(false); // Trạng thái kiểm tra quan hệ bạn bè
+  const [dropdownVisible, setDropdownVisible] = useState(false); // Trạng thái hiển thị dropdown
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,6 +36,15 @@ const UserProfile = ({ userId, onBack }) => {
 
     fetchUserData();
   }, [userId, setBackground]);
+
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser && friends.includes(currentUser.uid)) {
+      setIsFriend(true);
+    } else {
+      setIsFriend(false);
+    }
+  }, [friends]);
 
   const fetchFriendsData = async (friends) => {
     const friendsData = {};
@@ -57,7 +68,7 @@ const UserProfile = ({ userId, onBack }) => {
     setRequestData(requestsData);
   };
 
-  const sendFriendRequest = async (userId) => {
+  const sendFriendRequest = async () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
       const currentUserDoc = doc(db, 'profiles', currentUser.uid);
@@ -71,47 +82,64 @@ const UserProfile = ({ userId, onBack }) => {
     }
   };
 
-  const acceptFriendRequest = async (userId) => {
+  const unfriend = async () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
       const currentUserDoc = doc(db, 'profiles', currentUser.uid);
       const userDoc = doc(db, 'profiles', userId);
       await updateDoc(currentUserDoc, {
-        friends: arrayUnion(userId),
-        friendRequestsReceived: arrayRemove(userId),
+        friends: arrayRemove(userId),
       });
       await updateDoc(userDoc, {
-        friends: arrayUnion(currentUser.uid),
-        friendRequestsSent: arrayRemove(currentUser.uid),
+        friends: arrayRemove(currentUser.uid),
       });
-      setFriends([...friends, userId]);
-      setFriendRequests(friendRequests.filter(id => id !== userId));
-      await fetchFriendsData([...friends, userId]);
-      await fetchRequestsData(friendRequests.filter(id => id !== userId));
+      setFriends(friends.filter(id => id !== userId));
+      setIsFriend(false);
     }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const addToFavorites = () => {
+    // Thêm logic để thêm vào yêu thích ở đây
+    console.log('Đã thêm vào yêu thích');
+    setDropdownVisible(false); // Ẩn dropdown sau khi chọn
   };
 
   return (
     <div className="profilePage">
       <div className="userProfileContainer">
-      <label htmlFor="fileInput" className="fileInputLabel">
+        <label htmlFor="fileInput" className="fileInputLabel">
           <img src={background || profilePictureUrl} alt="Profile" />
         </label>
         <h2>Thông tin tài khoản</h2>
+        {isFriend ? (
+          <div className="dropdownContainer">
+            <button onClick={toggleDropdown} className="friendButton">Bạn bè</button>
+            {dropdownVisible && (
+              <div className="dropdownMenu">
+                <button onClick={addToFavorites}>Yêu thích</button>
+                <button onClick={unfriend}>Hủy kết bạn</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="dropdownContainer">
+          <button onClick={sendFriendRequest} className="friendButton">Gửi yêu cầu kết bạn</button>
+          </div>
+        )}
         <div>
           <label>Tên người dùng:</label>
           <input type="text" value={username} readOnly />
         </div>
         <div>
-          <label>Email:</label>
-          <input type="email" value={email} readOnly />
-        </div>
-        <div>
           <label>Giới thiệu:</label>
           <textarea value={bio} readOnly />
         </div>
+       
         <button onClick={onBack} className='backButton'>Quay lại</button>
-
       </div>
 
       <div className="sidebar">
