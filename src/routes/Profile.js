@@ -19,6 +19,7 @@ const Profile = () => {
   const [friendData, setFriendData] = useState({});
   const [requestData, setRequestData] = useState({});
   const [selectedUser, setSelectedUser] = useState(null);
+  const [sentRequests, setSentRequests] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,6 +37,7 @@ const Profile = () => {
           setBackground(userData.profilePictureUrl || '');
           setFriends(userData.friends || []);
           setFriendRequests(userData.friendRequestsReceived || []);
+          setSentRequests(userData.friendRequestsSent || []);
           await fetchFriendsData(userData.friends || []);
           await fetchRequestsData(userData.friendRequestsReceived || []);
         }
@@ -92,7 +94,8 @@ const Profile = () => {
         bio,
         profilePictureUrl: base64Url,
         friends,
-        friendRequestsReceived: friendRequests
+        friendRequestsReceived: friendRequests,
+        friendRequestsSent: sentRequests
       });
     };
     reader.onerror = (error) => console.error('Error: ', error);
@@ -127,6 +130,22 @@ const Profile = () => {
       await updateDoc(userDoc, {
         friendRequestsReceived: arrayUnion(currentUser.uid),
       });
+      setSentRequests([...sentRequests, userId]);
+    }
+  };
+
+  const cancelFriendRequest = async (userId) => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      const currentUserDoc = doc(db, 'profiles', currentUser.uid);
+      const userDoc = doc(db, 'profiles', userId);
+      await updateDoc(currentUserDoc, {
+        friendRequestsSent: arrayRemove(userId),
+      });
+      await updateDoc(userDoc, {
+        friendRequestsReceived: arrayRemove(currentUser.uid),
+      });
+      setSentRequests(sentRequests.filter(id => id !== userId));
     }
   };
 
@@ -178,7 +197,7 @@ const Profile = () => {
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
-              saveUserData({ username: e.target.value, email, bio, profilePictureUrl, friends, friendRequestsReceived: friendRequests });
+              saveUserData({ username: e.target.value, email, bio, profilePictureUrl, friends, friendRequestsReceived: friendRequests, friendRequestsSent: sentRequests });
             }}
           />
         </div>
@@ -196,7 +215,7 @@ const Profile = () => {
             value={bio}
             onChange={(e) => {
               setBio(e.target.value);
-              saveUserData({ username, email, bio: e.target.value, profilePictureUrl, friends, friendRequestsReceived: friendRequests });
+              saveUserData({ username, email, bio: e.target.value, profilePictureUrl, friends, friendRequestsReceived: friendRequests, friendRequestsSent: sentRequests });
             }}
           />
         </div>
@@ -214,11 +233,16 @@ const Profile = () => {
           <div className="searchResults">
             {searchResults.map(user => (
               <div key={user.id} className="searchResultItem">
-              <div onClick={() => setSelectedUser(user.id)} className='searchResultItem1'>
-                <img src={user.profilePictureUrl} alt="Profile" />
-                <p>{user.username}</p>
+                <div onClick={() => setSelectedUser(user.id)} className='searchResultItem1'>
+                  <img src={user.profilePictureUrl} alt="Profile" />
+                  <p>{user.username}</p>
                 </div>
-                <button onClick={() => sendFriendRequest(user.id)}>Kết bạn</button>
+                {!friends.includes(user.id) && !sentRequests.includes(user.id) && (
+                  <button onClick={() => sendFriendRequest(user.id)}>Kết bạn</button>
+                )}
+                {sentRequests.includes(user.id) && (
+                  <button onClick={() => cancelFriendRequest(user.id)}>Hủy lời mời</button>
+                )}
               </div>
             ))}
           </div>
@@ -239,11 +263,11 @@ const Profile = () => {
           {friendRequests.map(requestId => (
             <div key={requestId} className="friendRequestItem" >
               <div onClick={() => setSelectedUser(requestId)} className='friendRequestItem1'>
-              <img src={requestData[requestId]?.profilePictureUrl} alt="Profile" />
-              <p>{requestData[requestId]?.username}</p>
+                <img src={requestData[requestId]?.profilePictureUrl} alt="Profile" />
+                <p>{requestData[requestId]?.username}</p>
               </div>
               <button onClick={() => acceptFriendRequest(requestId)}>Chấp nhận</button>
-            </div>
+              </div>
           ))}
         </div>
       </div>

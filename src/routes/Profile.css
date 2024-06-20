@@ -1,9 +1,14 @@
 .profilePage {
   display: flex;
+  flex-direction: column;
   gap: 10px; /* Khoảng cách giữa các phần tử */
   max-width: 1200px; /* Giới hạn chiều rộng tối đa */
   margin: 0 auto; /* Căn giữa trang */
+  padding: 10px; /* Khoảng cách bên trong */
 }
+
+/* Responsive cho màn hình lớn hơn 768px */
+
 
 .userProfileContainer {
   flex: 2; /* Chia layout theo tỷ lệ */
@@ -114,11 +119,13 @@
   align-items: center; /* Căn giữa theo chiều dọc */
   cursor: pointer; /* Thêm con trỏ chỉ tay */
 }
-.friendRequestItem1{
+
+.friendRequestItem1 {
   display: flex;
   align-items: center; /* Căn giữa theo chiều dọc */
   cursor: pointer; /* Thêm con trỏ chỉ tay */
 }
+
 .searchResultItem img,
 .friendItem img,
 .friendRequestItem img {
@@ -169,6 +176,7 @@
 .searchButton:hover {
   background-color: #0056b3;
 }
+
 .backButton {
   background-color: #007bff; /* Màu nền */
   color: white; /* Màu chữ */
@@ -182,4 +190,9 @@
 
 .backButton:hover {
   background-color: #0056b3; /* Màu nền khi hover */
+}
+@media (min-width: 768px) {
+  .profilePage {
+    flex-direction: row; /* Chuyển thành hàng ngang trên màn hình lớn hơn */
+  }
 }

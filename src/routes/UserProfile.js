@@ -95,6 +95,7 @@ const UserProfile = ({ userId, onBack }) => {
       });
       setFriends(friends.filter(id => id !== userId));
       setIsFriend(false);
+      setDropdownVisible(false); // Ẩn dropdown sau khi chọn
     }
   };
 

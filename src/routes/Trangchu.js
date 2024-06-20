@@ -42,7 +42,6 @@ function Trangchu(props) {
             <div className={`gioithieu ${showGioithieu ? 'show' : ''}`}>
                 <Gioithieu />
                 <hr className="separator" />
-
                 <AboutUs/>
                 <Contact/>
             </div>
