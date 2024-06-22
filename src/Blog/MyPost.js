@@ -12,8 +12,8 @@ const MyPost = () => {
   const [postIdToDelete, setPostIdToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState(null); // State cho bài viết đang chỉnh sửa
+  const [dropdownOpen, setDropdownOpen] = useState(null); // State cho dropdown
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchUserPosts = async () => {
       const user = auth.currentUser;
@@ -94,37 +94,47 @@ const MyPost = () => {
     }
   };
 
+  const toggleDropdown = (postId) => {
+    setDropdownOpen(dropdownOpen === postId ? null : postId);
+  };
+
   return (
-    <div className="blog-container">
+    <div className="blog-container-mypost">
       <h1>Bài viết của tôi</h1>
       {loading ? (
         <p>Đang tải...</p>
       ) : editingPost ? (
         <EditPost post={editingPost} onUpdatePost={handleUpdatePost} onCancel={() => setEditingPost(null)} />
       ) : (
-        <div className="card-grid">
+        <div className="card-grid-mypost">
           {userPosts.map(post => (
-            <div className="card" key={post.id}>
-            <Link className='card-link' to={`/post/${post.id}`} key={post.id}>
-              <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
+            <div className="card-mypost" key={post.id}>
+              <Link className='card-link-mypost' to={`/post/${post.id}`} key={post.id}>
+                <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
               </Link>
-              <h2>{post.title}</h2>
-              <p>{post.summary}</p>
-              <div className="card-buttons">
-                <button onClick={() => handleEditPost(post)} className="edit-button">Sửa</button>
-                <button onClick={() => handleDeletePost(post.id, post.imageUrl)} className="delete-button">Xóa</button>
+              <div className="card-content-mypost">
+                <h2>{post.title}</h2>
+                <p>{post.summary}</p>
+              </div>
+              <div className="card-menu-mypost">
+                <button onClick={() => toggleDropdown(post.id)} className="menu-button-mypost">⋮</button>
+                {dropdownOpen === post.id && (
+                  <div className="dropdown-mypost">
+                    <button onClick={() => handleEditPost(post)} className="dropdown-item-mypost">Sửa</button>
+                    <button onClick={() => handleDeletePost(post.id, post.imageUrl)} className="dropdown-item-mypost">Xóa</button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
-        
       )}
       {confirmDelete && (
-        <div className="confirm-delete">
+        <div className="confirm-delete-mypost">
           <p>Bạn có chắc chắn muốn xóa bài viết này?</p>
-          <div className="confirm-buttons">
-            <button onClick={() => handleDeletePost(postIdToDelete)} className="confirm-delete-button">Xác nhận</button>
-            <button onClick={() => setConfirmDelete(false)} className="cancel-delete-button">Hủy</button>
+          <div className="confirm-buttons-mypost">
+            <button onClick={() => handleDeletePost(postIdToDelete)} className="confirm-delete-button-mypost">Xác nhận</button>
+            <button onClick={() => setConfirmDelete(false)} className="cancel-delete-button-mypost">Hủy</button>
           </div>
         </div>
       )}

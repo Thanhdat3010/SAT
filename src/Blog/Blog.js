@@ -134,7 +134,7 @@ const Blog = () => {
       {isLoggedIn && (
         <div className="Newpost">
           <button onClick={() => navigate('/new-post')}>Thêm bài viết</button>
-          <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button>
+          {/* <button onClick={() => navigate('/my-post')}>Bài viết của tôi</button> */}
         </div>
       )}
       <div className="search-bar">

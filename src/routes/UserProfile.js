@@ -3,7 +3,8 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firest
 import { db, auth } from '../components/firebase';
 import BackgroundContext from '../components/BackgroundContext';
 import "./UserProfile.css";
-
+import MyPost from '../Blog/MyPost';
+import UserPosts from '../Blog/UserPosts';
 const UserProfile = ({ userId, onBack }) => {
   const { background, setBackground } = useContext(BackgroundContext);
   const [username, setUsername] = useState('');
@@ -139,7 +140,9 @@ const UserProfile = ({ userId, onBack }) => {
           <label>Giới thiệu:</label>
           <textarea value={bio} readOnly />
         </div>
-       
+        <div className="userPostsContainer">
+        <UserPosts userId={userId} />
+        </div>
         <button onClick={onBack} className='backButton'>Quay lại</button>
       </div>
 

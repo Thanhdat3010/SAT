@@ -5,6 +5,7 @@ import BackgroundContext from '../components/BackgroundContext';
 import UserProfile from './UserProfile';
 import { debounce } from 'lodash';
 import "./Profile.css";
+import MyPost from '../Blog/MyPost';
 
 const Profile = () => {
   const { background, setBackground } = useContext(BackgroundContext);
@@ -219,6 +220,7 @@ const Profile = () => {
             }}
           />
         </div>
+        <MyPost />
       </div>
 
       <div className="sidebar">
