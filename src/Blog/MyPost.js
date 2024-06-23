@@ -13,11 +13,13 @@ const MyPost = () => {
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState(null); // State cho bài viết đang chỉnh sửa
   const [dropdownOpen, setDropdownOpen] = useState(null); // State cho dropdown
+  const [currentPage, setCurrentPage] = useState(1); // State cho trang hiện tại
+  const postsPerPage = 2; // Số bài viết trên mỗi trang
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUserPosts = async () => {
       const user = auth.currentUser;
-
       if (user) {
         const userPostsCollection = collection(db, 'posts');
         const q = query(userPostsCollection, where('userId', '==', user.uid));
@@ -98,6 +100,40 @@ const MyPost = () => {
     setDropdownOpen(dropdownOpen === postId ? null : postId);
   };
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = userPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(userPosts.length / postsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const generatePagination = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > 3) {
+        pages.push('...');
+      }
+      let startPage = Math.max(2, currentPage - 1);
+      let endPage = Math.min(totalPages - 1, currentPage + 1);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
   return (
     <div className="blog-container-mypost">
       <h1>Bài viết của tôi</h1>
@@ -107,7 +143,7 @@ const MyPost = () => {
         <EditPost post={editingPost} onUpdatePost={handleUpdatePost} onCancel={() => setEditingPost(null)} />
       ) : (
         <div className="card-grid-mypost">
-          {userPosts.map(post => (
+          {currentPosts.map(post => (
             <div className="card-mypost" key={post.id}>
               <Link className='card-link-mypost' to={`/post/${post.id}`} key={post.id}>
                 <img src={post.imageUrl} alt={`Cover for ${post.title}`} />
@@ -129,6 +165,18 @@ const MyPost = () => {
           ))}
         </div>
       )}
+      <div className="pagination">
+        {generatePagination().map((page, index) => (
+          <button
+            key={index}
+            onClick={() => page !== '...' && paginate(page)}
+            className={`page-number ${currentPage === page ? 'active' : ''}`}
+            disabled={page === '...'}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
       {confirmDelete && (
         <div className="confirm-delete-mypost">
           <p>Bạn có chắc chắn muốn xóa bài viết này?</p>

@@ -22,6 +22,7 @@ import MyPost from "./Blog/MyPost";
 import CreateQuiz from "./CreateQuiz/CreateQuiz";
 import CustomQuiz from "./CreateQuiz/CustomQuiz";
 import EditQuiz from "./CreateQuiz/EditQuiz";
+import RoomManagement from "./CreateQuiz/RoomManagement";
 import { BackgroundProvider } from "./components/BackgroundContext";
 function App() {
   useEffect(() => {
@@ -57,6 +58,7 @@ function App() {
     <Route path='/' element={<Trangchu />}/>
     <Route path='/Profile' element={<Profile />}/>
     <Route path='/Flashcard' element={<FLashcard />}/>
+    <Route path='/RoomManagement' element={<RoomManagement/>}/>
     <Route path='/CreateQuiz' element={<CreateQuiz/>}/>
     <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
     <Route path="/edit-quiz/:quizId" element={<EditQuiz/>} />

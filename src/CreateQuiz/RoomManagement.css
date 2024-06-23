@@ -206,7 +206,6 @@
   
   .start-button {
     background-color: #007bff;
-    margin-right: 10px;
   }
   
   .start-button:hover {
@@ -215,7 +214,6 @@
   
   .delete-button {
     background-color: #dc3545;
-    margin-left: 10px;
   }
   
   .delete-button:hover {
@@ -260,5 +258,86 @@
     .fill-in-the-blank-input {
       width: 100%;
       font-size: 14px;
+    }
+  }
+  .room-management-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .room-management-page h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .room-management-page h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .room-management-page input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* Adjusting for padding and border */
+  }
+  
+  .room-management-page button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #007bff;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .room-management-page button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .room-management-page .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .room-management-page ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .room-management-page li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    .room-management-page input[type="text"] {
+      width: calc(100% - 22px); /* Adjusting for padding and border */
+    }
+  
+    .room-management-page button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .room-management-page input[type="text"] {
+      width: calc(100% - 22px); /* Adjusting for padding and border */
+      font-size: 14px;
+    }
+  
+    .room-management-page button {
+      padding: 6px 12px;
+      font-size: 12px;
     }
   }

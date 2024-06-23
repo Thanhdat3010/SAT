@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import './CustomQuiz.css';
-import Notification from '../components/Notification';
 import { db, auth } from '../components/firebase';
-import { getDocs, collection, deleteDoc, doc, query, where } from 'firebase/firestore';
+import { doc, setDoc, getDoc, collection, addDoc, updateDoc, arrayUnion, getDocs } from 'firebase/firestore';
+import Notification from '../components/Notification';
+import './RoomManagement.css';
 
-const CustomQuiz = () => {
+const RoomManagement = () => {
+  const [roomId, setRoomId] = useState('');
+  const [roomName, setRoomName] = useState('');
+  const [roomCreated, setRoomCreated] = useState(false);
+  const [room, setRoom] = useState(null);
+  const [joinError, setJoinError] = useState('');
   const [quizzes, setQuizzes] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -16,28 +21,72 @@ const CustomQuiz = () => {
   const [showExplanation, setShowExplanation] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const [currentView, setCurrentView] = useState('roomManagement'); // 'roomManagement' or 'quiz'
 
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const user = auth.currentUser;
-        if (user) {
-          const quizzesRef = collection(db, 'createdQuizzes');
-          const q = query(quizzesRef, where('userId', '==', user.uid));
-          const querySnapshot = await getDocs(q);
-          const quizData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setQuizzes(quizData);
-        } else {
-          console.log('No user is logged in.');
-        }
+        const querySnapshot = await getDocs(collection(db, 'createdQuizzes'));
+        const quizData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setQuizzes(quizData);
       } catch (error) {
         console.error('Error fetching quizzes:', error);
-        // Xử lý lỗi ở đây nếu cần thiết
       }
     };
 
     fetchQuizzes();
   }, []);
+
+  const createRoom = async () => {
+    if (roomName.trim() === '') {
+      alert('Tên phòng không được để trống');
+      return;
+    }
+    try {
+      const currentUser = getCurrentUser();
+      const roomRef = await addDoc(collection(db, 'rooms'), {
+        roomName,
+        ownerId: currentUser.uid,
+        createdAt: new Date(),
+        players: [currentUser.uid],
+        isStarted: false,
+        scores: {}
+      });
+      setRoomId(roomRef.id);
+      setRoomCreated(true);
+      setRoom({ roomName, ownerId: currentUser.uid, players: [currentUser.uid] });
+    } catch (error) {
+      console.error('Error creating room:', error);
+    }
+  };
+
+  const joinRoom = async () => {
+    if (roomId.trim() === '') {
+      alert('Mã phòng không được để trống');
+      return;
+    }
+    try {
+      const currentUser = getCurrentUser();
+      const roomDoc = await getDoc(doc(db, 'rooms', roomId));
+      if (!roomDoc.exists()) {
+        setJoinError('Phòng không tồn tại');
+        return;
+      }
+      const roomData = roomDoc.data();
+      if (roomData.players.includes(currentUser.uid)) {
+        setRoom(roomData);
+      } else {
+        await updateDoc(doc(db, 'rooms', roomId), {
+          players: arrayUnion(currentUser.uid)
+        });
+        setRoom({ ...roomData, players: [...roomData.players, currentUser.uid] });
+      }
+      setJoinError('');
+    } catch (error) {
+      console.error('Error joining room:', error);
+      setJoinError('Có lỗi xảy ra khi tham gia phòng');
+    }
+  };
 
   const startQuiz = (quiz) => {
     setQuestions(quiz.questions);
@@ -46,21 +95,12 @@ const CustomQuiz = () => {
     setScore(0);
     setProgress(0);
     setQuizCompleted(false);
-  };
-
-  const deleteQuiz = async (quizId) => {
-    try {
-      await deleteDoc(doc(db, 'createdQuizzes', quizId));
-      setQuizzes(quizzes.filter(quiz => quiz.id !== quizId));
-    } catch (error) {
-      console.error('Error deleting quiz:', error);
-    }
+    setCurrentView('quiz');
   };
 
   const handleOptionClick = (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
-
       const isCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
       const newAnswerState = [...answerState];
       newAnswerState[currentQuestion] = isCorrect;
@@ -75,7 +115,6 @@ const CustomQuiz = () => {
   const handleTrueFalseClick = (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
-
       const isCorrect = selectedAnswer === (questions[currentQuestion].correctAnswer === "true");
       const newAnswerState = [...answerState];
       newAnswerState[currentQuestion] = isCorrect;
@@ -92,7 +131,6 @@ const CustomQuiz = () => {
     if (selectedOption === null) {
       const userAnswer = event.target.elements[0].value.trim().toLowerCase();
       setSelectedOption(userAnswer);
-
       const isCorrect = userAnswer === questions[currentQuestion].correctAnswer.toLowerCase();
       const newAnswerState = [...answerState];
       newAnswerState[currentQuestion] = isCorrect;
@@ -148,27 +186,178 @@ const CustomQuiz = () => {
     setScore(0);
     setProgress(0);
     setQuizCompleted(false);
+    setCurrentView('roomManagement');
   };
 
   const toggleExplanation = () => {
     setShowExplanation(!showExplanation);
   };
 
-  if (quizCompleted) {
-    return (
-      <div className="custom-quiz-page">
-        <h2>Hoàn thành</h2>
-        <div className="score-container">
-          <p className="score-label">Điểm số của bạn:</p>
-          <p className="score">{score}</p>
-          <button onClick={resetQuiz} className="next-button">Làm lại</button>
+  const getCurrentUser = () => {
+    const user = auth.currentUser;
+    if (user) {
+      return user;
+    } else {
+      console.error('No user found');
+      return null;
+    }
+  };
+
+  if (currentView === 'quiz') {
+    if (quizCompleted) {
+      return (
+        <div className="custom-quiz-page">
+          <h2>Hoàn thành</h2>
+          <div className="score-container">
+            <p className="score-label">Điểm số của bạn:</p>
+            <p className="score">{score}</p>
+            <button onClick={resetQuiz} className="next-button">Làm lại</button>
+          </div>
         </div>
+      );
+    }
+
+    return (
+      <div className="questions-container">
+        <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+        {currentQuestion < questions.length && (
+          <div className="question">
+            <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+            {questions[currentQuestion].type === "multiple-choice" && (
+              <ul>
+                {questions[currentQuestion].options.map((option, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    className={
+                      selectedOption !== null &&
+                      answerState[currentQuestion] !== null &&
+                      option === questions[currentQuestion].correctAnswer
+                        ? "correct"
+                        : selectedOption !== null &&
+                          answerState[currentQuestion] !== null &&
+                          selectedOption === option &&
+                          option !== questions[currentQuestion].correctAnswer
+                        ? "incorrect"
+                        : ""
+                    }
+                  >
+                    ({String.fromCharCode(65 + index)}) {(option)}
+                    {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
+                    {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {questions[currentQuestion].type === "true-false" && (
+              <ul>
+                <li
+                  onClick={() => handleTrueFalseClick(true)}
+                  className={
+                    selectedOption !== null &&
+                    answerState[currentQuestion] !== null &&
+                    true === (questions[currentQuestion].correctAnswer === "true")
+                      ? "correct"
+                      : selectedOption !== null &&
+                        answerState[currentQuestion] !== null &&
+                        selectedOption === true &&
+                        true !== (questions[currentQuestion].correctAnswer === "true")
+                      ? "incorrect"
+                      : ""
+                  }
+                >
+                  (A) True
+                  {selectedOption === true && answerState[currentQuestion] !== null && true === (questions[currentQuestion].correctAnswer === "true") ? <span className="correct-mark">&#10003;</span> : ''}
+                  {selectedOption === true && answerState[currentQuestion] !== null && true !== (questions[currentQuestion].correctAnswer === "true") ? <span className="incorrect-mark">&#10007;</span> : ''}
+                </li>
+                <li
+                  onClick={() => handleTrueFalseClick(false)}
+                  className={
+                    selectedOption !== null &&
+                    answerState[currentQuestion] !== null &&
+                    false === (questions[currentQuestion].correctAnswer === "true")
+                      ? "correct"
+                      : selectedOption !== null &&
+                        answerState[currentQuestion] !== null &&
+                        selectedOption === false &&
+                        false !== (questions[currentQuestion].correctAnswer === "true")
+                      ? "incorrect"
+                      : ""
+                  }
+                >
+                  (B) False
+                  {selectedOption === false && answerState[currentQuestion] !== null && false === (questions[currentQuestion].correctAnswer === "true") ? <span className="correct-mark">&#10003;</span> : ''}
+                  {selectedOption === false && answerState[currentQuestion] !== null && false !== (questions[currentQuestion].correctAnswer === "true") ? <span className="incorrect-mark">&#10007;</span> : ''}
+                </li>
+              </ul>
+            )}
+            {questions[currentQuestion].type === "fill-in-the-blank" && (
+              <form onSubmit={handleFillInTheBlankSubmit} className="fill-in-the-blank-form">
+                <input
+                  type="text"
+                  className="fill-in-the-blank-input"
+                  placeholder="Nhập câu trả lời..."
+                />
+                <button type="submit" id="submit-button" className="submit-button">Submit</button>
+              </form>
+            )}
+          </div>
+        )}
+        {currentQuestion < questions.length && (
+          <button onClick={nextQuestion} className="next-button">Câu hỏi tiếp theo</button>
+        )}
+        {showNotification && (
+          <Notification
+            message={notificationMessage}
+            onClose={() => setShowNotification(false)}
+          />
+        )}
       </div>
     );
   }
 
   return (
-    <div className="custom-quiz-page">
+    <div className="room-management-page">
+      <h2>Quản lý phòng chơi</h2>
+      {!roomCreated ? (
+        <div>
+          <h3>Tạo phòng mới</h3>
+          <input
+            type="text"
+            value={roomName}
+            onChange={(e) => setRoomName(e.target.value)}
+            placeholder="Nhập tên phòng"
+          />
+          <button onClick={createRoom}>Tạo phòng</button>
+        </div>
+      ) : (
+        <div>
+          <p>Phòng của bạn đã được tạo với mã: <strong>{roomId}</strong></p>
+          <p>Chia sẻ mã này với bạn bè để mời họ vào phòng</p>
+        </div>
+      )}
+      <div>
+        <h3>Tham gia phòng</h3>
+        <input
+          type="text"
+          value={roomId}
+          onChange={(e) => setRoomId(e.target.value)}
+          placeholder="Nhập mã phòng"
+        />
+        <button onClick={joinRoom}>Tham gia</button>
+        {joinError && <p className="error">{joinError}</p>}
+      </div>
+      {room && (
+        <div>
+          <h3>Bạn đã tham gia phòng: {room.roomName}</h3>
+          <p>Danh sách người chơi:</p>
+          <ul>
+            {room.players.map((player, index) => (
+              <li key={index}>{player}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <h2>Bộ câu hỏi của bạn</h2>
       {questions.length === 0 ? (
         <div className="quiz-list">
@@ -176,7 +365,6 @@ const CustomQuiz = () => {
             <div key={index} className="quiz-item">
               <h3>{quiz.title}</h3>
               <button onClick={() => startQuiz(quiz)} className='start-button'>Bắt đầu</button>
-              <button onClick={() => deleteQuiz(quiz.id)} className="delete-button">Xóa</button>
             </div>
           ))}
         </div>
@@ -262,19 +450,7 @@ const CustomQuiz = () => {
                     placeholder="Nhập câu trả lời..."
                   />
                   <button type="submit" id="submit-button" className="submit-button">Submit</button>
-                  {/* Hiển thị dấu tích hoặc dấu x tùy thuộc vào đáp án */}
                 </form>
-              )}
-              {selectedOption !== null && (
-                <>
-                  <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
-                  {showExplanation && (
-                    <div className="explanation">
-                      <p>Đáp án đúng: {questions[currentQuestion].correctAnswer.toString()}</p>
-                      <p>Giải thích: {questions[currentQuestion].explain}</p>
-                    </div>
-                  )}
-                </>
               )}
             </div>
           )}
@@ -293,4 +469,4 @@ const CustomQuiz = () => {
   );
 };
 
-export default CustomQuiz;
+export default RoomManagement;

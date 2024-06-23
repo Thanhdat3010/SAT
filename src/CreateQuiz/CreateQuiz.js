@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CreateQuiz.css';
-import { db } from '../components/firebase';
+import { db, auth } from '../components/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
 const CreateQuiz = () => {
@@ -47,7 +47,15 @@ const CreateQuiz = () => {
     setCurrentQuestion({ ...initialQuestionState });
   };
 
-  const handleSaveQuiz = async () => {
+  const handleSaveQuiz = async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert('Bạn cần đăng nhập để lưu bộ câu hỏi.');
+      return;
+    }
+
     if (quizTitle.trim() === '') {
       alert('Vui lòng nhập tiêu đề cho bộ câu hỏi.');
       return;
@@ -59,8 +67,9 @@ const CreateQuiz = () => {
     }
 
     try {
-      const docRef = doc(db, 'createdQuizzes', quizTitle); // Sử dụng tiêu đề làm tên tài liệu
-      await setDoc(docRef, { title: quizTitle, questions });
+      const userId = user.uid; // Get the user ID
+      const docRef = doc(db, 'createdQuizzes', `${quizTitle}-${userId}`); // Use a unique document name
+      await setDoc(docRef, { userId, title: quizTitle, questions });
       alert('Bộ câu hỏi đã được lưu thành công.');
       setQuizTitle('');
       setQuestions([]);

@@ -269,7 +269,7 @@ const Profile = () => {
                 <p>{requestData[requestId]?.username}</p>
               </div>
               <button onClick={() => acceptFriendRequest(requestId)}>Chấp nhận</button>
-              </div>
+            </div>
           ))}
         </div>
       </div>
