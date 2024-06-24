@@ -10,6 +10,7 @@ import { db } from '../components/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import CreateQuiz from '../CreateQuiz/CreateQuiz';
 import CustomQuiz from '../CreateQuiz/CustomQuiz';
+import Room from '../CreateQuiz/Room';
 const { Sider, Content } = Layout;
 
 const Onthi = () => {
@@ -121,6 +122,9 @@ const Onthi = () => {
             <Menu.Item key="Custom"  onClick={() => handleMenuClick('Custom')}>
               Bộ câu hỏi của bạn
             </Menu.Item>
+            <Menu.Item key="Room"  onClick={() => handleMenuClick('Room')}>
+              Phòng
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
@@ -133,6 +137,8 @@ const Onthi = () => {
               {selectedChapter === 4 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(4)} onReset={() => handleChapterReset(4)} />}
               {selectedChapter === 'create' && <CreateQuiz/>}
               {selectedChapter === 'Custom' && <CustomQuiz/>}
+              {selectedChapter === 'Room' && <Room/>}
+
 
               {/* Add more chapters here */}
             </div>

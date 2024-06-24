@@ -44,7 +44,7 @@ const CreateQuiz = () => {
     }
 
     setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
-    setCurrentQuestion({ ...initialQuestionState });
+    setCurrentQuestion({ ...initialQuestionState }); // Đặt lại câu hỏi hiện tại thành câu hỏi mặc định
   };
 
   const handleSaveQuiz = async (e) => {

@@ -22,8 +22,10 @@ import MyPost from "./Blog/MyPost";
 import CreateQuiz from "./CreateQuiz/CreateQuiz";
 import CustomQuiz from "./CreateQuiz/CustomQuiz";
 import EditQuiz from "./CreateQuiz/EditQuiz";
-import RoomManagement from "./CreateQuiz/RoomManagement";
 import { BackgroundProvider } from "./components/BackgroundContext";
+import Room from "./CreateQuiz/Room";
+import QuizRoom from "./CreateQuiz/QuizRoom";
+import WaitingRoom from "./CreateQuiz/WaitingRoom";
 function App() {
   useEffect(() => {
     // Tìm nạp email và mã thông báo của người dùng từ localStorage
@@ -58,9 +60,11 @@ function App() {
     <Route path='/' element={<Trangchu />}/>
     <Route path='/Profile' element={<Profile />}/>
     <Route path='/Flashcard' element={<FLashcard />}/>
-    <Route path='/RoomManagement' element={<RoomManagement/>}/>
     <Route path='/CreateQuiz' element={<CreateQuiz/>}/>
     <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
+    <Route path='/Room' element={<Room/>}/>
+    <Route path="/waiting-room/:id" element={<WaitingRoom/>} />
+    <Route path="/quiz-room/:roomId" element={<QuizRoom/>} />
     <Route path="/edit-quiz/:quizId" element={<EditQuiz/>} />
     <Route path='/Chapter1' element={<Chapter1 />}/>
     <Route path='/Chapter2' element={<Chapter2 />}/>
