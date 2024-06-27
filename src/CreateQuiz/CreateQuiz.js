@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CreateQuiz.css';
 import { db, auth } from '../components/firebase';
 import { doc, setDoc } from 'firebase/firestore';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const CreateQuiz = () => {
   const initialQuestionState = {
@@ -15,6 +16,34 @@ const CreateQuiz = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({ ...initialQuestionState });
   const [quizTitle, setQuizTitle] = useState('');
+  const [numQuestions, setNumQuestions] = useState(1);
+  const [grade, setGrade] = useState('');
+  const [topic, setTopic] = useState('');
+  const genAI = new GoogleGenerativeAI("AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ");
+
+  const handleAddQuestionsFromAPI = async () => {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hoá lớp ${grade} với chủ đề ${topic} có đáp án kèm theo. Kết quả trả ra dạng JSON`;
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    // Giả sử text trả về là một chuỗi JSON các câu hỏi
+    const cleanText = text.replace(/`/g, ''); // Thay thế tất cả các backtick
+    const cleanText1 = cleanText.replace(/json/g, ''); // Thay thế tất cả các backtick
+    const generatedQuestions = JSON.parse(cleanText1);
+    generatedQuestions.forEach(generatedQuestions => {
+      const newQuestion = {
+          type: 'multiple-choice',
+          question: generatedQuestions.question,
+          options: generatedQuestions.options,
+          correctAnswer: generatedQuestions.answer,
+          explain: generatedQuestions.explanation, // Giả sử chúng ta không có giải thích từ API
+      };
+
+      setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
+    })
+  };
 
   const handleAddQuestion = () => {
     if (currentQuestion.question.trim() === '') {
@@ -44,7 +73,7 @@ const CreateQuiz = () => {
     }
 
     setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
-    setCurrentQuestion({ ...initialQuestionState }); // Đặt lại câu hỏi hiện tại thành câu hỏi mặc định
+    setCurrentQuestion({ ...initialQuestionState });
   };
 
   const handleSaveQuiz = async (e) => {
@@ -67,8 +96,8 @@ const CreateQuiz = () => {
     }
 
     try {
-      const userId = user.uid; // Get the user ID
-      const docRef = doc(db, 'createdQuizzes', `${quizTitle}-${userId}`); // Use a unique document name
+      const userId = user.uid;
+      const docRef = doc(db, 'createdQuizzes', `${quizTitle}-${userId}`);
       await setDoc(docRef, { userId, title: quizTitle, questions });
       alert('Bộ câu hỏi đã được lưu thành công.');
       setQuizTitle('');
@@ -109,6 +138,39 @@ const CreateQuiz = () => {
           placeholder="Nhập tiêu đề bộ câu hỏi..."
         />
       </div>
+      <div className="quiz-config">
+        <label htmlFor="numQuestions">Số lượng câu hỏi:</label>
+        <input
+          id="numQuestions"
+          name="numQuestions"
+          type="number"
+          value={numQuestions}
+          onChange={(e) => setNumQuestions(e.target.value)}
+          placeholder="Nhập số lượng câu hỏi..."
+        />
+        <label htmlFor="grade">Lớp:</label>
+        <select
+          id="grade"
+          name="grade"
+          value={grade}
+          onChange={(e) => setGrade(e.target.value)}
+        >
+          <option value="">-- Chọn lớp --</option>
+          {[...Array(3)].map((_, i) => (
+            <option key={i} value={10 + i}>{10 + i}</option>
+          ))}
+        </select>
+        <label htmlFor="topic">Chủ đề:</label>
+        <input
+          id="topic"
+          name="topic"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+          placeholder="Nhập chủ đề..."
+        />
+      </div>
+      <button className="add-question-btn" onClick={handleAddQuestionsFromAPI}>Thêm câu hỏi từ API</button>
+
       <div className="question-form">
         <label htmlFor="questionType">Loại câu hỏi:</label>
         <select
@@ -142,14 +204,20 @@ const CreateQuiz = () => {
                 placeholder={`Lựa chọn ${String.fromCharCode(65 + index)}`}
               />
             ))}
-            <label>Đáp án đúng:</label>
-            <input
-              type="text"
+            <label htmlFor="correctAnswer">Đáp án đúng:</label>
+            <select
+              id="correctAnswer"
               name="correctAnswer"
               value={currentQuestion.correctAnswer}
               onChange={handleInputChange}
-              placeholder="Nhập đáp án đúng..."
-            />
+            >
+              <option value="">-- Chọn đáp án đúng --</option>
+              {[0, 1, 2, 3].map(index => (
+                <option key={index} value={currentQuestion.options[index]}>
+                  {String.fromCharCode(65 + index)}
+                </option>
+              ))}
+            </select>
           </>
         )}
         {currentQuestion.type === 'true-false' && (
@@ -168,9 +236,9 @@ const CreateQuiz = () => {
         )}
         {currentQuestion.type === 'fill-in-the-blank' && (
           <>
-            <label>Đáp án đúng:</label>
+            <label htmlFor="correctAnswer">Đáp án đúng:</label>
             <input
-              type="text"
+              id="correctAnswer"
               name="correctAnswer"
               value={currentQuestion.correctAnswer}
               onChange={handleInputChange}
@@ -178,33 +246,44 @@ const CreateQuiz = () => {
             />
           </>
         )}
-        <label>Giải thích (tùy chọn):</label>
+        <label htmlFor="explain">Giải thích:</label>
         <textarea
+          id="explain"
           name="explain"
           value={currentQuestion.explain}
           onChange={handleInputChange}
           rows={3}
-          placeholder="Nhập giải thích cho câu trả lời đúng của bạn..."
+          placeholder="Nhập giải thích cho câu hỏi..."
         />
         <button className="add-question-btn" onClick={handleAddQuestion}>Thêm câu hỏi</button>
       </div>
+
       <div className="question-list">
-        <h2>Danh sách câu hỏi:</h2>
-        {questions.length > 0 ? (
-          <ul>
-            {questions.map((q, index) => (
-              <li key={index}>
-                <p>{q.question}</p>
-                <p>Đáp án đúng: {q.correctAnswer}</p>
-                {q.explain && <p>Giải thích: {q.explain}</p>}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Chưa có câu hỏi nào được thêm.</p>
-        )}
-        <button className="save-quiz-btn" onClick={handleSaveQuiz}>Lưu bộ câu hỏi</button>
+        <h2>Danh sách câu hỏi</h2>
+        <ul>
+          {questions.map((question, index) => (
+            <li key={index}>
+              <div className="question-content">
+                <p><strong>Câu hỏi:</strong> {question.question}</p>
+                {question.type === 'multiple-choice' && (
+                  <div className="question-options">
+                    {question.options.map((option, i) => (
+                      <p key={i}>{String.fromCharCode(65 + i)}. {option}</p>
+                    ))}
+                  </div>
+                )}
+                {question.type === 'fill-in-the-blank' && (
+                  <p><strong>Đáp án:</strong> {question.correctAnswer}</p>
+                )}
+                <p className="correct-answer"><strong>Đáp án đúng:</strong> {question.correctAnswer}</p>
+                <p><strong>Giải thích:</strong> {question.explain}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
+
+      <button className="save-quiz-btn" onClick={handleSaveQuiz}>Lưu Bộ Câu Hỏi</button>
     </div>
   );
 };

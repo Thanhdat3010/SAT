@@ -76,33 +76,33 @@ const Room = () => {
 
   return (
     <div className="room-page">
-      <h2>Create or Join a Room</h2>
+      <h2>Tạo hoặc vào phòng</h2>
       <div className="create-room">
         <input
           type="text"
-          placeholder="Enter new room name"
+          placeholder="Nhập tên phòng"
           value={newRoomName}
           onChange={(e) => setNewRoomName(e.target.value)}
         />
         <div>
-          <p>Select quiz for this room:</p>
+          <p>Chọn bộ câu hỏi:</p>
           <select onChange={(e) => setSelectedQuizId(e.target.value)}>
-            <option value="">Select a quiz...</option>
+            <option value="">Chọn bộ câu hỏi...</option>
             {quizzes.map((quiz) => (
               <option key={quiz.id} value={quiz.id}>{quiz.title}</option>
             ))}
           </select>
         </div>
-        <button onClick={createRoom}>Create Room</button>
+        <button onClick={createRoom}>Tạo phòng</button>
       </div>
       <div className="join-room">
         <input
           type="text"
-          placeholder="Enter room ID"
+          placeholder="Nhập ID phòng"
           value={roomId}
           onChange={(e) => setRoomId(e.target.value)}
         />
-        <button onClick={joinRoom}>Join Room</button>
+        <button onClick={joinRoom}>Vào phòng</button>
       </div>
     </div>
   );

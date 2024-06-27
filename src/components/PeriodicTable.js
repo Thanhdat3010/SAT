@@ -123,7 +123,7 @@ class PeriodicTable extends React.Component {
             <td className="B"><a href="https://www.canva.com/design/DAFjjHvbfi0/fIqjvceuM5dDey7azgTB_A/edit?utm_content=DAFjjHvbfi0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">5<br />B</a></td>
             <td className="C"><a href="https://www.canva.com/design/DAFjjAf5AqM/F9KTAbwUC0uMvz8hHGyTqg/edit?utm_content=DAFjjAf5AqM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">6<br />C</a></td>
             <td className="C"><a href="https://www.canva.com/design/DAFjjGRz2qo/O8GOTy8BZz32ySOlmUCtiw/edit?utm_content=DAFjjGRz2qo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">7<br />N</a></td>
-            <td className="C"><a href="https://www.canva.com/design/DAFjjAUrndI/Xwdx9WKQPZ7oPrc0ziSE8g/edit?utm_content=DAFjjAUrndI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">8<br />O</a></td>
+            <td className="C"><a href="https://www.canva.com/design/DAFkHNRf2V4/pQy0_VWXofhOSN5q-tCRIA/edit?utm_content=DAFkHNRf2V4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">8<br />O</a></td>
             <td className="C"><a href="https://www.canva.com/design/DAFjjK9MWGo/e6kSfem35WP2Pvqe4GYi0g/edit?utm_content=DAFjjK9MWGo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">9<br />F</a></td>
             <td className="He"><a href="https://www.canva.com/design/DAFjjGaeMJ8/FPmb7JiB3-t1Hba6DUPOcQ/edit?utm_content=DAFjjGaeMJ8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">10<br />Ne</a></td>
         </tr>
