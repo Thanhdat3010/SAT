@@ -83,7 +83,14 @@ const SolverForm = () => {
       alert('Đã xảy ra lỗi khi giải bài từ AI.');
     }
   };
-
+  const formatTextWithLineBreaks = (text) => {
+    return text.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+  };
   return (
     <div className="solver-form">
       <h2>Giải hóa tự động bằng AI</h2>
@@ -112,8 +119,8 @@ const SolverForm = () => {
       {equation && (
         <div className="answer">
           <h3>Bài giải:</h3>
-          <p><strong>Đáp án:</strong> {equation}</p>
-          <p><strong>Giải thích:</strong> {explanation}</p>
+          <p><strong>Đáp án:</strong> {formatTextWithLineBreaks(equation)}</p>
+          <p><strong>Giải thích:</strong> {formatTextWithLineBreaks(explanation)}</p>
         </div>
       )}
     </div>
