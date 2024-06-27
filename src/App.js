@@ -26,6 +26,7 @@ import { BackgroundProvider } from "./components/BackgroundContext";
 import Room from "./CreateQuiz/Room";
 import QuizRoom from "./CreateQuiz/QuizRoom";
 import WaitingRoom from "./CreateQuiz/WaitingRoom";
+import SolverForm from "./CreateQuiz/SolverForm";
 function App() {
   useEffect(() => {
     // Tìm nạp email và mã thông báo của người dùng từ localStorage
@@ -61,6 +62,7 @@ function App() {
     <Route path='/Profile' element={<Profile />}/>
     <Route path='/Flashcard' element={<FLashcard />}/>
     <Route path='/CreateQuiz' element={<CreateQuiz/>}/>
+    <Route path='/SolverForm' element={<SolverForm/>}/>
     <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
     <Route path='/Room' element={<Room/>}/>
     <Route path="/waiting-room/:id" element={<WaitingRoom/>} />

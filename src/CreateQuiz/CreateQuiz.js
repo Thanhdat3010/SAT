@@ -22,27 +22,49 @@ const CreateQuiz = () => {
   const genAI = new GoogleGenerativeAI("AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ");
 
   const handleAddQuestionsFromAPI = async () => {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hoá lớp ${grade} với chủ đề ${topic} có đáp án kèm theo. Kết quả trả ra dạng JSON`;
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-
-    // Giả sử text trả về là một chuỗi JSON các câu hỏi
-    const cleanText = text.replace(/`/g, ''); // Thay thế tất cả các backtick
-    const cleanText1 = cleanText.replace(/json/g, ''); // Thay thế tất cả các backtick
-    const generatedQuestions = JSON.parse(cleanText1);
-    generatedQuestions.forEach(generatedQuestions => {
-      const newQuestion = {
-          type: 'multiple-choice',
-          question: generatedQuestions.question,
-          options: generatedQuestions.options,
-          correctAnswer: generatedQuestions.answer,
-          explain: generatedQuestions.explanation, // Giả sử chúng ta không có giải thích từ API
-      };
-
-      setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
-    })
+    // Kiểm tra các thông tin bắt buộc
+    if (!numQuestions || numQuestions <= 0) {
+      alert('Vui lòng nhập số lượng câu hỏi hợp lệ.');
+      return;
+    }
+  
+    if (!grade) {
+      alert('Vui lòng chọn lớp.');
+      return;
+    }
+  
+    if (!topic.trim()) {
+      alert('Vui lòng nhập chủ đề.');
+      return;
+    }
+  
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hoá lớp ${grade} với chủ đề ${topic} có đáp án kèm theo. Kết quả trả ra dạng JSON`;
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();    
+      // Giả sử text trả về là một chuỗi JSON các câu hỏi
+      const cleanText = text.replace(/`/g, ''); // Thay thế tất cả các backtick
+      const cleanText1 = cleanText.replace(/json/g, ''); // Thay thế tất cả các backtick
+      const generatedQuestions = JSON.parse(cleanText1);
+      // Kiểm tra nếu generatedQuestions là một mảng
+      const questionsArray = Array.isArray(generatedQuestions) ? generatedQuestions : [generatedQuestions];
+      questionsArray.forEach(generatedQuestions => {
+        const newQuestion = {
+            type: 'multiple-choice',
+            question: generatedQuestions.question,
+            options: generatedQuestions.options,
+            correctAnswer: generatedQuestions.answer,
+            explain: generatedQuestions.explanation,
+        };
+  
+        setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
+      });
+    } catch (error) {
+      console.error('Error generating questions from AI:', error);
+      alert('Đã xảy ra lỗi khi tạo câu hỏi từ AI.');
+    }
   };
 
   const handleAddQuestion = () => {
@@ -74,6 +96,10 @@ const CreateQuiz = () => {
 
     setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
     setCurrentQuestion({ ...initialQuestionState });
+  };
+
+  const handleDeleteQuestion = (index) => {
+    setQuestions(prevQuestions => prevQuestions.filter((_, i) => i !== index));
   };
 
   const handleSaveQuiz = async (e) => {
@@ -169,7 +195,7 @@ const CreateQuiz = () => {
           placeholder="Nhập chủ đề..."
         />
       </div>
-      <button className="add-question-btn" onClick={handleAddQuestionsFromAPI}>Thêm câu hỏi từ API</button>
+      <button className="add-question-btn" onClick={handleAddQuestionsFromAPI}>Tạo câu hỏi từ AI</button>
 
       <div className="question-form">
         <label htmlFor="questionType">Loại câu hỏi:</label>
@@ -277,6 +303,7 @@ const CreateQuiz = () => {
                 )}
                 <p className="correct-answer"><strong>Đáp án đúng:</strong> {question.correctAnswer}</p>
                 <p><strong>Giải thích:</strong> {question.explain}</p>
+                <button className='delete-question-btn' onClick={() => handleDeleteQuestion(index)}>Xóa</button>
               </div>
             </li>
           ))}

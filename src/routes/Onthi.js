@@ -11,6 +11,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import CreateQuiz from '../CreateQuiz/CreateQuiz';
 import CustomQuiz from '../CreateQuiz/CustomQuiz';
 import Room from '../CreateQuiz/Room';
+import SolverForm from '../CreateQuiz/SolverForm';
 const { Sider, Content } = Layout;
 
 const Onthi = () => {
@@ -122,6 +123,9 @@ const Onthi = () => {
             <Menu.Item key="Custom"  onClick={() => handleMenuClick('Custom')}>
               Bộ câu hỏi của bạn
             </Menu.Item>
+            <Menu.Item key="SolverForm"  onClick={() => handleMenuClick('SolverForm')}>
+            Giải bài tự động bằng AI
+            </Menu.Item>
             <Menu.Item key="Room"  onClick={() => handleMenuClick('Room')}>
               Phòng
             </Menu.Item>
@@ -137,6 +141,7 @@ const Onthi = () => {
               {selectedChapter === 4 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(4)} onReset={() => handleChapterReset(4)} />}
               {selectedChapter === 'create' && <CreateQuiz/>}
               {selectedChapter === 'Custom' && <CustomQuiz/>}
+              {selectedChapter === 'SolverForm' && <SolverForm/>}
               {selectedChapter === 'Room' && <Room/>}
 
 
