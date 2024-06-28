@@ -1,0 +1,49 @@
+.analyze-results-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .analyze-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .analyze-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .analysis-content {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .analysis-content p {
+    margin-bottom: 10px;
+  }
+  
+  .analysis-content strong {
+    font-weight: bold;
+  }
+  
+  .analysis-content em {
+    font-style: italic;
+  }

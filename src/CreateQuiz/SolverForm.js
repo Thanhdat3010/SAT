@@ -9,6 +9,7 @@ const SolverForm = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [error, setError] = useState('');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const genAI = new GoogleGenerativeAI('AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ');
@@ -57,7 +58,7 @@ const SolverForm = () => {
       videoRef.current.srcObject = stream;
       videoRef.current.play();
     } else {
-      alert('Không tìm thấy camera sau.');
+      setError('Không tìm thấy camera sau.');
     }
   };
 
@@ -96,7 +97,7 @@ const SolverForm = () => {
     e.preventDefault();
 
     if (!selectedFile) {
-      alert('Vui lòng chọn một file hình ảnh.');
+      setError('Vui lòng chọn một file hình ảnh.');
       return;
     }
 
@@ -120,19 +121,17 @@ const SolverForm = () => {
       const result = await model.generateContent([prompt, ...imageParts]);
       const response = await result.response;
       const text = await response.text();
-      // Xử lý chuỗi JSON trả về
       const cleanText = text.replace(/`/g, ''); // Thay thế tất cả các backtick
       const cleanText1 = cleanText.replace(/json/g, ''); // Thay thế tất cả các backtick
-      console.log(cleanText1);
       const parsedResponse = JSON.parse(cleanText1);
-      // Giả sử JSON trả về có dạng { "answer": "..." }
       const extractedEquation = parsedResponse.answer || parsedResponse.equation || 'Không tìm thấy câu trả lời phù hợp.';
-      const explanations = parsedResponse.explanation || 'Không tìm thấy câu trả lời phù hợp.';
+      const explanations = parsedResponse.explanation || '';
       setExplanation(explanations);
       setEquation(extractedEquation);
+      setError('');
     } catch (error) {
       console.error('Error generating answer from AI:', error);
-      alert('Đã xảy ra lỗi khi giải bài từ AI.');
+      setError('Đã xảy ra lỗi khi giải bài từ AI.');
     } finally {
       setLoading(false);
     }
@@ -150,6 +149,7 @@ const SolverForm = () => {
   return (
     <div className="solver-form-container">
       <h2 className="solver-form-title">Giải hóa tự động bằng AI</h2>
+      {error && <p className="solver-form-error">{error}</p>}
       <form className="solver-form" onSubmit={handleSubmit}>
         <div
           className="solver-form-drop-zone"
@@ -177,7 +177,7 @@ const SolverForm = () => {
           <div className="camera-container">
             <video ref={videoRef} className="camera-video" />
             <div onClick={capturePhoto} className='camera-capture-button'>
-            <i className="fa-solid fa-camera"></i>
+              <i className="fa-solid fa-camera"></i>
             </div>
             <button type="button" onClick={closeCamera} className="solver-form-button">Đóng camera</button>
             <canvas ref={canvasRef} className="camera-canvas" style={{ display: 'none' }} />
@@ -190,8 +190,10 @@ const SolverForm = () => {
       {equation && (
         <div className="solver-form-answer">
           <h3 className="solver-form-answer-title">Bài giải:</h3>
-          <p className="solver-form-answer-content"><strong>Đáp án:</strong> {formatTextWithLineBreaks(equation)}</p>
-          <p className="solver-form-answer-content"><strong>Giải thích:</strong> {formatTextWithLineBreaks(explanation)}</p>
+          <p className="solver-form-answer-content"><strong>Đáp án:</strong> <br/> {formatTextWithLineBreaks(equation)}</p>
+          {explanation && (
+            <p className="solver-form-answer-content"><strong>Giải thích:</strong> <br/> {formatTextWithLineBreaks(explanation)}</p>
+          )}
         </div>
       )}
     </div>

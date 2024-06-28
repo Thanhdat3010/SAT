@@ -12,6 +12,7 @@ import CreateQuiz from '../CreateQuiz/CreateQuiz';
 import CustomQuiz from '../CreateQuiz/CustomQuiz';
 import Room from '../CreateQuiz/Room';
 import SolverForm from '../CreateQuiz/SolverForm';
+import AnalyzeResults from '../CreateQuiz/AnalyzeResults';
 const { Sider, Content } = Layout;
 
 const Onthi = () => {
@@ -118,13 +119,16 @@ const Onthi = () => {
               </Menu.Item>
             </Menu.SubMenu>
             <Menu.Item key="create" icon={<PlusOutlined />} onClick={() => handleMenuClick('create')}>
-              Tạo câu hỏi
+              Tạo câu hỏi với AI
             </Menu.Item>
             <Menu.Item key="Custom"  onClick={() => handleMenuClick('Custom')}>
               Bộ câu hỏi của bạn
             </Menu.Item>
             <Menu.Item key="SolverForm"  onClick={() => handleMenuClick('SolverForm')}>
             Giải bài tự động bằng AI
+            </Menu.Item>
+            <Menu.Item key="AnalyzeResults"  onClick={() => handleMenuClick('AnalyzeResults')}>
+              AI đánh giá năng lực
             </Menu.Item>
             <Menu.Item key="Room"  onClick={() => handleMenuClick('Room')}>
               Phòng
@@ -143,6 +147,8 @@ const Onthi = () => {
               {selectedChapter === 'Custom' && <CustomQuiz/>}
               {selectedChapter === 'SolverForm' && <SolverForm/>}
               {selectedChapter === 'Room' && <Room/>}
+              {selectedChapter === 'AnalyzeResults' && <AnalyzeResults/>}
+
 
 
               {/* Add more chapters here */}

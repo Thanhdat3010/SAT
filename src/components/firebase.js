@@ -19,7 +19,16 @@ const firebaseConfig = {
   measurementId: "G-BH50VJN30Y"
 };
 
-// Initialize Firebase
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCAIwwcHXVt_dXrSln1qZ0mI7IKJPD7qCk",
+//   authDomain: "sat-web-9b4e8.firebaseapp.com",
+//   projectId: "sat-web-9b4e8",
+//   storageBucket: "sat-web-9b4e8.appspot.com",
+//   messagingSenderId: "461995815075",
+//   appId: "1:461995815075:web:fe18a2e1065566ef0c4f16",
+//   measurementId: "G-97KTVKR2Z0"
+// };
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
