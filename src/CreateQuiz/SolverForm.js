@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './SolverForm.css';
 
@@ -8,6 +8,9 @@ const SolverForm = () => {
   const [explanation, setExplanation] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const genAI = new GoogleGenerativeAI('AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ');
 
   const handleFileChange = (e) => {
@@ -41,6 +44,52 @@ const SolverForm = () => {
 
   const handleClick = () => {
     document.getElementById('fileInput').click();
+  };
+
+  const openCamera = async () => {
+    setIsCameraOpen(true);
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    const rearCamera = videoDevices.find(device => device.label.toLowerCase().includes('back')) || videoDevices[0];
+
+    if (rearCamera) {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: rearCamera.deviceId } });
+      videoRef.current.srcObject = stream;
+      videoRef.current.play();
+    } else {
+      alert('Không tìm thấy camera sau.');
+    }
+  };
+
+  const closeCamera = () => {
+    setIsCameraOpen(false);
+    const stream = videoRef.current.srcObject;
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+    videoRef.current.srcObject = null;
+  };
+
+  const capturePhoto = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const videoWidth = video.videoWidth;
+    const videoHeight = video.videoHeight;
+    
+    canvas.width = videoWidth;
+    canvas.height = videoHeight;
+  
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, videoWidth, videoHeight);
+  
+    canvas.toBlob((blob) => {
+      setSelectedFile(blob);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(blob);
+      closeCamera();
+    }, 'image/jpeg');
   };
 
   const handleSubmit = async (e) => {
@@ -121,6 +170,19 @@ const SolverForm = () => {
             style={{ display: 'none' }}
           />
         </div>
+        {!isCameraOpen && (
+          <button type="button" onClick={openCamera} className="solver-form-button">Mở camera</button>
+        )}
+        {isCameraOpen && (
+          <div className="camera-container">
+            <video ref={videoRef} className="camera-video" />
+            <div onClick={capturePhoto} className='camera-capture-button'>
+            <i className="fa-solid fa-camera"></i>
+            </div>
+            <button type="button" onClick={closeCamera} className="solver-form-button">Đóng camera</button>
+            <canvas ref={canvasRef} className="camera-canvas" style={{ display: 'none' }} />
+          </div>
+        )}
         <button className="solver-form-button" type="submit" disabled={loading}>
           {loading ? 'Đang giải...' : 'Giải'}
         </button>
