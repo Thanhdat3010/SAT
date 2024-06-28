@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { db, auth } from '../components/firebase';
-import { doc, updateDoc, arrayUnion, getDoc, query , collection , where, getDocs } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, arrayRemove, getDoc, query, collection, where, getDocs, onSnapshot, deleteDoc } from 'firebase/firestore';
 import './WaitingRoom.css';
 
 const WaitingRoom = () => {
@@ -21,6 +21,44 @@ const WaitingRoom = () => {
       }
     };
     fetchRoomDetails();
+  }, [roomId]);
+
+  useEffect(() => {
+    const roomRef = doc(db, 'rooms', roomId);
+    const unsubscribe = onSnapshot(roomRef, (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setRoomDetails(data);
+
+        if (data.participants.length === 0) {
+          deleteDoc(roomRef);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, [roomId]);
+
+  useEffect(() => {
+    const joinRoom = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        await updateDoc(doc(db, 'rooms', roomId), {
+          participants: arrayUnion(user.uid)
+        });
+      }
+    };
+
+    joinRoom();
+
+    return async () => {
+      const user = auth.currentUser;
+      if (user) {
+        await updateDoc(doc(db, 'rooms', roomId), {
+          participants: arrayRemove(user.uid)
+        });
+      }
+    };
   }, [roomId]);
 
   const inviteFriend = async () => {

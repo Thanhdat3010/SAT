@@ -7,6 +7,7 @@ const SolverForm = () => {
   const [equation, setEquation] = useState('');
   const [explanation, setExplanation] = useState('');
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+  const [loading, setLoading] = useState(false);
   const genAI = new GoogleGenerativeAI('AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ');
 
   const handleFileChange = (e) => {
@@ -50,6 +51,8 @@ const SolverForm = () => {
       return;
     }
 
+    setLoading(true);
+
     const fileToGenerativePart = async (file) => {
       const base64EncodedDataPromise = new Promise((resolve) => {
         const reader = new FileReader();
@@ -81,8 +84,11 @@ const SolverForm = () => {
     } catch (error) {
       console.error('Error generating answer from AI:', error);
       alert('Đã xảy ra lỗi khi giải bài từ AI.');
+    } finally {
+      setLoading(false);
     }
   };
+
   const formatTextWithLineBreaks = (text) => {
     return text.split('\n').map((line, index) => (
       <React.Fragment key={index}>
@@ -91,18 +97,19 @@ const SolverForm = () => {
       </React.Fragment>
     ));
   };
+
   return (
-    <div className="solver-form">
-      <h2>Giải hóa tự động bằng AI</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="solver-form-container">
+      <h2 className="solver-form-title">Giải hóa tự động bằng AI</h2>
+      <form className="solver-form" onSubmit={handleSubmit}>
         <div
-          className="drop-zone"
+          className="solver-form-drop-zone"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onClick={handleClick}
         >
           {imagePreviewUrl ? (
-            <img src={imagePreviewUrl} alt="Ảnh tải lên" className="preview-image" />
+            <img src={imagePreviewUrl} alt="Ảnh tải lên" className="solver-form-preview-image" />
           ) : (
             <p>Kéo và thả ảnh vào đây hoặc nhấn để chọn tệp</p>
           )}
@@ -114,13 +121,15 @@ const SolverForm = () => {
             style={{ display: 'none' }}
           />
         </div>
-        <button type="submit">Giải</button>
+        <button className="solver-form-button" type="submit" disabled={loading}>
+          {loading ? 'Đang giải...' : 'Giải'}
+        </button>
       </form>
       {equation && (
-        <div className="answer">
-          <h3>Bài giải:</h3>
-          <p><strong>Đáp án:</strong> {formatTextWithLineBreaks(equation)}</p>
-          <p><strong>Giải thích:</strong> {formatTextWithLineBreaks(explanation)}</p>
+        <div className="solver-form-answer">
+          <h3 className="solver-form-answer-title">Bài giải:</h3>
+          <p className="solver-form-answer-content"><strong>Đáp án:</strong> {formatTextWithLineBreaks(equation)}</p>
+          <p className="solver-form-answer-content"><strong>Giải thích:</strong> {formatTextWithLineBreaks(explanation)}</p>
         </div>
       )}
     </div>
