@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../components/firebase';
-import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
+import { db, auth } from '../components/firebase';
+import { doc, getDoc, setDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './AnalyzeResults.css';
 
@@ -8,7 +8,9 @@ const AnalyzeResults = () => {
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
   const [chapters, setChapters] = useState([]);
-  const [selectedChapter, setSelectedChapter] = useState('');
+  const [quizzes, setQuizzes] = useState([]);
+  const [selectedType, setSelectedType] = useState('chapter');
+  const [selectedItem, setSelectedItem] = useState('');
   const genAI = new GoogleGenerativeAI("AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ");
 
   useEffect(() => {
@@ -27,19 +29,51 @@ const AnalyzeResults = () => {
     fetchChapters();
   }, []);
   
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const quizzesRef = collection(db, 'createdQuizzes');
+          const q = query(quizzesRef, where('userId', '==', user.uid));
+          const querySnapshot = await getDocs(q);
+          const quizData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setQuizzes(quizData);
+        } else {
+          console.log('No user is logged in.');
+        }
+      } catch (error) {
+        console.error('Error fetching quizzes:', error);
+      }
+    };
 
-  const fetchQuizData = async (chapterId) => {
+    fetchQuizzes();
+  }, []);
+  
+  const fetchQuizData = async (type, itemId) => {
     try {
       const userId = JSON.parse(localStorage.getItem('user'))?.email || 'defaultUser';
-      const chapterDocRef = doc(db, 'users', userId, 'chapters', chapterId);
-      const chapterDoc = await getDoc(chapterDocRef);
+      let docRef;
+      
+      if (type === 'chapter') {
+        docRef = doc(db, 'users', userId, 'chapters', itemId);
+      } else {
+        const user = auth.currentUser;
+        if (user) {
+          docRef = doc(db, 'quizProgress', `${user.uid}_${itemId}`);
+        } else {
+          throw new Error('No user is logged in.');
+        }
+      }
+
+      const docSnap = await getDoc(docRef);
       let questions = [];
       let answerState = [];
       
-      if (chapterDoc.exists()) {
-        const chapterData = chapterDoc.data();
-        questions = chapterData.questions || [];
-        answerState = chapterData.answerState || [];
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        questions = data.questions || [];
+        answerState = data.answerState || [];
       }
 
       return { answerState, questions };
@@ -52,7 +86,7 @@ const AnalyzeResults = () => {
   const handleAnalyzeResults = async () => {
     setLoading(true);
 
-    const { answerState, questions } = await fetchQuizData(selectedChapter);
+    const { answerState, questions } = await fetchQuizData(selectedType, selectedItem);
 
     if (answerState.length === 0 || questions.length === 0) {
       setAnalysis('Không có dữ liệu để phân tích.');
@@ -124,20 +158,34 @@ const AnalyzeResults = () => {
   return (
     <div className="analyze-results-page">
       <h1 className="title">Phân Tích Kết Quả</h1>
-      <div className="chapter-select">
-        <label htmlFor="chapter">Chọn Chương:</label>
+      <div className="type-select">
+        <label htmlFor="type">Chọn Bài Tập:</label>
         <select 
-          id="chapter" 
-          value={selectedChapter} 
-          onChange={(e) => setSelectedChapter(e.target.value)}
+          id="type" 
+          value={selectedType} 
+          onChange={(e) => {
+            setSelectedType(e.target.value);
+            setSelectedItem(''); // reset selected item when type changes
+          }}
         >
-          <option value="">Chọn chương</option>
-          {chapters.map((chapter) => (
-            <option key={chapter} value={chapter}>{chapter}</option>
+          <option value="chapter">Chương</option>
+          <option value="quiz">Bài kiểm tra</option>
+        </select>
+      </div>
+      <div className="item-select">
+        <label htmlFor="item">{selectedType === 'chapter' ? 'Chọn Chương:' : 'Chọn Bài Kiểm Tra:'}</label>
+        <select 
+          id="item" 
+          value={selectedItem} 
+          onChange={(e) => setSelectedItem(e.target.value)}
+        >
+          <option value="">Chọn {selectedType === 'chapter' ? 'chương' : 'bài kiểm tra'}</option>
+          {(selectedType === 'chapter' ? chapters : quizzes).map((item) => (
+            <option key={item.id || item} value={item.id || item}>{item.title || item}</option>
           ))}
         </select>
       </div>
-      <button className="analyze-btn" onClick={handleAnalyzeResults} disabled={loading || !selectedChapter}>
+      <button className="analyze-btn" onClick={handleAnalyzeResults} disabled={loading || !selectedItem}>
         {loading ? 'Đang phân tích...' : 'Phân tích kết quả'}
       </button>
       {analysis && (

@@ -138,12 +138,16 @@ const SolverForm = () => {
   };
 
   const formatTextWithLineBreaks = (text) => {
-    return text.split('\n').map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
+    return text.split('\n').map((line, index) => {
+      if (!line.trim()) return null;
+  
+      // Loại bỏ các ký hiệu đặc biệt
+      const cleanedLine = line.replace(/^[\*\#\-\s]+/, '').replace(/\*\*/g, '');
+  
+      return (
+        <p key={index} dangerouslySetInnerHTML={{ __html: cleanedLine }}></p>
+      );
+    });
   };
 
   return (

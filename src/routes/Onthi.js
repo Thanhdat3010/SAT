@@ -119,21 +119,23 @@ const Onthi = () => {
                 Luyện đề
               </Menu.Item>
             </Menu.SubMenu>
-            <Menu.Item key="create" icon={<PlusOutlined />} onClick={() => handleMenuClick('create')}>
+            <Menu.SubMenu key="sub4" title="Học hóa với AI">
+            <Menu.Item key="create" onClick={() => handleMenuClick('create')}>
               Tạo câu hỏi với AI
             </Menu.Item>
             <Menu.Item key="Custom"  onClick={() => handleMenuClick('Custom')}>
               Bộ câu hỏi của bạn
             </Menu.Item>
             <Menu.Item key="SolverForm"  onClick={() => handleMenuClick('SolverForm')}>
-            Giải bài tự động bằng AI
+            AI giải bài
             </Menu.Item>
             <Menu.Item key="AnalyzeResults"  onClick={() => handleMenuClick('AnalyzeResults')}>
               AI đánh giá năng lực
             </Menu.Item>
             <Menu.Item key="RecommendExercises"  onClick={() => handleMenuClick('RecommendExercises')}>
-              AI tạo bài tập theo năng lực
+            AI tạo bài tập theo năng lực
             </Menu.Item>
+            </Menu.SubMenu>
             <Menu.Item key="Room"  onClick={() => handleMenuClick('Room')}>
               Phòng
             </Menu.Item>

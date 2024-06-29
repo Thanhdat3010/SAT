@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './CustomQuiz.css';
 import Notification from '../components/Notification';
 import { db, auth } from '../components/firebase';
-import { getDocs, collection, deleteDoc, doc, query, where } from 'firebase/firestore';
+import { getDocs, collection, deleteDoc, doc, query, where, setDoc, getDoc } from 'firebase/firestore';
 
 const CustomQuiz = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -16,6 +16,7 @@ const CustomQuiz = () => {
   const [showExplanation, setShowExplanation] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const [currentQuizId, setCurrentQuizId] = useState(null);
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -39,13 +40,30 @@ const CustomQuiz = () => {
     fetchQuizzes();
   }, []);
 
-  const startQuiz = (quiz) => {
+  const startQuiz = async (quiz) => {
     setQuestions(quiz.questions);
     setCurrentQuestion(0);
     setAnswerState(Array(quiz.questions.length).fill(null));
     setScore(0);
     setProgress(0);
-    setQuizCompleted(false);
+    setCurrentQuizId(quiz.id);
+  
+    const user = auth.currentUser;
+    if (user) {
+      const docRef = doc(db, 'quizProgress', `${user.uid}_${quiz.id}`);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setQuestions(data.questions);
+        setCurrentQuestion(data.currentQuestion);
+        setAnswerState(data.answerState);
+        setScore(data.score);
+        setProgress(data.progress);
+        setQuizCompleted(data.quizCompleted); // Đọc trạng thái quizCompleted từ Firestore
+      } else {
+        setQuizCompleted(false); // Nếu không có dữ liệu, đặt lại quizCompleted
+      }
+    }
   };
 
   const deleteQuiz = async (quizId) => {
@@ -57,7 +75,22 @@ const CustomQuiz = () => {
     }
   };
 
-  const handleOptionClick = (selectedAnswer) => {
+  const saveProgress = async () => {
+    const user = auth.currentUser;
+    if (user && currentQuizId) {
+      const docRef = doc(db, 'quizProgress', `${user.uid}_${currentQuizId}`);
+      await setDoc(docRef, {
+        questions,
+        currentQuestion,
+        answerState,
+        score,
+        progress,
+        quizCompleted  // Đảm bảo lưu trường quizCompleted vào Firestore
+      });
+    }
+  };
+
+  const handleOptionClick = async (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
 
@@ -69,10 +102,12 @@ const CustomQuiz = () => {
       if (isCorrect) {
         setScore(prevScore => prevScore + 1);
       }
+
+      await saveProgress();
     }
   };
 
-  const handleTrueFalseClick = (selectedAnswer) => {
+  const handleTrueFalseClick = async (selectedAnswer) => {
     if (selectedOption === null) {
       setSelectedOption(selectedAnswer);
 
@@ -84,10 +119,12 @@ const CustomQuiz = () => {
       if (isCorrect) {
         setScore(prevScore => prevScore + 1);
       }
+
+      await saveProgress();
     }
   };
 
-  const handleFillInTheBlankSubmit = (event) => {
+  const handleFillInTheBlankSubmit = async (event) => {
     event.preventDefault();
     if (selectedOption === null) {
       const userAnswer = event.target.elements[0].value.trim().toLowerCase();
@@ -103,6 +140,8 @@ const CustomQuiz = () => {
       }
       event.target.elements[0].classList.toggle('correct-answer', isCorrect);
       event.target.elements[0].classList.toggle('incorrect-answer', !isCorrect);
+
+      await saveProgress();
     }
   };
 
@@ -121,15 +160,15 @@ const CustomQuiz = () => {
     };
   }, []);
 
-  const nextQuestion = () => {
+  const nextQuestion = async () => {
     if (selectedOption === null) {
       setNotificationMessage("Bạn cần chọn đáp án trước khi tiếp tục.");
       setShowNotification(true);
       return;
     }
-
+  
     setSelectedOption(null);
-
+  
     const nextQ = currentQuestion + 1;
     if (nextQ < questions.length) {
       setCurrentQuestion(nextQ);
@@ -137,10 +176,12 @@ const CustomQuiz = () => {
       setProgress(newProgress);
     } else {
       setQuizCompleted(true);
+      await saveProgress();
+      // Lưu trạng thái hoàn thành vào Firestore
     }
   };
 
-  const resetQuiz = () => {
+  const resetQuiz = async () => {
     setQuestions([]);
     setCurrentQuestion(0);
     setSelectedOption(null);
@@ -148,6 +189,11 @@ const CustomQuiz = () => {
     setScore(0);
     setProgress(0);
     setQuizCompleted(false);
+
+    const user = auth.currentUser;
+    if (user && currentQuizId) {
+      await deleteDoc(doc(db, 'quizProgress', `${user.uid}_${currentQuizId}`));
+    }
   };
 
   const toggleExplanation = () => {
