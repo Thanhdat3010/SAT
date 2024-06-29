@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db } from '../components/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './AnalyzeResults.css';
 
 const AnalyzeResults = () => {
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [chapters, setChapters] = useState([]);
+  const [selectedChapter, setSelectedChapter] = useState('');
   const genAI = new GoogleGenerativeAI("AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ");
 
-  const fetchQuizData = async () => {
+  useEffect(() => {
+    const fetchChapters = async () => {
+      try {
+        const userId = JSON.parse(localStorage.getItem('user'))?.email || 'defaultUser';
+        const chaptersColRef = collection(db, 'users', userId, 'chapters');
+        const chapterSnapshot = await getDocs(chaptersColRef);
+        const chapterList = chapterSnapshot.docs.map(doc => doc.id);
+        setChapters(chapterList);
+      } catch (error) {
+        console.error('Lỗi khi lấy danh sách chapters:', error);
+      }
+    };
+
+    fetchChapters();
+  }, []);
+  
+
+  const fetchQuizData = async (chapterId) => {
     try {
       const userId = JSON.parse(localStorage.getItem('user'))?.email || 'defaultUser';
-      const chapterId = 'chapter1';
-
-      // Lấy dữ liệu câu hỏi và câu trả lời từ Firestore
       const chapterDocRef = doc(db, 'users', userId, 'chapters', chapterId);
       const chapterDoc = await getDoc(chapterDocRef);
       let questions = [];
@@ -32,10 +48,11 @@ const AnalyzeResults = () => {
       return { answerState: [], questions: [] };
     }
   };
+
   const handleAnalyzeResults = async () => {
     setLoading(true);
 
-    const { answerState, questions } = await fetchQuizData();
+    const { answerState, questions } = await fetchQuizData(selectedChapter);
 
     if (answerState.length === 0 || questions.length === 0) {
       setAnalysis('Không có dữ liệu để phân tích.');
@@ -73,9 +90,9 @@ const AnalyzeResults = () => {
       const analysisText = await response.text();
       setAnalysis(analysisText);
       const userId = JSON.parse(localStorage.getItem('user'))?.email || 'defaultUser';
-        const userDocRef = doc(db, 'users', userId);
+      const userDocRef = doc(db, 'users', userId);
 
-    await setDoc(userDocRef, { analysis: analysisText }, { merge: true });
+      await setDoc(userDocRef, { analysis: analysisText }, { merge: true });
     } catch (error) {
       console.error('Lỗi khi phân tích kết quả:', error);
       setAnalysis('Đã xảy ra lỗi khi phân tích kết quả.');
@@ -92,10 +109,10 @@ const AnalyzeResults = () => {
       const cleanedLine = line.replace(/^[\*\#\-\s]+/, '').replace(/\*\*/g, '');
 
       if (
-          cleanedLine.startsWith('1.') || cleanedLine.startsWith('2.')||
-          cleanedLine.startsWith('3.') || cleanedLine.startsWith('4.')||
-          cleanedLine.startsWith('Phân tích kết quả') || cleanedLine.startsWith('Đánh giá kỹ năng:')||
-          cleanedLine.startsWith('Phân loại năng lực') || cleanedLine.startsWith('Đưa ra nhận xét')||
+          cleanedLine.startsWith('1.') || cleanedLine.startsWith('2.') ||
+          cleanedLine.startsWith('3.') || cleanedLine.startsWith('4.') || cleanedLine.startsWith('5.') ||
+          cleanedLine.startsWith('Phân tích kết quả') || cleanedLine.startsWith('Đánh giá kỹ năng:') ||
+          cleanedLine.startsWith('Phân loại năng lực') || cleanedLine.startsWith('Đưa ra nhận xét') ||
           cleanedLine.startsWith('Nhận xét')
         ) {
         return <p key={index}><strong>{cleanedLine}</strong></p>;
@@ -107,7 +124,20 @@ const AnalyzeResults = () => {
   return (
     <div className="analyze-results-page">
       <h1 className="title">Phân Tích Kết Quả</h1>
-      <button className="analyze-btn" onClick={handleAnalyzeResults} disabled={loading}>
+      <div className="chapter-select">
+        <label htmlFor="chapter">Chọn Chương:</label>
+        <select 
+          id="chapter" 
+          value={selectedChapter} 
+          onChange={(e) => setSelectedChapter(e.target.value)}
+        >
+          <option value="">Chọn chương</option>
+          {chapters.map((chapter) => (
+            <option key={chapter} value={chapter}>{chapter}</option>
+          ))}
+        </select>
+      </div>
+      <button className="analyze-btn" onClick={handleAnalyzeResults} disabled={loading || !selectedChapter}>
         {loading ? 'Đang phân tích...' : 'Phân tích kết quả'}
       </button>
       {analysis && (

@@ -28,6 +28,7 @@ import QuizRoom from "./CreateQuiz/QuizRoom";
 import WaitingRoom from "./CreateQuiz/WaitingRoom";
 import SolverForm from "./CreateQuiz/SolverForm";
 import AnalyzeResults from "./CreateQuiz/AnalyzeResults";
+import RecommendExercises from "./CreateQuiz/RecommendExercises";
 function App() {
   useEffect(() => {
     // Tìm nạp email và mã thông báo của người dùng từ localStorage
@@ -65,6 +66,7 @@ function App() {
     <Route path='/CreateQuiz' element={<CreateQuiz/>}/>
     <Route path='/SolverForm' element={<SolverForm/>}/>
     <Route path='/AnalyzeResults' element={<AnalyzeResults/>}/>
+    <Route path='/RecommendExercises' element={<RecommendExercises/>}/>
     <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
     <Route path='/Room' element={<Room/>}/>
     <Route path="/waiting-room/:id" element={<WaitingRoom/>} />

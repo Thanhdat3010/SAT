@@ -13,6 +13,7 @@ import CustomQuiz from '../CreateQuiz/CustomQuiz';
 import Room from '../CreateQuiz/Room';
 import SolverForm from '../CreateQuiz/SolverForm';
 import AnalyzeResults from '../CreateQuiz/AnalyzeResults';
+import RecommendExercises from '../CreateQuiz/RecommendExercises';
 const { Sider, Content } = Layout;
 
 const Onthi = () => {
@@ -130,6 +131,9 @@ const Onthi = () => {
             <Menu.Item key="AnalyzeResults"  onClick={() => handleMenuClick('AnalyzeResults')}>
               AI đánh giá năng lực
             </Menu.Item>
+            <Menu.Item key="RecommendExercises"  onClick={() => handleMenuClick('RecommendExercises')}>
+              AI tạo bài tập theo năng lực
+            </Menu.Item>
             <Menu.Item key="Room"  onClick={() => handleMenuClick('Room')}>
               Phòng
             </Menu.Item>
@@ -148,6 +152,7 @@ const Onthi = () => {
               {selectedChapter === 'SolverForm' && <SolverForm/>}
               {selectedChapter === 'Room' && <Room/>}
               {selectedChapter === 'AnalyzeResults' && <AnalyzeResults/>}
+              {selectedChapter === 'RecommendExercises' && <RecommendExercises/>}
 
 
 
