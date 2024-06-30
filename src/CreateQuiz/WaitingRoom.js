@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { db, auth } from '../components/firebase';
 import { doc, updateDoc, arrayUnion, arrayRemove, getDoc, onSnapshot, deleteDoc, getDocs } from 'firebase/firestore';
-import { FaSignOutAlt } from 'react-icons/fa'; // Import icon
+import { FaSignOutAlt } from 'react-icons/fa'; 
 import './WaitingRoom.css';
 
 const WaitingRoom = () => {
@@ -20,7 +20,7 @@ const WaitingRoom = () => {
       if (roomSnap.exists()) {
         const data = roomSnap.data();
         setRoomDetails(data);
-        setIsOwner(data.ownerId === auth.currentUser.uid); // Check if current user is owner
+        setIsOwner(data.ownerId === auth.currentUser.uid); 
       }
     };
     fetchRoomDetails();
@@ -29,17 +29,16 @@ const WaitingRoom = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       if (roomDetails && roomDetails.participants) {
-        const membersData = [];
-        for (let memberId of roomDetails.participants) {
-          const memberDoc = await getDoc(doc(db, 'profiles', memberId));
-          if (memberDoc.exists()) {
-            membersData.push(memberDoc.data());
-          }
-        }
-        setMembers(membersData);
+        const membersData = await Promise.all(
+          roomDetails.participants.map(async memberId => {
+            const memberDoc = await getDoc(doc(db, 'profiles', memberId));
+            return memberDoc.exists() ? memberDoc.data() : null;
+          })
+        );
+        setMembers(membersData.filter(member => member !== null));
       }
     };
-
+  
     fetchMembers();
   }, [roomDetails]);
 
@@ -86,14 +85,12 @@ const WaitingRoom = () => {
   }, [roomId]);
 
   useEffect(() => {
-    // Listen for changes in roomDetails.quizStarted
     const roomRef = doc(db, 'rooms', roomId);
     const unsubscribe = onSnapshot(roomRef, (doc) => {
       if (doc.exists()) {
         const data = doc.data();
         setRoomDetails(data);
         if (data.quizStarted && members.length > 0) {
-          // Automatically navigate all members to the quiz room
           members.forEach(member => {
             navigate(`/quiz-room/${roomId}`, { state: { quizId, roomId } });
           });
@@ -106,14 +103,12 @@ const WaitingRoom = () => {
 
   const handleStartQuiz = async () => {
     if (isOwner) {
-      // Update room status to indicate quiz started
       const roomRef = doc(db, 'rooms', roomId);
       await updateDoc(roomRef, {
-        quizStarted: true // Set a flag to indicate quiz started by owner
+        quizStarted: true 
       });
     } else {
       console.log('Only room owner can start the quiz.');
-      // Optionally, you can display an error message or notification here
     }
   };
 
@@ -137,14 +132,13 @@ const WaitingRoom = () => {
       } else {
         console.log('Room does not exist');
       }
-
       navigate('/');
     }
   };
 
   return (
     <div className="waiting-room-page">
-      <FaSignOutAlt className="exit-icon" onClick={handleExitRoom} /> {/* Icon thoát phòng */}
+      <FaSignOutAlt className="exit-icon" onClick={handleExitRoom} />
       <h2>Phòng chờ</h2>
       <p>Tên phòng: {roomDetails?.name}</p>
       <p>ID phòng: {roomId}</p>
