@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { db, auth } from '../components/firebase';
-import { doc, updateDoc, arrayUnion, arrayRemove, getDoc, query, collection, where, getDocs, onSnapshot, deleteDoc } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, arrayRemove, getDoc, onSnapshot, deleteDoc, getDocs } from 'firebase/firestore';
+import { FaSignOutAlt } from 'react-icons/fa'; // Import icon
 import './WaitingRoom.css';
 
 const WaitingRoom = () => {
@@ -9,43 +10,52 @@ const WaitingRoom = () => {
   const location = useLocation();
   const { roomId, quizId } = location.state;
   const [roomDetails, setRoomDetails] = useState(null);
-  const [friendEmail, setFriendEmail] = useState('');
-  const [invitedFriends, setInvitedFriends] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const fetchRoomDetails = async () => {
       const roomRef = doc(db, 'rooms', roomId);
       const roomSnap = await getDoc(roomRef);
       if (roomSnap.exists()) {
-        setRoomDetails(roomSnap.data());
+        const data = roomSnap.data();
+        setRoomDetails(data);
+        setIsOwner(data.ownerId === auth.currentUser.uid); // Check if current user is owner
       }
     };
     fetchRoomDetails();
   }, [roomId]);
 
   useEffect(() => {
-    const roomRef = doc(db, 'rooms', roomId);
-    const unsubscribe = onSnapshot(roomRef, (doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
-        setRoomDetails(data);
-
-        if (data.participants.length === 0) {
-          deleteDoc(roomRef);
+    const fetchMembers = async () => {
+      if (roomDetails && roomDetails.participants) {
+        const membersData = [];
+        for (let memberId of roomDetails.participants) {
+          const memberDoc = await getDoc(doc(db, 'profiles', memberId));
+          if (memberDoc.exists()) {
+            membersData.push(memberDoc.data());
+          }
         }
+        setMembers(membersData);
       }
-    });
+    };
 
-    return () => unsubscribe();
-  }, [roomId]);
+    fetchMembers();
+  }, [roomDetails]);
 
   useEffect(() => {
     const joinRoom = async () => {
       const user = auth.currentUser;
       if (user) {
-        await updateDoc(doc(db, 'rooms', roomId), {
-          participants: arrayUnion(user.uid)
-        });
+        const roomRef = doc(db, 'rooms', roomId);
+        const roomSnap = await getDoc(roomRef);
+        if (roomSnap.exists()) {
+          await updateDoc(roomRef, {
+            participants: arrayUnion(user.uid)
+          });
+        } else {
+          console.log('Room does not exist');
+        }
       }
     };
 
@@ -54,54 +64,104 @@ const WaitingRoom = () => {
     return async () => {
       const user = auth.currentUser;
       if (user) {
-        await updateDoc(doc(db, 'rooms', roomId), {
-          participants: arrayRemove(user.uid)
-        });
+        const roomRef = doc(db, 'rooms', roomId);
+        const roomSnap = await getDoc(roomRef);
+        if (roomSnap.exists()) {
+          await updateDoc(roomRef, {
+            participants: arrayRemove(user.uid)
+          });
+
+          const updatedRoomSnap = await getDoc(roomRef);
+          const updatedRoomData = updatedRoomSnap.data();
+          if (updatedRoomData && updatedRoomData.participants && updatedRoomData.participants.length === 0) {
+            await deleteDoc(roomRef).catch((error) => {
+              console.error('Error deleting document: ', error);
+            });
+          }
+        } else {
+          console.log('Room does not exist');
+        }
       }
     };
   }, [roomId]);
 
-  const inviteFriend = async () => {
-    const user = auth.currentUser;
-    if (user && friendEmail) {
-      const friendsQuery = query(collection(db, 'profiles'), where('email', '==', friendEmail));
-      const friendSnapshot = await getDocs(friendsQuery);
-      if (!friendSnapshot.empty) {
-        const friendDoc = friendSnapshot.docs[0];
-        await updateDoc(doc(db, 'rooms', roomId), {
-          invitedFriends: arrayUnion(friendDoc.id)
-        });
-        setInvitedFriends([...invitedFriends, friendDoc.data().username]);
+  useEffect(() => {
+    // Listen for changes in roomDetails.quizStarted
+    const roomRef = doc(db, 'rooms', roomId);
+    const unsubscribe = onSnapshot(roomRef, (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setRoomDetails(data);
+        if (data.quizStarted && members.length > 0) {
+          // Automatically navigate all members to the quiz room
+          members.forEach(member => {
+            navigate(`/quiz-room/${roomId}`, { state: { quizId, roomId } });
+          });
+        }
       }
+    });
+
+    return () => unsubscribe();
+  }, [roomId, members]);
+
+  const handleStartQuiz = async () => {
+    if (isOwner) {
+      // Update room status to indicate quiz started
+      const roomRef = doc(db, 'rooms', roomId);
+      await updateDoc(roomRef, {
+        quizStarted: true // Set a flag to indicate quiz started by owner
+      });
+    } else {
+      console.log('Only room owner can start the quiz.');
+      // Optionally, you can display an error message or notification here
     }
   };
 
-  const handleStartQuiz = () => {
-    navigate(`/quiz-room/${roomId}`, { state: { quizId, roomId } });
+  const handleExitRoom = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const roomRef = doc(db, 'rooms', roomId);
+      const roomSnap = await getDoc(roomRef);
+      if (roomSnap.exists()) {
+        await updateDoc(roomRef, {
+          participants: arrayRemove(user.uid)
+        });
+
+        const updatedRoomSnap = await getDoc(roomRef);
+        const updatedRoomData = updatedRoomSnap.data();
+        if (updatedRoomData && updatedRoomData.participants && updatedRoomData.participants.length === 0) {
+          await deleteDoc(roomRef).catch((error) => {
+            console.error('Error deleting document: ', error);
+          });
+        }
+      } else {
+        console.log('Room does not exist');
+      }
+
+      navigate('/');
+    }
   };
 
   return (
     <div className="waiting-room-page">
+      <FaSignOutAlt className="exit-icon" onClick={handleExitRoom} /> {/* Icon thoát phòng */}
       <h2>Phòng chờ</h2>
       <p>Tên phòng: {roomDetails?.name}</p>
       <p>ID phòng: {roomId}</p>
-      <p>ID quiz: {quizId}</p>
-      <div className="invite-friend">
-        <input
-          type="email"
-          placeholder="Nhập email bạn bè"
-          value={friendEmail}
-          onChange={(e) => setFriendEmail(e.target.value)}
-        />
-        <button onClick={inviteFriend}>Mời bạn</button>
-      </div>
-      <div className="invited-friends">
-        <h3>Bạn bè đã mời:</h3>
-        {invitedFriends.map((friend, index) => (
-          <p key={index}>{friend}</p>
+      
+      <div className="members-list">
+        <h3>Thành viên trong phòng:</h3>
+        {members.map(member => (
+          <div key={member.uid} className="member-item">
+            <img src={member.profilePictureUrl} alt="Avatar" />
+            <p>{member.username}</p>
+          </div>
         ))}
       </div>
-      <button onClick={handleStartQuiz}>Bắt đầu quiz</button>
+
+      {isOwner && !roomDetails.quizStarted && (
+        <button onClick={handleStartQuiz}>Bắt đầu quiz</button>
+      )}
     </div>
   );
 };
