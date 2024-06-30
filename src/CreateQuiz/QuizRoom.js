@@ -223,8 +223,8 @@ const QuizRoom = () => {
           <div className="quiz-room-page-progress-bar" style={{ width: `${progress}%` }}></div>
           {currentQuestion < questions.length && (
             <div className="quiz-room-page-question">
-              <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-              <p>Thời gian còn lại: {timeLeft} giây</p>
+            <p dangerouslySetInnerHTML={{ __html: `${currentQuestion + 1}. ${questions[currentQuestion].question}` }} />
+            <p>Thời gian còn lại: {timeLeft} giây</p>
               {questions[currentQuestion].type === "multiple-choice" && (
                 <ul>
                   {questions[currentQuestion].options.map((option, index) => (
@@ -244,7 +244,7 @@ const QuizRoom = () => {
                           : ""
                       }
                     >
-                      ({String.fromCharCode(65 + index)}) {(option)}
+                      <span dangerouslySetInnerHTML={{ __html: `(${String.fromCharCode(65 + index)}) ${option}` }} />
                       {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="quiz-room-page-correct-mark">&#10003;</span> : ''}
                       {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="quiz-room-page-incorrect-mark">&#10007;</span> : ''}
                     </li>
@@ -309,8 +309,8 @@ const QuizRoom = () => {
                   <button onClick={toggleExplanation} className="quiz-room-page-explanation-button">Giải thích</button>
                   {showExplanation && (
                     <div className="quiz-room-page-explanation">
-                      <p>Đáp án đúng: {questions[currentQuestion].correctAnswer.toString()}</p>
-                      <p>Giải thích: {questions[currentQuestion].explain}</p>
+                    <p>Đáp án đúng: <span dangerouslySetInnerHTML={{ __html: questions[currentQuestion].correctAnswer.toString() }} /></p>
+                    <p>Giải thích: <span dangerouslySetInnerHTML={{ __html: questions[currentQuestion].explain }} /></p>
                     </div>
                   )}
                 </>

@@ -231,8 +231,8 @@ const CustomQuiz = () => {
           <div className="progress-bar" style={{ width: `${progress}%` }}></div>
           {currentQuestion < questions.length && (
             <div className="question">
-              <p>{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-              {questions[currentQuestion].type === "multiple-choice" && (
+            <p dangerouslySetInnerHTML={{ __html: `${currentQuestion + 1}. ${questions[currentQuestion].question}` }} />
+            {questions[currentQuestion].type === "multiple-choice" && (
                 <ul>
                   {questions[currentQuestion].options.map((option, index) => (
                     <li
@@ -251,7 +251,7 @@ const CustomQuiz = () => {
                           : ""
                       }
                     >
-                      ({String.fromCharCode(65 + index)}) {(option)}
+                      <span dangerouslySetInnerHTML={{ __html: `(${String.fromCharCode(65 + index)}) ${option}` }} />
                       {selectedOption === option && answerState[currentQuestion] !== null && option === questions[currentQuestion].correctAnswer ? <span className="correct-mark">&#10003;</span> : ''}
                       {selectedOption === option && answerState[currentQuestion] !== null && option !== questions[currentQuestion].correctAnswer ? <span className="incorrect-mark">&#10007;</span> : ''}
                     </li>
@@ -316,8 +316,8 @@ const CustomQuiz = () => {
                   <button onClick={toggleExplanation} className="explanation-button">Giải thích</button>
                   {showExplanation && (
                     <div className="explanation">
-                      <p>Đáp án đúng: {questions[currentQuestion].correctAnswer.toString()}</p>
-                      <p>Giải thích: {questions[currentQuestion].explain}</p>
+                    <p>Đáp án đúng: <span dangerouslySetInnerHTML={{ __html: questions[currentQuestion].correctAnswer.toString() }} /></p>
+                    <p>Giải thích: <span dangerouslySetInnerHTML={{ __html: questions[currentQuestion].explain }} /></p>
                     </div>
                   )}
                 </>

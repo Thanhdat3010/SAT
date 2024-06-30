@@ -20,7 +20,7 @@ const CreateQuiz = () => {
   const [grade, setGrade] = useState('');
   const [topic, setTopic] = useState('');
   const genAI = new GoogleGenerativeAI("AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ");
-
+  
   const handleAddQuestionsFromAPI = async () => {
     // Kiểm tra các thông tin bắt buộc
     if (!numQuestions || numQuestions <= 0) {
@@ -287,26 +287,25 @@ const CreateQuiz = () => {
       <div className="question-list">
         <h2>Danh sách câu hỏi</h2>
         <ul>
-          {questions.map((question, index) => (
-            <li key={index}>
-              <div className="question-content">
-                <p><strong>Câu hỏi:</strong> {question.question}</p>
-                {question.type === 'multiple-choice' && (
-                  <div className="question-options">
-                    {question.options.map((option, i) => (
-                      <p key={i}>{String.fromCharCode(65 + i)}. {option}</p>
-                    ))}
-                  </div>
-                )}
-                {question.type === 'fill-in-the-blank' && (
-                  <p><strong>Đáp án:</strong> {question.correctAnswer}</p>
-                )}
-                <p className="correct-answer"><strong>Đáp án đúng:</strong> {question.correctAnswer}</p>
-                <p><strong>Giải thích:</strong> {question.explain}</p>
-                <button className='delete-question-btn' onClick={() => handleDeleteQuestion(index)}>Xóa</button>
+        {questions.map((question, index) => (
+        <li key={index}>
+          <div className="question-content">
+          <p dangerouslySetInnerHTML={{ __html: `<strong>Câu hỏi:</strong> ${question.question}` }} />            {question.type === 'multiple-choice' && (
+              <div className="question-options">
+                {question.options.map((option, i) => (
+                  <p key={i} dangerouslySetInnerHTML={{ __html: `${String.fromCharCode(65 + i)} ${option}` }} />
+                ))}
               </div>
-            </li>
-          ))}
+            )}
+            {question.type === 'fill-in-the-blank' && (
+              <p><strong>Đáp án:</strong> {question.correctAnswer}</p>
+            )}
+            <p className="correct-answer" dangerouslySetInnerHTML={{ __html: `<strong>Đáp án đúng:</strong> ${question.correctAnswer || ''}` }} />
+            <p dangerouslySetInnerHTML={{ __html: `<strong>Giải thích:</strong> ${question.explain}` }} />
+            <button className='delete-question-btn' onClick={() => handleDeleteQuestion(index)}>Xóa</button>
+          </div>
+        </li>
+      ))}
         </ul>
       </div>
 
