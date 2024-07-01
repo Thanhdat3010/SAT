@@ -8,7 +8,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 const Chapter2cauhoi = ({ onCompletion, onReset }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [questions, setQuestions] = useState([]);
-  const chapterId = 'chapter2';
+  const chapterId = 'Chapter 2';
   const userId = user ? user.email : 'defaultUser';
   const [showExplanation, setShowExplanation] = useState(false);
   const [showNotification, setShowNotification] = useState(false);

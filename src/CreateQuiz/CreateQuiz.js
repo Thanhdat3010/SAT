@@ -40,7 +40,7 @@ const CreateQuiz = () => {
   
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hoá lớp ${grade} với chủ đề ${topic} có đáp án kèm theo. Kết quả trả ra dạng JSON`;
+      const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hoá lớp ${grade} với chủ đề ${topic} có đáp án và giải thích kèm theo. Kết quả trả ra dạng JSON`;
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();    
