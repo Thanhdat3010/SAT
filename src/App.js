@@ -29,6 +29,7 @@ import WaitingRoom from "./CreateQuiz/WaitingRoom";
 import SolverForm from "./CreateQuiz/SolverForm";
 import AnalyzeResults from "./CreateQuiz/AnalyzeResults";
 import RecommendExercises from "./CreateQuiz/RecommendExercises";
+import Chatbot from "./routes/Chatbot";
 function App() {
   useEffect(() => {
     // Tìm nạp email và mã thông báo của người dùng từ localStorage
@@ -78,6 +79,7 @@ function App() {
     <Route path='/Chapter4' element={<Chapter4/>}/>
     <Route path='/Chapter5' element={<Chapter5/>}/>
     <Route path='/Chapter6' element={<Chapter6/>}/>
+    <Route path='/Chatbot' element={<Chatbot/>}/>
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
     <Route path='/Onthi' element={<Onthi/>}/>    

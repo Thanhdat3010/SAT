@@ -29,12 +29,12 @@ function Trangchulythuyet() {
         { id: 4, title: "Chương 4: Bảng tuần hoàn và xu hướng tuần hoàn", image: image4, path: "/Chapter4" },
         { id: 5, title: "Chương 5: Liên kết", image: image5, path: "/Chapter5" },
         { id: 6, title: "Chương 6: Phép cân bằng hóa học và giải pháp hóa học", image: image6, path: "/Chapter6" },
-        { id: 7, title: "Chương 7", image: image7, path: "/" },
-        { id: 8, title: "Chương 8: Tốc độ phản ứng và cân bằng hóa học", image: image8, path: "/" },
-        { id: 9, title: "Chương 9: Acid và Base", image: image9, path: "/" },
-        { id: 10, title: "Chương 10", image: image10, path: "/" },
-        { id: 11, title: "Chương 11: Hóa học hữu cơ", image: image11, path: "/" },
-        { id: 12, title: "Chương 12: Hóa học hạt nhân", image: image12, path: "/" }
+        // { id: 7, title: "Chương 7", image: image7, path: "/" },
+        // { id: 8, title: "Chương 8: Tốc độ phản ứng và cân bằng hóa học", image: image8, path: "/" },
+        // { id: 9, title: "Chương 9: Acid và Base", image: image9, path: "/" },
+        // { id: 10, title: "Chương 10", image: image10, path: "/" },
+        // { id: 11, title: "Chương 11: Hóa học hữu cơ", image: image11, path: "/" },
+        // { id: 12, title: "Chương 12: Hóa học hạt nhân", image: image12, path: "/" }
     ];
     const filteredChapters = chapters.filter(chapter =>
       chapter.title.toLowerCase().includes(searchTerm.toLowerCase())

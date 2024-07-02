@@ -118,9 +118,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <a className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} onClick={openMessenger}>
+          <Link className={`nav-links ${isActive('/ChatbotAI') ? 'active' : ''}`} to="/Chatbot">
             Chatbot AI
-          </a>
+          </Link>
         </li>
         <li>
           <Link className={`nav-links ${isActive('/Lythuyet') ? 'active' : ''}`} to="/Lythuyet">
