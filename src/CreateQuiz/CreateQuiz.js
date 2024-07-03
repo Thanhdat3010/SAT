@@ -3,8 +3,6 @@ import './CreateQuiz.css';
 import { db, auth } from '../components/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { PDFDocument } from 'pdf-lib';
-import { Document, Packer, Paragraph } from 'docx';
 import Tesseract from 'tesseract.js';
 const CreateQuiz = () => {
   const initialQuestionState = {
@@ -28,25 +26,6 @@ const CreateQuiz = () => {
     setFile(event.target.files[0]);
   };
 
-  const extractTextFromPDF = async (file) => {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdfDoc = await PDFDocument.load(arrayBuffer);
-    const pages = pdfDoc.getPages();
-    let text = '';
-    for (const page of pages) {
-      const content = await page.getTextContent();
-      text += content.items.map(item => item.str).join(' ');
-    }
-    return text;
-  };
-
-  const extractTextFromDocx = async (file) => {
-    const arrayBuffer = await file.arrayBuffer();
-    const doc = new Document();
-    await doc.load(arrayBuffer);
-    const paragraphs = doc.getParagraphs();
-    return paragraphs.map(paragraph => paragraph.getText()).join(' ');
-  };
 
   const extractTextFromImage = async (file) => {
     const text = await Tesseract.recognize(file, 'eng');
@@ -56,7 +35,7 @@ const CreateQuiz = () => {
   const generateQuestionsFromAI = async (text) => {
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hóa có đáp án và giải thích kèm theo từ văn bản sau: ${text} với cấu trúc:
+      const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm có đáp án và giải thích kèm theo từ văn bản sau: ${text} với cấu trúc:
       [
         {
           type: "multiple-choice",
@@ -65,13 +44,6 @@ const CreateQuiz = () => {
           "correctAnswer": "Đáp án đúng",
           "explain": "Giải thích cho đáp án đúng"
         },
-        {
-          type: "multiple-choice",
-          "question": "Câu hỏi 2",
-          "options": ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"],
-          "correctAnswer": "Đáp án đúng",
-          "explain": "Giải thích cho đáp án đúng"
-        }
       ]. Kết quả trả về dạng JSON
       `;
       const result = await model.generateContent(prompt);
@@ -109,11 +81,7 @@ const CreateQuiz = () => {
     let extractedText = '';
     const fileType = file.type;
     try {
-      if (fileType === 'application/pdf') {
-        extractedText = await extractTextFromPDF(file);
-      } else if (fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        extractedText = await extractTextFromDocx(file);
-      } else if (fileType.startsWith('image/')) {
+      if (fileType.startsWith('image/')) {
         extractedText = await extractTextFromImage(file);
       }
       await generateQuestionsFromAI(extractedText);
@@ -310,7 +278,7 @@ const CreateQuiz = () => {
       </div>
       <button className="add-question-btn" onClick={handleAddQuestionsFromAPI}>Tạo câu hỏi từ AI</button>
       <div className="file-upload">
-        <label htmlFor="file">Tải lên tệp (PDF, DOCX, hình ảnh):</label>
+        <label htmlFor="file">Tải lên tệp (png, jpg, ...):</label>
         <input
           id="file"
           name="file"
