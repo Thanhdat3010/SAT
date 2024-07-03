@@ -3,7 +3,9 @@ import './CreateQuiz.css';
 import { db, auth } from '../components/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
+import { PDFDocument } from 'pdf-lib';
+import { Document, Packer, Paragraph } from 'docx';
+import Tesseract from 'tesseract.js';
 const CreateQuiz = () => {
   const initialQuestionState = {
     type: 'multiple-choice',
@@ -19,8 +21,108 @@ const CreateQuiz = () => {
   const [numQuestions, setNumQuestions] = useState(1);
   const [grade, setGrade] = useState('');
   const [topic, setTopic] = useState('');
+  const [file, setFile] = useState(null);
   const genAI = new GoogleGenerativeAI("AIzaSyB3QUai2Ebio9MRYYtkR5H21hRlYFuHXKQ");
   
+  const handleFileUpload = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const extractTextFromPDF = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdfDoc = await PDFDocument.load(arrayBuffer);
+    const pages = pdfDoc.getPages();
+    let text = '';
+    for (const page of pages) {
+      const content = await page.getTextContent();
+      text += content.items.map(item => item.str).join(' ');
+    }
+    return text;
+  };
+
+  const extractTextFromDocx = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const doc = new Document();
+    await doc.load(arrayBuffer);
+    const paragraphs = doc.getParagraphs();
+    return paragraphs.map(paragraph => paragraph.getText()).join(' ');
+  };
+
+  const extractTextFromImage = async (file) => {
+    const text = await Tesseract.recognize(file, 'eng');
+    return text.data.text;
+  };
+
+  const generateQuestionsFromAI = async (text) => {
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const prompt = `Hãy tạo cho tôi ${numQuestions} câu hỏi trắc nghiệm môn hóa có đáp án và giải thích kèm theo từ văn bản sau: ${text} với cấu trúc:
+      [
+        {
+          type: "multiple-choice",
+          "question": "Câu hỏi 1",
+          "options": ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"],
+          "correctAnswer": "Đáp án đúng",
+          "explain": "Giải thích cho đáp án đúng"
+        },
+        {
+          type: "multiple-choice",
+          "question": "Câu hỏi 2",
+          "options": ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"],
+          "correctAnswer": "Đáp án đúng",
+          "explain": "Giải thích cho đáp án đúng"
+        }
+      ]. Kết quả trả về dạng JSON
+      `;
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const cleanText = response.text().replace(/`/g, '').replace(/json/g, '');
+      console.log(cleanText);
+      const generatedQuestions = JSON.parse(cleanText);
+      const questionsArray = Array.isArray(generatedQuestions) ? generatedQuestions : [generatedQuestions];
+      questionsArray.forEach(question => {
+        const newQuestion = {
+          type: 'multiple-choice',
+          question: question.question,
+          options: question.options,
+          correctAnswer: question.correctAnswer,
+          explain: question.explain,
+        };
+        setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
+      });
+    } catch (error) {
+      console.error('Error generating questions from AI:', error);
+      alert('Đã xảy ra lỗi khi tạo câu hỏi từ AI.');
+    }
+  };
+
+  const handleGenerateQuestions = async () => {
+    if (!numQuestions || numQuestions <= 0) {
+      alert('Vui lòng nhập số lượng câu hỏi hợp lệ.');
+      return;
+    }
+    if (!file) {
+      alert('Vui lòng tải lên tệp để trích xuất văn bản.');
+      return;
+    }
+  
+    let extractedText = '';
+    const fileType = file.type;
+    try {
+      if (fileType === 'application/pdf') {
+        extractedText = await extractTextFromPDF(file);
+      } else if (fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+        extractedText = await extractTextFromDocx(file);
+      } else if (fileType.startsWith('image/')) {
+        extractedText = await extractTextFromImage(file);
+      }
+      await generateQuestionsFromAI(extractedText);
+    } catch (error) {
+      console.error('Error extracting text from file:', error);
+      alert('Đã xảy ra lỗi khi trích xuất văn bản từ tệp.');
+    }
+  };
+
   const handleAddQuestionsFromAPI = async () => {
     // Kiểm tra các thông tin bắt buộc
     if (!numQuestions || numQuestions <= 0) {
@@ -105,26 +207,37 @@ const CreateQuiz = () => {
   const handleSaveQuiz = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-
+  
     if (!user) {
       alert('Bạn cần đăng nhập để lưu bộ câu hỏi.');
       return;
     }
-
+  
     if (quizTitle.trim() === '') {
       alert('Vui lòng nhập tiêu đề cho bộ câu hỏi.');
       return;
     }
-
+  
     if (questions.length === 0) {
       alert('Bạn phải thêm ít nhất một câu hỏi để lưu.');
       return;
     }
-
+  
+    // Kiểm tra và loại bỏ các thuộc tính có giá trị undefined
+    const cleanQuestions = questions.map(question => {
+      const cleanedQuestion = { ...question };
+      for (const key in cleanedQuestion) {
+        if (cleanedQuestion[key] === undefined) {
+          cleanedQuestion[key] = ''; // Hoặc giá trị mặc định phù hợp
+        }
+      }
+      return cleanedQuestion;
+    });
+  
     try {
       const userId = user.uid;
       const docRef = doc(db, 'createdQuizzes', `${quizTitle}-${userId}`);
-      await setDoc(docRef, { userId, title: quizTitle, questions });
+      await setDoc(docRef, { userId, title: quizTitle, questions: cleanQuestions });
       alert('Bộ câu hỏi đã được lưu thành công.');
       setQuizTitle('');
       setQuestions([]);
@@ -196,7 +309,18 @@ const CreateQuiz = () => {
         />
       </div>
       <button className="add-question-btn" onClick={handleAddQuestionsFromAPI}>Tạo câu hỏi từ AI</button>
-
+      <div className="file-upload">
+        <label htmlFor="file">Tải lên tệp (PDF, DOCX, hình ảnh):</label>
+        <input
+          id="file"
+          name="file"
+          type="file"
+          onChange={handleFileUpload}
+        />
+      </div>
+      <div className="add-questions">
+        <button onClick={handleGenerateQuestions}>Tạo câu hỏi tự động</button>
+      </div>
       <div className="question-form">
         <label htmlFor="questionType">Loại câu hỏi:</label>
         <select

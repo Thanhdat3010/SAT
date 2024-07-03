@@ -12,7 +12,9 @@
 
 .quiz-title-form,
 .quiz-config,
-.question-form {
+.question-form,
+.file-upload,
+.add-questions {
   background: #ecf0f1;
   padding: 20px;
   border-radius: 8px;
@@ -21,7 +23,9 @@
 
 .quiz-title-form label,
 .quiz-config label,
-.question-form label {
+.question-form label,
+.file-upload label,
+.add-questions label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
@@ -32,7 +36,8 @@
 .quiz-config select,
 .question-form input,
 .question-form textarea,
-.question-form select {
+.question-form select,
+.file-upload input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -46,7 +51,8 @@
 }
 
 .add-question-btn,
-.save-quiz-btn {
+.save-quiz-btn,
+.add-questions button {
   background: #2980b9;
   color: white;
   border: none;
@@ -59,7 +65,8 @@
 }
 
 .add-question-btn:hover,
-.save-quiz-btn:hover {
+.save-quiz-btn:hover,
+.add-questions button:hover {
   background: #1c5d82;
 }
 
@@ -133,4 +140,33 @@
 
 .delete-question-btn:hover {
   background: #c0392b;
+}
+
+/* CSS cho phần tải lên tệp */
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.file-upload input[type="file"] {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* CSS cho phần tạo câu hỏi tự động */
+.add-questions {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.add-questions button {
+  padding: 10px 20px;
+  font-size: 1em;
 }

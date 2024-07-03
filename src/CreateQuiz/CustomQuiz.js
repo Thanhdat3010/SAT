@@ -232,6 +232,7 @@ const CustomQuiz = () => {
           {currentQuestion < questions.length && (
             <div className="question">
             <p dangerouslySetInnerHTML={{ __html: `${currentQuestion + 1}. ${questions[currentQuestion].question}` }} />
+            {questions[currentQuestion].imageURL && <img src={questions[currentQuestion].imageURL} alt="question image" style={{ maxWidth: '100%', margin: '10px 0' }} />}
             {questions[currentQuestion].type === "multiple-choice" && (
                 <ul>
                   {questions[currentQuestion].options.map((option, index) => (
