@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Progress } from 'antd';
-import { BookOutlined, PlusOutlined } from '@ant-design/icons';
+import { Layout, Menu, Progress, Tooltip } from 'antd';
+import { BookOutlined, PlusOutlined, QuestionCircleOutlined, FireOutlined, UsergroupAddOutlined, RobotOutlined, TeamOutlined } from '@ant-design/icons';
 import Chapter1cauhoi from '../Chaper/Chapter1cauhoi';
 import Chapter2cauhoi from '../Chapter2/Chapter2cauhoi';
 import './Onthi.css';
@@ -30,8 +30,7 @@ const Onthi = () => {
       if (docSnap.exists()) {
         setChapterCompletion(docSnap.data());
       } else {
-        // Nếu dữ liệu không tồn tại trong Firebase, bạn có thể sử dụng dữ liệu từ Local Storage hoặc giá trị mặc định khác
-        const defaultCompletion = { 1: false, 4: false }; // Hoặc bạn có thể lấy từ Local Storage
+        const defaultCompletion = { 1: false, 4: false };
         setChapterCompletion(defaultCompletion);
       }
     };
@@ -71,10 +70,6 @@ const Onthi = () => {
     const totalChapters = Object.keys(chapterCompletion).length;
     return (completedChapters / totalChapters) * 100;
   };
-  const handleQuizCreation = () => {
-    // Điều hướng đến CustomQuiz sau khi thêm câu hỏi
-    setSelectedChapter('customQuiz');
-  };
   return (
     <Layout>
       <Navbar />
@@ -85,61 +80,91 @@ const Onthi = () => {
           breakpoint="lg"
           collapsedWidth="0"
         >
-          <Menu mode="inline" defaultSelectedKeys={['1']} selectedKeys={[String(selectedChapter)]} style={{ height: '100%', borderRight: 0 }}>
-            <Menu.SubMenu key="sub1" icon={<BookOutlined />} title="Chapter 1">
-              <Menu.Item key="1" onClick={() => handleMenuClick(1)}>
-                Ôn tập
-              </Menu.Item>
-              <Menu.Item key="2" onClick={() => handleMenuClick(2)}>
-                Questions
-              </Menu.Item>
-              <Menu.Item key="3" onClick={() => handleMenuClick(3)}>
-                Luyện đề
-              </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key="sub2" icon={<BookOutlined />} title="Chapter 2">
-              <Menu.Item key="4" onClick={() => handleMenuClick(4)}>
-                Ôn tập
-              </Menu.Item>
-              <Menu.Item key="5" onClick={() => handleMenuClick(5)}>
-                Questions
-              </Menu.Item>
-              <Menu.Item key="6" onClick={() => handleMenuClick(6)}>
-                Luyện đề
-              </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key="sub3" icon={<BookOutlined />} title="Chapter 3">
-              <Menu.Item key="7" onClick={() => handleMenuClick(7)}>
-                Ôn tập
-              </Menu.Item>
-              <Menu.Item key="8" onClick={() => handleMenuClick(8)}>
-                Questions
-              </Menu.Item>
-              <Menu.Item key="9" onClick={() => handleMenuClick(9)}>
-                Luyện đề
-              </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key="sub4" title="Học hóa với AI">
-            <Menu.Item key="create" onClick={() => handleMenuClick('create')}>
-              Tạo câu hỏi với AI
-            </Menu.Item>
-            <Menu.Item key="Custom"  onClick={() => handleMenuClick('Custom')}>
-              Bộ câu hỏi của bạn
-            </Menu.Item>
-            <Menu.Item key="SolverForm"  onClick={() => handleMenuClick('SolverForm')}>
-            AI giải bài
-            </Menu.Item>
-            <Menu.Item key="AnalyzeResults"  onClick={() => handleMenuClick('AnalyzeResults')}>
-              AI đánh giá năng lực
-            </Menu.Item>
-            <Menu.Item key="RecommendExercises"  onClick={() => handleMenuClick('RecommendExercises')}>
-            AI tạo bài tập theo năng lực
-            </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item key="Room"  onClick={() => handleMenuClick('Room')}>
-              Phòng
-            </Menu.Item>
-          </Menu>
+        <Menu mode="inline" defaultSelectedKeys={['1']} selectedKeys={[String(selectedChapter)]} style={{ height: '100%', borderRight: 0 }}>
+  <Menu.SubMenu key="sub1" icon={<BookOutlined />} title="Chapter 1">
+    <Menu.Item key="1" icon={<BookOutlined />} onClick={() => handleMenuClick(1)}>
+      <Tooltip title="Ôn tập">
+        <span>Ôn tập</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="2" icon={<QuestionCircleOutlined />} onClick={() => handleMenuClick(2)}>
+      <Tooltip title="Questions">
+        <span>Questions</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="3" icon={<FireOutlined />} onClick={() => handleMenuClick(3)}>
+      <Tooltip title="Luyện đề">
+        <span>Luyện đề</span>
+      </Tooltip>
+    </Menu.Item>
+  </Menu.SubMenu>
+  <Menu.SubMenu key="sub2" icon={<BookOutlined />} title="Chapter 2">
+    <Menu.Item key="4" icon={<BookOutlined />} onClick={() => handleMenuClick(4)}>
+      <Tooltip title="Ôn tập">
+        <span>Ôn tập</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="5" icon={<QuestionCircleOutlined />} onClick={() => handleMenuClick(5)}>
+      <Tooltip title="Questions">
+        <span>Questions</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="6" icon={<FireOutlined />} onClick={() => handleMenuClick(6)}>
+      <Tooltip title="Luyện đề">
+        <span>Luyện đề</span>
+      </Tooltip>
+    </Menu.Item>
+  </Menu.SubMenu>
+  <Menu.SubMenu key="sub3" icon={<BookOutlined />} title="Chapter 3">
+    <Menu.Item key="7" icon={<BookOutlined />} onClick={() => handleMenuClick(7)}>
+      <Tooltip title="Ôn tập">
+        <span>Ôn tập</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="8" icon={<QuestionCircleOutlined />} onClick={() => handleMenuClick(8)}>
+      <Tooltip title="Questions">
+        <span>Questions</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="9" icon={<FireOutlined />} onClick={() => handleMenuClick(9)}>
+      <Tooltip title="Luyện đề">
+        <span>Luyện đề</span>
+      </Tooltip>
+    </Menu.Item>
+  </Menu.SubMenu>
+  <Menu.SubMenu key="sub4" icon={<RobotOutlined />} title="Học với AI">
+    <Menu.Item key="create" icon={<PlusOutlined />} onClick={() => handleMenuClick('create')}>
+      <Tooltip title="Tạo câu hỏi với AI">
+        <span>Ai tạo câu hỏi</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="Custom" icon={<UsergroupAddOutlined />} onClick={() => handleMenuClick('Custom')}>
+      <Tooltip title="Bộ câu hỏi của bạn">
+        <span>Bộ câu hỏi</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="SolverForm" icon={<RobotOutlined />} onClick={() => handleMenuClick('SolverForm')}>
+      <Tooltip title="AI giải bài">
+        <span>AI giải bài</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="AnalyzeResults" icon={<TeamOutlined />} onClick={() => handleMenuClick('AnalyzeResults')}>
+      <Tooltip title="AI đánh giá năng lực">
+        <span>AI Đánh giá</span>
+      </Tooltip>
+    </Menu.Item>
+    <Menu.Item key="RecommendExercises" icon={<FireOutlined />} onClick={() => handleMenuClick('RecommendExercises')}>
+      <Tooltip title="AI tạo bài tập theo năng lực">
+        <span>AI Tạo bài tập</span>
+      </Tooltip>
+    </Menu.Item>
+  </Menu.SubMenu>
+  <Menu.Item key="Room" icon={<UsergroupAddOutlined />} onClick={() => handleMenuClick('Room')}>
+    <Tooltip title="Phòng">
+      <span>Phòng</span>
+    </Tooltip>
+  </Menu.Item>
+</Menu>
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
           <Content style={{ padding: '24px 0', minHeight: 280 }}>
@@ -155,9 +180,6 @@ const Onthi = () => {
               {selectedChapter === 'Room' && <Room/>}
               {selectedChapter === 'AnalyzeResults' && <AnalyzeResults/>}
               {selectedChapter === 'RecommendExercises' && <RecommendExercises/>}
-
-
-
               {/* Add more chapters here */}
             </div>
           </Content>

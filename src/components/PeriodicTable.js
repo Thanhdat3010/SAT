@@ -111,6 +111,7 @@ class PeriodicTable extends React.Component {
         <center>
         <div className="table-container">
           <table>
+          <tbody>
         <tr>
             <td className="H"><a href="https://www.canva.com/design/DAFi_WQ09Ww/E3wAuJWz5psFK-gPmMQBZg/edit?utm_content=DAFi_WQ09Ww&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">1<br />H</a></td>
             <td className="noBorder" colSpan="16"></td>
@@ -218,9 +219,11 @@ class PeriodicTable extends React.Component {
             <td className="Mt"><a href="https://www.canva.com/design/DAFkBtwHnV8/qE-URG11qFPe4oEB1VRKCQ/edit?utm_content=DAFkBtwHnV8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">117<br />Ts</a></td>
             <td className="Mt"><a href="https://www.canva.com/design/DAFkBusATao/3ueLFOfmcwIy4_dkpNTkDQ/edit?utm_content=DAFkBusATao&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">118<br />Og</a></td>
         </tr>
+        </tbody>
         </table>
         <br/>
         <table>
+        <tbody>
         <tr>
             <td className="La"><a href="https://www.canva.com/design/DAFj1WXc5SQ/0O1Tkg3FQ4OeRBmAr3DvNQ/edit?utm_content=DAFj1WXc5SQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">57<br />La</a></td>
             <td className="La"><a href="https://www.canva.com/design/DAFj1Ysclzc/Ei1RGub7nZmYm6bj2dF7_Q/edit?utm_content=DAFj1Ysclzc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">58<br />Ce</a></td>
@@ -255,6 +258,7 @@ class PeriodicTable extends React.Component {
             <td className="Ac"><a href="https://www.canva.com/design/DAFkBB0CT5g/Wh5niHFNTkq_Ns8fOzQlgw/edit?utm_content=DAFkBB0CT5g&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">102<br />No</a></td>
             <td className="Ac"><a href="https://www.canva.com/design/DAFkBGWAa9Q/rIisMZNEozw54eq9tZfzyQ/edit?utm_content=DAFkBGWAa9Q&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">103<br />Lr</a></td>
         </tr>
+        </tbody>
         </table>
         </div>
         </center>

@@ -8,7 +8,7 @@ import './WaitingRoom.css';
 const WaitingRoom = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { roomId, quizId } = location.state;
+  const { roomId, quizId } = location.state; //lấy url từ useNavigate chuyển qua
   const [roomDetails, setRoomDetails] = useState(null);
   const [members, setMembers] = useState([]);
   const [isOwner, setIsOwner] = useState(false);

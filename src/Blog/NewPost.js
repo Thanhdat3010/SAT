@@ -4,8 +4,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../components/firebase';
 import { doc,getDoc, } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill'; // Import React Quill
-import 'react-quill/dist/quill.snow.css'; // Import CSS cho React Quill
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './NewPost.css';
 
 const NewPost = () => {
@@ -48,7 +48,7 @@ const NewPost = () => {
         if (profileSnap.exists()) {
           const profileData = profileSnap.data();
           setProfilePictureUrl(profileData.profilePictureUrl || '');
-          setFullName(profileData.username || ''); // Set the fullName with username
+          setFullName(profileData.username || '');
         }
       }
     };

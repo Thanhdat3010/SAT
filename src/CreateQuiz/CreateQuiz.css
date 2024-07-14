@@ -3,41 +3,42 @@
   margin: 20px;
 }
 
-.title {
+.create-quiz-title {
   text-align: center;
   color: #2c3e50;
   font-size: 2em;
   margin-bottom: 20px;
 }
 
-.quiz-title-form,
-.quiz-config,
-.question-form,
-.file-upload,
-.add-questions {
+.create-quiz-title-form,
+.create-quiz-config,
+.create-quiz-question-form,
+.create-quiz-file-upload,
+.create-quiz-add-questions,
+.create-quiz-question-list {
   background: #ecf0f1;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
 
-.quiz-title-form label,
-.quiz-config label,
-.question-form label,
-.file-upload label,
-.add-questions label {
+.create-quiz-title-form label,
+.create-quiz-config label,
+.create-quiz-question-form label,
+.create-quiz-file-upload label,
+.create-quiz-add-questions label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.quiz-title-form input,
-.quiz-config input,
-.quiz-config select,
-.question-form input,
-.question-form textarea,
-.question-form select,
-.file-upload input {
+.create-quiz-title-form input,
+.create-quiz-config input,
+.create-quiz-config select,
+.create-quiz-question-form input,
+.create-quiz-question-form textarea,
+.create-quiz-question-form select,
+.create-quiz-file-upload input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -46,13 +47,13 @@
   font-size: 1em;
 }
 
-.question-form textarea {
+.create-quiz-question-form textarea {
   resize: vertical;
 }
 
-.add-question-btn,
-.save-quiz-btn,
-.add-questions button {
+.create-quiz-add-question-btn,
+.create-quiz-save-quiz-btn,
+.create-quiz-add-questions button {
   background: #2980b9;
   color: white;
   border: none;
@@ -64,31 +65,31 @@
   margin-bottom: 20px;
 }
 
-.add-question-btn:hover,
-.save-quiz-btn:hover,
-.add-questions button:hover {
+.create-quiz-add-question-btn:hover,
+.create-quiz-save-quiz-btn:hover,
+.create-quiz-add-questions button:hover {
   background: #1c5d82;
 }
 
-.question-list {
+.create-quiz-question-list {
   background: #ecf0f1;
   padding: 20px;
   border-radius: 8px;
 }
 
-.question-list h2 {
+.create-quiz-question-list h2 {
   margin-top: 0;
   color: #2c3e50;
   font-size: 1.5em;
   text-align: center;
 }
 
-.question-list ul {
+.create-quiz-question-list ul {
   list-style-type: none;
   padding: 0;
 }
 
-.question-list li {
+.create-quiz-question-list li {
   background: white;
   padding: 15px;
   border-radius: 8px;
@@ -98,33 +99,33 @@
   position: relative;
 }
 
-.question-list li:hover {
+.create-quiz-question-list li:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.question-list li p {
+.create-quiz-question-list li p {
   margin: 5px 0;
 }
 
-.question-content {
+.create-quiz-question-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.question-options {
+.create-quiz-question-options {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.correct-answer {
+.create-quiz-correct-answer {
   font-weight: bold;
   color: #27ae60;
 }
 
-.delete-question-btn {
+.create-quiz-delete-question-btn {
   background: #e74c3c;
   color: white;
   border: none;
@@ -138,12 +139,12 @@
   width: 30%;
 }
 
-.delete-question-btn:hover {
+.create-quiz-delete-question-btn:hover {
   background: #c0392b;
 }
 
-/* CSS cho phần tải lên tệp */
-.file-upload {
+/* CSS for file upload section */
+.create-quiz-file-upload {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,7 +152,7 @@
   padding: 20px;
 }
 
-.file-upload input[type="file"] {
+.create-quiz-file-upload input[type="file"] {
   margin-top: 10px;
   padding: 10px;
   border: 1px solid #bdc3c7;
@@ -159,14 +160,14 @@
   cursor: pointer;
 }
 
-/* CSS cho phần tạo câu hỏi tự động */
-.add-questions {
+/* CSS for adding questions section */
+.create-quiz-add-questions {
   display: flex;
   justify-content: center;
   padding: 20px;
 }
 
-.add-questions button {
+.create-quiz-add-questions button {
   padding: 10px 20px;
   font-size: 1em;
 }

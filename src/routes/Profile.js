@@ -123,8 +123,8 @@ const Profile = () => {
   const sendFriendRequest = async (userId) => {
     const currentUser = auth.currentUser;
     if (currentUser) {
-      const currentUserDoc = doc(db, 'profiles', currentUser.uid);
-      const userDoc = doc(db, 'profiles', userId);
+      const currentUserDoc = doc(db, 'profiles', currentUser.uid); //của mình
+      const userDoc = doc(db, 'profiles', userId); // của người nhận
       await updateDoc(currentUserDoc, {
         friendRequestsSent: arrayUnion(userId),
       });

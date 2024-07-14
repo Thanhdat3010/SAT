@@ -234,18 +234,18 @@ const CreateQuiz = () => {
 
   return (
     <div className="create-quiz-page">
-      <h1 className="title">Tạo Bộ Câu Hỏi</h1>
-      <div className="quiz-title-form">
-        <label htmlFor="quizTitle">Tiêu đề bộ câu hỏi:</label>
-        <input
-          id="quizTitle"
-          name="quizTitle"
-          value={quizTitle}
-          onChange={(e) => setQuizTitle(e.target.value)}
-          placeholder="Nhập tiêu đề bộ câu hỏi..."
-        />
-      </div>
-      <div className="quiz-config">
+      <h1 className="create-quiz-title">Tạo Bộ Câu Hỏi</h1>
+      <div className="create-quiz-title-form">
+      <label htmlFor="quizTitle">Tiêu đề bộ câu hỏi:</label>
+      <input
+        id="quizTitle"
+        name="quizTitle"
+        value={quizTitle}
+        onChange={(e) => setQuizTitle(e.target.value)}
+        placeholder="Nhập tiêu đề bộ câu hỏi..."
+      />
+    </div>
+      <div className="create-quiz-config">
         <label htmlFor="numQuestions">Số lượng câu hỏi:</label>
         <input
           id="numQuestions"
@@ -276,21 +276,21 @@ const CreateQuiz = () => {
           placeholder="Nhập chủ đề..."
         />
       </div>
-      <button className="add-question-btn" onClick={handleAddQuestionsFromAPI}>Tạo câu hỏi từ AI</button>
-      <div className="file-upload">
-        <label htmlFor="file">Tải lên tệp (png, jpg, ...):</label>
-        <input
-          id="file"
-          name="file"
-          type="file"
-          onChange={handleFileUpload}
-        />
+      <button className="create-quiz-add-question-btn" onClick={handleAddQuestionsFromAPI}>Tạo câu hỏi từ AI</button>
+      <div className="create-quiz-file-upload">
+      <label htmlFor="file">Tải lên tệp (png, jpg, ...):</label>
+      <input
+        id="file"
+        name="file"
+        type="file"
+        onChange={handleFileUpload}
+      />
+    </div>
+    <div className="create-quiz-add-questions">
+    <button onClick={handleGenerateQuestions}>Tạo câu hỏi tự động</button>
       </div>
-      <div className="add-questions">
-        <button onClick={handleGenerateQuestions}>Tạo câu hỏi tự động</button>
-      </div>
-      <div className="question-form">
-        <label htmlFor="questionType">Loại câu hỏi:</label>
+      <div className="create-quiz-question-form">
+      <label htmlFor="questionType">Loại câu hỏi:</label>
         <select
           id="questionType"
           name="type"
@@ -373,35 +373,35 @@ const CreateQuiz = () => {
           rows={3}
           placeholder="Nhập giải thích cho câu hỏi..."
         />
-        <button className="add-question-btn" onClick={handleAddQuestion}>Thêm câu hỏi</button>
-      </div>
+    <button className="create-quiz-add-question-btn" onClick={handleAddQuestion}>Thêm câu hỏi</button>
+    </div>
+        <div className="create-quiz-question-list">
+      <h2>Danh sách câu hỏi</h2>
+      <ul>
+      {questions.map((question, index) => (
+      <li key={index}>
+        <div className="create-quiz-question-content">
+          <p dangerouslySetInnerHTML={{ __html: `<strong>Câu hỏi:</strong> ${question.question}` }} />            
+          {question.type === 'multiple-choice' && (
+            <div className="create-quiz-question-options">
+              {question.options.map((option, i) => (
+                <p key={i} dangerouslySetInnerHTML={{ __html: `${String.fromCharCode(65 + i)} ${option}` }} />
+              ))}
+            </div>
+          )}
+          {question.type === 'fill-in-the-blank' && (
+            <p><strong>Đáp án:</strong> {question.correctAnswer}</p>
+          )}
+          <p className="create-quiz-correct-answer" dangerouslySetInnerHTML={{ __html: `<strong>Đáp án đúng:</strong> ${question.correctAnswer || ''}` }} />
+          <p dangerouslySetInnerHTML={{ __html: `<strong>Giải thích:</strong> ${question.explain}` }} />
+          <button className='create-quiz-delete-question-btn' onClick={() => handleDeleteQuestion(index)}>Xóa</button>
+        </div>
+      </li>
+    ))}
+      </ul>
+    </div>
 
-      <div className="question-list">
-        <h2>Danh sách câu hỏi</h2>
-        <ul>
-        {questions.map((question, index) => (
-        <li key={index}>
-          <div className="question-content">
-          <p dangerouslySetInnerHTML={{ __html: `<strong>Câu hỏi:</strong> ${question.question}` }} />            {question.type === 'multiple-choice' && (
-              <div className="question-options">
-                {question.options.map((option, i) => (
-                  <p key={i} dangerouslySetInnerHTML={{ __html: `${String.fromCharCode(65 + i)} ${option}` }} />
-                ))}
-              </div>
-            )}
-            {question.type === 'fill-in-the-blank' && (
-              <p><strong>Đáp án:</strong> {question.correctAnswer}</p>
-            )}
-            <p className="correct-answer" dangerouslySetInnerHTML={{ __html: `<strong>Đáp án đúng:</strong> ${question.correctAnswer || ''}` }} />
-            <p dangerouslySetInnerHTML={{ __html: `<strong>Giải thích:</strong> ${question.explain}` }} />
-            <button className='delete-question-btn' onClick={() => handleDeleteQuestion(index)}>Xóa</button>
-          </div>
-        </li>
-      ))}
-        </ul>
-      </div>
-
-      <button className="save-quiz-btn" onClick={handleSaveQuiz}>Lưu Bộ Câu Hỏi</button>
+    <button className="create-quiz-save-quiz-btn" onClick={handleSaveQuiz}>Lưu Bộ Câu Hỏi</button>
     </div>
   );
 };
