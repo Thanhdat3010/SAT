@@ -1,3 +1,4 @@
+/* Block */
 .analyze-results-page {
   max-width: 800px;
   margin: 0 auto;
@@ -5,32 +6,35 @@
   font-family: Arial, sans-serif;
 }
 
-/* Tiêu đề */
-.title {
+/* Element: Tiêu đề */
+.analyze-results-page__title {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
   color: #333;
 }
 
-/* Chọn loại */
-.type-select, .item-select {
+/* Element: Chọn loại */
+.analyze-results-page__type-select,
+.analyze-results-page__item-select {
   margin-bottom: 20px;
   text-align: center;
 }
 
-.type-select label, .item-select label {
+.analyze-results-page__type-select label,
+.analyze-results-page__item-select label {
   font-size: 16px;
   margin-right: 10px;
 }
 
-.type-select select, .item-select select {
+.analyze-results-page__type-select select,
+.analyze-results-page__item-select select {
   padding: 5px;
   font-size: 16px;
 }
 
-/* Nút Phân Tích */
-.analyze-btn {
+/* Element: Nút Phân Tích */
+.analyze-results-page__analyze-btn {
   display: block;
   width: 100%;
   padding: 10px;
@@ -44,38 +48,39 @@
   transition: background-color 0.3s ease;
 }
 
-/* Hiệu Ứng Hover cho Nút */
-.analyze-btn:hover {
+/* Modifier: Hiệu Ứng Hover cho Nút */
+.analyze-results-page__analyze-btn:hover {
   background-color: #0056b3;
 }
 
-/* Nút Khi Vô Hiệu Hoá */
-.analyze-btn:disabled {
+/* Modifier: Nút Khi Vô Hiệu Hoá */
+.analyze-results-page__analyze-btn:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
 
-/* Nội Dung Phân Tích */
-.analysis-content {
+/* Element: Nội Dung Phân Tích */
+.analyze-results-page__analysis-content {
   margin-top: 20px;
   text-align: left;
   font-size: 16px;
   line-height: 1.5;
 }
 
-/* Định Dạng Đoạn Văn */
-.analysis-content p {
+/* Element: Định Dạng Đoạn Văn */
+.analyze-results-page__analysis-content p {
   margin-bottom: 10px;
   color: #555;
 }
 
-/* Văn Bản In Đậm và In Nghiêng */
-.analysis-content strong {
+/* Element: Văn Bản In Đậm */
+.analyze-results-page__analysis-content strong {
   font-weight: bold;
   color: #333;
 }
 
-.analysis-content em {
+/* Element: Văn Bản In Nghiêng */
+.analyze-results-page__analysis-content em {
   font-style: italic;
   color: #666;
 }
@@ -86,21 +91,21 @@
     padding: 10px;
   }
   
-  .title {
+  .analyze-results-page__title {
     font-size: 20px;
   }
   
-  .analyze-btn {
+  .analyze-results-page__analyze-btn {
     font-size: 14px;
     padding: 8px;
   }
   
-  .analysis-content {
+  .analyze-results-page__analysis-content {
     font-size: 14px;
   }
 }
 
-/* Tin nhắn lỗi/thành công */
+/* Block: Tin nhắn lỗi/thành công */
 .message {
   padding: 10px;
   margin-top: 20px;
@@ -108,11 +113,13 @@
   text-align: center;
 }
 
+/* Modifier: Tin nhắn lỗi */
 .error-message {
   background-color: #f8d7da;
   color: #721c24;
 }
 
+/* Modifier: Tin nhắn thành công */
 .success-message {
   background-color: #d4edda;
   color: #155724;

@@ -157,43 +157,49 @@ const AnalyzeResults = () => {
 
   return (
     <div className="analyze-results-page">
-      <h1 className="title">Phân Tích Kết Quả</h1>
-      <div className="type-select">
-        <label htmlFor="type">Chọn Bài Tập:</label>
-        <select 
-          id="type" 
-          value={selectedType} 
-          onChange={(e) => {
-            setSelectedType(e.target.value);
-            setSelectedItem(''); // reset selected item when type changes
-          }}
-        >
-          <option value="chapter">Chương</option>
-          <option value="quiz">Bài kiểm tra</option>
-        </select>
-      </div>
-      <div className="item-select">
-        <label htmlFor="item">{selectedType === 'chapter' ? 'Chọn Chương:' : 'Chọn Bài Kiểm Tra:'}</label>
-        <select 
-          id="item" 
-          value={selectedItem} 
-          onChange={(e) => setSelectedItem(e.target.value)}
-        >
-          <option value="">Chọn {selectedType === 'chapter' ? 'chương' : 'bài kiểm tra'}</option>
-          {(selectedType === 'chapter' ? chapters : quizzes).map((item) => (
-            <option key={item.id || item} value={item.id || item}>{item.title || item}</option>
-          ))}
-        </select>
-      </div>
-      <button className="analyze-btn" onClick={handleAnalyzeResults} disabled={loading || !selectedItem}>
-        {loading ? 'Đang phân tích...' : 'Phân tích kết quả'}
-      </button>
-      {analysis && (
-        <div className="analysis-content">
-          <p>{formatTextWithLineBreaks(analysis)}</p>
-        </div>
-      )}
+  <h1 className="analyze-results-page__title">Phân Tích Kết Quả</h1>
+  <div className="analyze-results-page__type-select">
+    <label htmlFor="type">Chọn Bài Tập:</label>
+    <select 
+      id="type" 
+      value={selectedType} 
+      onChange={(e) => {
+        setSelectedType(e.target.value);
+        setSelectedItem(''); // reset selected item when type changes
+      }}
+      className="analyze-results-page__select"
+    >
+      <option value="chapter">Chương</option>
+      <option value="quiz">Bài kiểm tra</option>
+    </select>
+  </div>
+  <div className="analyze-results-page__item-select">
+    <label htmlFor="item">{selectedType === 'chapter' ? 'Chọn Chương:' : 'Chọn Bài Kiểm Tra:'}</label>
+    <select 
+      id="item" 
+      value={selectedItem} 
+      onChange={(e) => setSelectedItem(e.target.value)}
+      className="analyze-results-page__select"
+    >
+      <option value="">Chọn {selectedType === 'chapter' ? 'chương' : 'bài kiểm tra'}</option>
+      {(selectedType === 'chapter' ? chapters : quizzes).map((item) => (
+        <option key={item.id || item} value={item.id || item}>{item.title || item}</option>
+      ))}
+    </select>
+  </div>
+  <button 
+    className="analyze-results-page__analyze-btn" 
+    onClick={handleAnalyzeResults} 
+    disabled={loading || !selectedItem}
+  >
+    {loading ? 'Đang phân tích...' : 'Phân tích kết quả'}
+  </button>
+  {analysis && (
+    <div className="analyze-results-page__analysis-content">
+      <p>{formatTextWithLineBreaks(analysis)}</p>
     </div>
+  )}
+</div>
   );
 };
 

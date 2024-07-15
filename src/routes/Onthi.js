@@ -14,6 +14,8 @@ import Room from '../CreateQuiz/Room';
 import SolverForm from '../CreateQuiz/SolverForm';
 import AnalyzeResults from '../CreateQuiz/AnalyzeResults';
 import RecommendExercises from '../CreateQuiz/RecommendExercises';
+import StorytellingAI from '../CreateQuiz/StorytellingAI';
+import ExperimentProposal from '../CreateQuiz/ExperimentProposal';
 const { Sider, Content } = Layout;
 
 const Onthi = () => {
@@ -73,7 +75,7 @@ const Onthi = () => {
   return (
     <Layout>
       <Navbar />
-      <Layout className='layout'>
+      <Layout className='onthi-layout'>
         <Sider
           width={200}
           style={{ background: 'lightgray' }}
@@ -135,7 +137,7 @@ const Onthi = () => {
   <Menu.SubMenu key="sub4" icon={<RobotOutlined />} title="Học với AI">
     <Menu.Item key="create" icon={<PlusOutlined />} onClick={() => handleMenuClick('create')}>
       <Tooltip title="Tạo câu hỏi với AI">
-        <span>Ai tạo câu hỏi</span>
+        <span>AI tạo đề</span>
       </Tooltip>
     </Menu.Item>
     <Menu.Item key="Custom" icon={<UsergroupAddOutlined />} onClick={() => handleMenuClick('Custom')}>
@@ -150,12 +152,22 @@ const Onthi = () => {
     </Menu.Item>
     <Menu.Item key="AnalyzeResults" icon={<TeamOutlined />} onClick={() => handleMenuClick('AnalyzeResults')}>
       <Tooltip title="AI đánh giá năng lực">
-        <span>AI Đánh giá</span>
+        <span>AI đánh giá</span>
       </Tooltip>
     </Menu.Item>
     <Menu.Item key="RecommendExercises" icon={<FireOutlined />} onClick={() => handleMenuClick('RecommendExercises')}>
       <Tooltip title="AI tạo bài tập theo năng lực">
-        <span>AI Tạo bài tập</span>
+        <span>AI tạo bài tập</span>
+      </Tooltip>
+    </Menu.Item>
+    {/* <Menu.Item key="StorytellingAI" icon={<FireOutlined />} onClick={() => handleMenuClick('StorytellingAI')}>
+      <Tooltip title="Tạo câu chuyện liên quan đến AI theo chủ đề">
+        <span>AI tạo câu chuyện</span>
+      </Tooltip>
+    </Menu.Item> */}
+    <Menu.Item key="ExperimentProposal" icon={<FireOutlined />} onClick={() => handleMenuClick('ExperimentProposal')}>
+      <Tooltip title="Tạo thí nghiệm theo chủ đề bằng AI">
+        <span>AI thí nghiệm</span>
       </Tooltip>
     </Menu.Item>
   </Menu.SubMenu>
@@ -168,10 +180,10 @@ const Onthi = () => {
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
           <Content style={{ padding: '24px 0', minHeight: 280 }}>
-            <div className='progress-bar'>
+            <div className='onthi-progress-bar'>
               <Progress percent={calculateProgress()} status="active" />
             </div>
-            <div className='content-wrapper'>
+            <div className='onthi-content-wrapper'>
               {selectedChapter === 1 && <Chapter1cauhoi onCompletion={() => handleChapterCompletion(1)} onReset={() => handleChapterReset(1)} />}
               {selectedChapter === 4 && <Chapter2cauhoi onCompletion={() => handleChapterCompletion(4)} onReset={() => handleChapterReset(4)} />}
               {selectedChapter === 'create' && <CreateQuiz/>}
@@ -180,6 +192,9 @@ const Onthi = () => {
               {selectedChapter === 'Room' && <Room/>}
               {selectedChapter === 'AnalyzeResults' && <AnalyzeResults/>}
               {selectedChapter === 'RecommendExercises' && <RecommendExercises/>}
+              {selectedChapter === 'StorytellingAI' && <StorytellingAI/>}
+              {selectedChapter === 'ExperimentProposal' && <ExperimentProposal/>}
+
               {/* Add more chapters here */}
             </div>
           </Content>

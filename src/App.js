@@ -29,6 +29,8 @@ import WaitingRoom from "./CreateQuiz/WaitingRoom";
 import SolverForm from "./CreateQuiz/SolverForm";
 import AnalyzeResults from "./CreateQuiz/AnalyzeResults";
 import RecommendExercises from "./CreateQuiz/RecommendExercises";
+import StorytellingAI from "./CreateQuiz/StorytellingAI";
+import ExperimentProposal from "./CreateQuiz/ExperimentProposal";
 import Chatbot from "./routes/Chatbot";
 function App() {
   useEffect(() => {
@@ -68,6 +70,8 @@ function App() {
     <Route path='/SolverForm' element={<SolverForm/>}/>
     <Route path='/AnalyzeResults' element={<AnalyzeResults/>}/>
     <Route path='/RecommendExercises' element={<RecommendExercises/>}/>
+    <Route path='/StorytellingAI' element={<StorytellingAI/>}/>
+    <Route path='/ExperimentProposal' element={<ExperimentProposal/>}/>
     <Route path='/CustomQuiz' element={<CustomQuiz/>}/>
     <Route path='/Room' element={<Room/>}/>
     <Route path="/waiting-room/:id" element={<WaitingRoom/>} />
@@ -82,11 +86,10 @@ function App() {
     <Route path='/Chatbot' element={<Chatbot/>}/>
     <Route path='/Tainguyen' element={<Tainguyen />}/>
     <Route path='/Lythuyet' element={<Lythuyet/>}/>    
-    <Route path='/Onthi' element={<Onthi/>}/>    
+    <Route path='/Onthi' element={<Onthi/>}/>
     <Route path="/post/:id" element={<Post />} />
     <Route path="/new-post" element={<NewPost />} />
     <Route path="/my-post" element={<MyPost />} />
-
     </Routes>
   </div>
   </BackgroundProvider>

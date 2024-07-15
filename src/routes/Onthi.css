@@ -1,4 +1,4 @@
-.layout{
+.onthi-layout{
     margin: 100px 0;
     
 }
@@ -34,11 +34,11 @@
     margin-right: 8px;
   }
   
-  .progress-bar {
+  .onthi-progress-bar {
     margin: 20px 0;
   }
   
-  .content-wrapper {
+  .onthi-content-wrapper {
     padding: 20px;
     background: #fff;
     border-radius: 8px;
